@@ -1,0 +1,47 @@
+/-
+Copyright (c) 2026 Benjamin Stanley Frohman. All rights reserved.
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Benjamin Stanley Frohman
+-/
+
+module
+
+public import FrohmanianSymplecticTether.ForMathlib.Projection
+public import FrohmanianSymplecticTether.NS_Equations
+public import FrohmanianSymplecticTether.Assumptions
+public import FrohmanianSymplecticTether.ArnoldGeometric
+public import FrohmanianSymplecticTether.SymplecticTether
+public import FrohmanianSymplecticTether.Uniqueness
+public import FrohmanianSymplecticTether.AnalyticPipeline
+public import FrohmanianSymplecticTether.TetheredLyapunov
+public import FrohmanianSymplecticTether.IndependentMajorant
+public import FrohmanianSymplecticTether.ClosureBlueprint
+public import FrohmanianSymplecticTether.GlobalRegularity
+
+-- Kernel axiom checks on primary exported theorems:
+#print axioms FrohmanianTether.CalderonZygmundConstant3D_eq_three_halves
+#print axioms FrohmanianTether.kappa_pos
+#print axioms FrohmanianTether.tetherKernel_quadratic_form
+#print axioms FrohmanianTether.tetherKernel_comm
+#print axioms FrohmanianTether.tetherPointwiseDensity_nonpos
+#print axioms FrohmanianTether.tetherPointwiseDensity_strict_neg_of_noncasimir
+#print axioms FrohmanianTether.tetherKernel_diagonal_nonpos
+#print axioms FrohmanianTether.tetherKernel_strict_neg_of_orthogonal_component
+#print axioms FrohmanianTether.tetherKernel_nondegenerate_on_casimir_defect
+#print axioms FrohmanianTether.uniqueness_of_minimal_tether
+#print axioms FrohmanianTether.uniqueness_of_kernel_density
+#print axioms FrohmanianTether.uniqueness_of_kernel_density_fun
+#print axioms FrohmanianTether.tetherKernel_has_canonical_density
+#print axioms FrohmanianTether.step2_degree_of_canonical_density
+#print axioms FrohmanianTether.step2_degree
+#print axioms FrohmanianTether.step5_higher_order
+#print axioms AnalyticPipeline.youngs_absorption_elimination
+#print axioms AnalyticPipeline.comparison_ode_stability
+#print axioms AnalyticPipeline.comparison_ode_nonneg
+#print axioms TetheredLyapunov.hasDerivAt_quartic_tether_weight
+#print axioms TetheredLyapunov.quartic_weight_source_eq
+#print axioms TetheredLyapunov.global_regularity_of_restart
+#print axioms TetheredLyapunov.global_regularity_of_constructions
+#print axioms GlobalRegularity.frohmanian_tether_theorem
+#print axioms GlobalRegularity.global_regularity_for_NS
+#print axioms GlobalRegularity.global_regularity_for_NS_nonvacuous_at_zero

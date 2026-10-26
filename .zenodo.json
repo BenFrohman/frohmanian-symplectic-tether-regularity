@@ -1,0 +1,42 @@
+{
+  "title": "The Frohmanian Symplectic Tether: Canonical Uniqueness on Coadjoint Orbits of SDiff(T3), Non-Degenerate Casimir Coupling, and Conditional Global Regularity via Quartic Young Absorption in Lean 4",
+  "upload_type": "software",
+  "description": "Self-contained Lean 4 formalization (leanprover/lean4:v4.30.0-rc1, Mathlib 4, 341 kernel-verified theorems across 12 modules with zero sorry and zero non-standard axioms outside [propext, Classical.choice, Quot.sound]) of the Frohmanian Symplectic Tether {F, G}_FT = {F, G}_LP - kappa * K_FT(delta F, delta G; omega) with kappa = 27 * C_CZ^4 / (4 * nu^3) = 2187 / (64 * nu^3) on coadjoint orbits of SDiff(T^3). Unconditionally proves: (1) Casimir non-degeneracy of K_FT (tetherPointwiseDensity_nonpos, tetherPointwiseDensity_strict_neg_of_noncasimir, tetherKernel_diagonal_nonpos, tetherKernel_strict_neg_of_orthogonal_component, tetherKernel_nondegenerate_on_casimir_defect), (2) 5-step canonical uniqueness of the minimal-degree Casimir-preserving tether (uniqueness_of_minimal_tether, uniqueness_of_kernel_density, tetherKernel_has_canonical_density, step2_degree, step5_higher_order), (3) quartic 4=4 Young absorption (youngs_absorption_elimination) and ODE comparison stability (comparison_ode_stability), and (4) non-vacuity and step-jump exclusion at zero initial data (global_regularity_for_NS_nonvacuous_at_zero, stepField_not_physical). The global regularity theorems (frohmanian_tether_theorem and global_regularity_for_NS) hold for flows that satisfy the Frohmanian tether rate or bound (frohmanianTetherRate / frohmanianTetherBound) and local Kato/restart/uniqueness hypotheses.",
+  "creators": [
+    {
+      "name": "Frohman, Benjamin Stanley",
+      "orcid": "0009-0006-7068-3718"
+    }
+  ],
+  "license": "Apache-2.0",
+  "access_right": "open",
+  "keywords": [
+    "Lean 4",
+    "Frohmanian Symplectic Tether",
+    "coadjoint orbits",
+    "metriplectic dynamics",
+    "Casimir invariants",
+    "Navier-Stokes equations",
+    "conditional global regularity",
+    "Titan Audit",
+    "SealGuard"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.23630648",
+      "relation": "isSupplementedBy",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.23631670",
+      "relation": "isSupplementedBy",
+      "scheme": "doi"
+    },
+    {
+      "identifier": "10.5281/zenodo.23632766",
+      "relation": "isSupplementedBy",
+      "scheme": "doi"
+    }
+  ],
+  "doi": "10.5281/zenodo.23652843"
+}

@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this Lean 4 formalization, please cite it as below."
+title: "The Frohmanian Symplectic Tether: Canonical Uniqueness on Coadjoint Orbits of SDiff(T3), Non-Degenerate Casimir Coupling, and Conditional Global Regularity via Quartic Young Absorption in Lean 4"
+authors:
+  - family-names: "Frohman"
+    given-names: "Benjamin Stanley"
+    orcid: "https://orcid.org/0009-0006-7068-3718"
+version: "1.0.0"
+date-released: "2026-10-25"
+license: "Apache-2.0"
+repository-code: "https://github.com/BenFrohman/frohmanian-symplectic-tether-regularity"
+doi: "10.5281/zenodo.23652843"
