@@ -2,10 +2,10 @@
 
 **Verdict: PASS_WITH_WARNINGS**
 
-- Generated (UTC): 2026-10-26T00:01:12+00:00
+- Generated (UTC): 2026-10-27T23:58:17+00:00
 - Tool: titan-audit 1.0.0 (Benjamin Stanley Frohman (ORCID: 0009-0006-7068-3718))
-- Toolchain: `leanprover/lean4:v4.30.0-rc1`  Git HEAD: `None`
-- Tree SHA-256: `898684ad2d3bdd69e77ab42bef2a864397c374467fe3d6eef113ec46d0bfb4ef` over 16 files
+- Toolchain: `leanprover/lean4:v4.30.0-rc1`  Git HEAD: `e0a566734a9b336ba40bf698b6c9944f5b84f8d6`
+- Tree SHA-256: `e66822458bcd25cdc765410797ca8b969f14a490d90e59c2d79d5412c2b77fd4` over 17 files
 
 ## Build
 
@@ -13,7 +13,7 @@
 
 ## Axiom audit
 
-- Modules: 12  Theorems: 341  Clean (only propext/Classical.choice/Quot.sound): 341
+- Modules: 13  Theorems: 350  Clean (only propext/Classical.choice/Quot.sound): 350
 - Nonstandard: 0
 
 | Module | Theorems | Nonstandard |
@@ -21,6 +21,7 @@
 | `FrohmanianSymplecticTether.AnalyticPipeline` | 14 | 0 |
 | `FrohmanianSymplecticTether.ArnoldGeometric` | 43 | 0 |
 | `FrohmanianSymplecticTether.ClosureBlueprint` | 22 | 0 |
+| `FrohmanianSymplecticTether.FinalProductTheorem` | 9 | 0 |
 | `FrohmanianSymplecticTether.ForMathlib.Projection` | 7 | 0 |
 | `FrohmanianSymplecticTether.GlobalRegularity` | 11 | 0 |
 | `FrohmanianSymplecticTether.IndependentMajorant` | 2 | 0 |

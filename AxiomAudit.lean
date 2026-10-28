@@ -49,13 +49,17 @@ open Lean Elab Command
 #print axioms FrohmanianTether.tetherKernel_strict_neg_of_orthogonal_component
 #print axioms FrohmanianTether.tetherKernel_nondegenerate_on_casimir_defect
 #print axioms FrohmanianTether.uniqueness_of_minimal_tether
+#print axioms FrohmanianTether.uniqueness_of_minimal_symmetric_tether
 #print axioms FrohmanianTether.uniqueness_of_kernel_density
 #print axioms FrohmanianTether.uniqueness_of_kernel_density_fun
 #print axioms FrohmanianTether.tetherKernel_has_canonical_density
 #print axioms FrohmanianTether.step2_degree_of_canonical_density
 #print axioms FrohmanianTether.step2_degree
+#print axioms FrohmanianTether.step2_degree_of_ne_zero
 #print axioms FrohmanianTether.step5_higher_order
+#print axioms FrohmanianTether.tethered_reproduces_classical_euler
 #print axioms AnalyticPipeline.youngs_absorption_elimination
+#print axioms AnalyticPipeline.holder_I4
 #print axioms AnalyticPipeline.comparison_ode_stability
 #print axioms AnalyticPipeline.comparison_ode_nonneg
 #print axioms TetheredLyapunov.hasDerivAt_quartic_tether_weight
@@ -65,3 +69,8 @@ open Lean Elab Command
 #print axioms GlobalRegularity.frohmanian_tether_theorem
 #print axioms GlobalRegularity.global_regularity_for_NS
 #print axioms GlobalRegularity.global_regularity_for_NS_nonvacuous_at_zero
+#print axioms GlobalRegularity.stepField_not_physical
+#print axioms FrohmanianSymplecticTether.FinalProductTheorem.kksSymplecticForm_skew
+#print axioms FrohmanianSymplecticTether.FinalProductTheorem.kksPointwise_cyclic_jacobi_identity
+#print axioms FrohmanianSymplecticTether.FinalProductTheorem.FrohmanianMetriplecticPairing_diag_eq_metric
+#print axioms FrohmanianSymplecticTether.FinalProductTheorem.frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem

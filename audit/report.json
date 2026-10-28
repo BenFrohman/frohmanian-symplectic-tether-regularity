@@ -9,7 +9,7 @@
     "path": "/workspace/frohmanian-symplectic-tether-regularity",
     "name": "frohmanian-symplectic-tether-regularity",
     "lean_toolchain": "leanprover/lean4:v4.30.0-rc1",
-    "git_head": null
+    "git_head": "e0a566734a9b336ba40bf698b6c9944f5b84f8d6"
   },
   "build": {
     "requested": false
@@ -18,9 +18,9 @@
     "ran": true,
     "exit_code": 0,
     "errors": [],
-    "modules": 12,
-    "theorems": 341,
-    "clean_theorems": 341,
+    "modules": 13,
+    "theorems": 350,
+    "clean_theorems": 350,
     "nonstandard": [],
     "per_module": {
       "FrohmanianSymplecticTether.SymplecticTether": {
@@ -57,6 +57,10 @@
       },
       "FrohmanianSymplecticTether.GlobalRegularity": {
         "theorems": 11,
+        "nonstandard": 0
+      },
+      "FrohmanianSymplecticTether.FinalProductTheorem": {
+        "theorems": 9,
         "nonstandard": 0
       },
       "FrohmanianSymplecticTether.IndependentMajorant": {
@@ -114,16 +118,16 @@
     }
   },
   "tree": {
-    "sha256": "898684ad2d3bdd69e77ab42bef2a864397c374467fe3d6eef113ec46d0bfb4ef",
-    "files": 16,
+    "sha256": "e66822458bcd25cdc765410797ca8b969f14a490d90e59c2d79d5412c2b77fd4",
+    "files": 17,
     "entries": [
       {
         "path": "AxiomAudit.lean",
-        "sha256": "48aabda6113d8d1721b532cfca261224b13e13586ad15f47d9c64a8224a836bb"
+        "sha256": "a3a2411b488b8f46819742407de9a639efec31bbb28512a73a20efae7b1a6262"
       },
       {
         "path": "FrohmanianSymplecticTether.lean",
-        "sha256": "ae4069fd23486fecd6d86729d7caddf340deb0982599df4cda16bdaaaeb7008f"
+        "sha256": "c330168c355225079889b07dcc686eba5b4543150926682493c35afd277cbb8c"
       },
       {
         "path": "FrohmanianSymplecticTether/AnalyticPipeline.lean",
@@ -140,6 +144,10 @@
       {
         "path": "FrohmanianSymplecticTether/ClosureBlueprint.lean",
         "sha256": "a562e9509471e9474b0c24e8d7a909736d9757431b07ca3376289830de3a0c89"
+      },
+      {
+        "path": "FrohmanianSymplecticTether/FinalProductTheorem.lean",
+        "sha256": "28cb8f0a3d52a53102a9f52a77d997f483a4c895a4404ceae70a65e4e237806f"
       },
       {
         "path": "FrohmanianSymplecticTether/ForMathlib/Projection.lean",
@@ -189,11 +197,11 @@
     "reasons": [],
     "vacuity_warnings_in_build": 5
   },
-  "generated_at_utc": "2026-10-26T00:01:12+00:00",
+  "generated_at_utc": "2026-10-27T23:58:17+00:00",
   "signature": {
     "alg": "ed25519",
     "public_key_b64": "c7BnJCTBz91GSJfR9q9g7XaE9b8u6r2wfKeXGzYuwKs=",
     "payload": "canonical JSON of report without 'signature' (sort_keys, compact, UTF-8)",
-    "value_b64": "Z4OXdOYbN9rMTUA+xCfa5deq/enlyWivK+z8/ZlbUgUyE8mWUsfoPCF99HaDW+vcPobw5sJDHEt1tfHEPrA+DQ=="
+    "value_b64": "FkkpqvWNS+WjzSoL8VKY54xBwUOsPC/SkFNYcQ7fHnwYt9tvs5f/RO8nK7wfFoBk2+vQixU9Vaig5S+p4bnCAg=="
   }
 }
