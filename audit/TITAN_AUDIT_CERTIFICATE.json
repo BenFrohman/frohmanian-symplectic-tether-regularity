@@ -9,7 +9,7 @@
     "path": "/workspace/frohmanian-symplectic-tether-regularity",
     "name": "frohmanian-symplectic-tether-regularity",
     "lean_toolchain": "leanprover/lean4:v4.30.0-rc1",
-    "git_head": "e0a566734a9b336ba40bf698b6c9944f5b84f8d6"
+    "git_head": "ad60fb8da437452ff8781b91e2ce864c53ed851d"
   },
   "build": {
     "requested": false
@@ -118,7 +118,7 @@
     }
   },
   "tree": {
-    "sha256": "e66822458bcd25cdc765410797ca8b969f14a490d90e59c2d79d5412c2b77fd4",
+    "sha256": "f4ad708229a59a0b7ddf6066a4636ee688bdf38acc1b9f4ec908cb1d115cee2f",
     "files": 17,
     "entries": [
       {
@@ -183,7 +183,7 @@
       },
       {
         "path": "lakefile.lean",
-        "sha256": "ae3a50aa598da1d229d9312d725e4f5e9585f40ca514159960144651919a79b5"
+        "sha256": "003a8d59b56d861f7ada2bfd4b7052b2380ff4d075f4fafc98bab5fa92ed139c"
       },
       {
         "path": "lean-toolchain",
@@ -197,11 +197,11 @@
     "reasons": [],
     "vacuity_warnings_in_build": 5
   },
-  "generated_at_utc": "2026-10-27T23:58:17+00:00",
+  "generated_at_utc": "2026-10-28T00:51:01+00:00",
   "signature": {
     "alg": "ed25519",
-    "public_key_b64": "c7BnJCTBz91GSJfR9q9g7XaE9b8u6r2wfKeXGzYuwKs=",
+    "public_key_b64": "ZOyujV1yUEldQRZEDhmXCHa4ikWGfcTD+meZYssNLpo=",
     "payload": "canonical JSON of report without 'signature' (sort_keys, compact, UTF-8)",
-    "value_b64": "FkkpqvWNS+WjzSoL8VKY54xBwUOsPC/SkFNYcQ7fHnwYt9tvs5f/RO8nK7wfFoBk2+vQixU9Vaig5S+p4bnCAg=="
+    "value_b64": "Hy9k1oFIuE40B7nsAgaFwEf34xAhynloZVavEFJ36/OC7C3NuQbkvpb2EQ0rIRw9IpJYYeANfffPLlbQFptMBw=="
   }
 }
