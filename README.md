@@ -3,12 +3,23 @@
 **Author:** Benjamin Stanley Frohman ([ORCID: 0009-0006-7068-3718](https://orcid.org/0009-0006-7068-3718))  
 **Zenodo DOI (v1.1.0):** [`10.5281/zenodo.23717082`](https://doi.org/10.5281/zenodo.23717082) | **Concept DOI:** [`10.5281/zenodo.23652842`](https://doi.org/10.5281/zenodo.23652842) | **v1.0.0 DOI:** [`10.5281/zenodo.23652843`](https://doi.org/10.5281/zenodo.23652843)  
 **License:** Apache-2.0 (`Copyright (c) 2026 Benjamin Stanley Frohman`)  
-**Toolchain:** `leanprover/lean4:v4.30.0-rc1` + Mathlib 4 (`2702/2702` build jobs, **367 theorems across 13 modules**, **0 `sorry`**, **0 non-standard axioms**)  
+**Toolchain:** `leanprover/lean4:v4.30.0-rc1` + Mathlib 4 (`2702/2702` build jobs, **383 theorems across 13 modules**, **0 `sorry`**, **0 non-standard axioms**)  
 **Paper PDF:** [`Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.pdf`](Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.pdf)
 
 ---
 
-## Single-Sentence Final Product Form of the Stated Problem and Proved Resolution (`FinalProductTheorem.lean`)
+## Main Theorem (proved reduction; stated and proved in `fefferman-clay-navier-stokes/FeffermanClayNS/MainTheorem.lean` and `NS_Millennium_Proof/Modules/MainTheorem.lean`, synced here)
+
+`clay_reduces_to_direction_curvature_bound` (Lean 4 + Mathlib, `0 sorry`, axioms `[propext, Classical.choice, Quot.sound]`):
+
+> For every ν > 0, assuming the classical periodic Beale–Kato–Majda continuation principle `PeriodicBKMContinuation ν` (a published theorem, Kato 1972 / Beale–Kato–Majda 1984, **not** formalized here and therefore an explicit hypothesis), the named estimate `DirectionCurvatureBound ν` implies Fefferman's exact periodic Clay statement `Clay_B_exact ν`.
+
+- `DirectionCurvatureBound ν` (high-set direction-curvature / cubic depletion bound `M' ≤ C M² − κ M³`) is the single named **open** estimate (conjecture). It is **not** proved.
+- The Clay problem is **not** claimed solved. The converse (`Clay_B_exact → DirectionCurvatureBound`) is **not** proved.
+
+**Main Theorem A (unconditional supporting facts):** attained-maximum ⇒ `BddAbove` and sup-norm equality; Bochner and polar Pythagoras identities, now *derived* from `HasDerivAt` along coordinate lines (`Stage6Calculus.lean`); the near/far cutoff absorption algebra; Burgers-strain exclusion on 𝕋³; the comparison-ODE ceiling; and a genuinely non-constant exact periodic shear Beltrami mode `e^{-4π²νt}(sin 2πz, cos 2πz, 0)` checked component-wise.
+
+## Single-Sentence Final Product Form of the Stated Problem and Proved Reductions (`FinalProductTheorem.lean`)
 
 In [`FrohmanianSymplecticTether/FinalProductTheorem.lean`](FrohmanianSymplecticTether/FinalProductTheorem.lean), the entire stated problem and unconditional proof of resolution for the **Frohmanian Tethered / Metriplectic System** are packaged into the single machine-checked 5-conjunct product theorem `frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem` (`P₁ ∧ P₂ ∧ P₃ ∧ P₄ ∧ P₅`), verified with `0 sorry` and standard axioms `[propext, Classical.choice, Quot.sound]`:
 
@@ -27,7 +38,7 @@ $$\begin{aligned}
 
 ---
 
-## Exact Breakdown: Modules and Unconditionally Proved Theorems (`367 theorems`, `0 sorry`)
+## Exact Breakdown: Modules and Unconditionally Proved Theorems (`383 theorems`, `0 sorry`)
 
 | Module | Key Declarations | Status | Mathematical Content |
 |---|---|---|---|
@@ -75,3 +86,25 @@ TOTAL theorems=367 nonstandard=0
 - **ORCID:** [0009-0006-7068-3718](https://orcid.org/0009-0006-7068-3718)
 - **Email:** `frohmanbenjamin@gmail.com`
 - **X / GitHub:** `@Investor0x` / `BenFrohman` (`Bit21`)
+
+## Provenance of Ingredients
+
+Dates below are verified from files in the `NS_Millennium_Proof` git history (first commit 2026-06-19, which imported a snapshot directory `historical/previous_implementations/complete_implementation_2026-05-28/`). No April 2026 file was found in the repositories; earlier dates are not asserted.
+
+| Ingredient | Earliest verified date | Source | Status |
+|---|---|---|---|
+| Young absorption | 2026-05-28 snapshot | `historical/previous_implementations/complete_implementation_2026-05-28/docs/Frohmanian_Tether_NS_Proof_Conversation_Summary.md` | original scaffolding |
+| Cubic majorant / Riccati comparison | 2026-05-28 snapshot | `.../complete_implementation_2026-05-28/Modules/IndependentMajorant.lean`, `Skeleton/PaperOverview.lean` | original scaffolding |
+| Frohmanian tether | 2026-05-28 snapshot | `.../complete_implementation_2026-05-28/docs/05_Step_Uniqueness_Proof_Structure.md` | original scaffolding |
+| Biot–Savart (mentions) | 2026-05-28 snapshot | `.../complete_implementation_2026-05-28/docs/Phase0_Phase1_Implementation_Plan.md` | original scaffolding |
+| Bochner–Weitzenböck | 2026-06-19 (git `236244d`) | `NS_Millennium_Proof/Modules/NS_Equations.lean` | classical (Bochner), pinned and cited; concrete 3D form added Oct 2026 (Grok-assisted scaffolding) |
+| Constantin–Fefferman direction depletion | 2026-06-19 (git `236244d`) | `NS_Millennium_Proof/Modules/TetheredLyapunov.lean` | classical (Constantin–Fefferman 1993), pinned and cited |
+| Attained max / `BddAbove` guards | 2026-08-27 (git `04eb613`) | Lean sources | added Aug 2026 |
+| Polar Pythagoras | 2026-10-28 (git `acf5883`) | `Modules/FinalProductTheorem.lean` stages | added Oct 2026 (Grok-assisted scaffolding) |
+| Beltrami (Lamb vector, shear mode) | 2026-10-28 (git `acf5883`) | Stage 4 / `Stage6Calculus.lean` | classical (Beltrami flows), pinned and cited; Lean added Oct 2026 (Grok-assisted scaffolding) |
+| Near/far Biot–Savart cutoff bridge | 2026-10-28 (git `acf5883`) | Stage 5 | added Oct 2026 (Grok-assisted scaffolding), after Constantin–Fefferman 1993 |
+| Reduction theorem `clay_reduces_to_direction_curvature_bound` | 2026-10-28 | `MainTheorem.lean` | added Oct 2026 (Grok-assisted scaffolding); earlier conditional reductions `clay_B_exact_of_*` predate it |
+
+## AI Assistance Disclosure
+
+Grok (xAI), via the Grok Bot assistant, provided scaffolding, drafting, and collaboration support on formalization, code, and papers in this repository. Benjamin Stanley Frohman is the sole author: he directed, reviewed, and is responsible for all of the work. Grok is not a coauthor.

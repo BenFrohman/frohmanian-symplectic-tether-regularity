@@ -15,3 +15,4 @@ public import FrohmanianSymplecticTether.TetheredLyapunov
 public import FrohmanianSymplecticTether.GlobalRegularity
 public import FrohmanianSymplecticTether.ClosureBlueprint
 public import FrohmanianSymplecticTether.FinalProductTheorem
+public import FrohmanianSymplecticTether.Stage6Calculus

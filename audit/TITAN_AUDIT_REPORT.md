@@ -2,10 +2,10 @@
 
 **Verdict: PASS_WITH_WARNINGS**
 
-- Generated (UTC): 2026-10-28T22:04:33+00:00
+- Generated (UTC): 2026-10-28T23:10:36+00:00
 - Tool: titan-audit 1.0.0 (Benjamin Stanley Frohman (ORCID: 0009-0006-7068-3718))
-- Toolchain: `leanprover/lean4:v4.30.0-rc1`  Git HEAD: `7eb4a1944cfc1d9a731ab31728bd07c4ad94d606`
-- Tree SHA-256: `f1af7f4fc4eccfe9fa6f76ae008970cbab8373a2d0db3971dd6131b413c6eae3` over 17 files
+- Toolchain: `leanprover/lean4:v4.30.0-rc1`  Git HEAD: `e26081aba7d7051da65d563349ce555923249688`
+- Tree SHA-256: `8fa3af09751c95509853e3fbdc8771bd6ef02d4a76e82ebda53a81699de4505c` over 18 files
 
 ## Build
 
@@ -13,7 +13,7 @@
 
 ## Axiom audit
 
-- Modules: 13  Theorems: 367  Clean (only propext/Classical.choice/Quot.sound): 367
+- Modules: 14  Theorems: 383  Clean (only propext/Classical.choice/Quot.sound): 383
 - Nonstandard: 0
 
 | Module | Theorems | Nonstandard |
@@ -26,6 +26,7 @@
 | `FrohmanianSymplecticTether.GlobalRegularity` | 11 | 0 |
 | `FrohmanianSymplecticTether.IndependentMajorant` | 2 | 0 |
 | `FrohmanianSymplecticTether.NS_Equations` | 143 | 0 |
+| `FrohmanianSymplecticTether.Stage6Calculus` | 16 | 0 |
 | `FrohmanianSymplecticTether.SymplecticTether` | 38 | 0 |
 | `FrohmanianSymplecticTether.TetheredLyapunov` | 45 | 0 |
 | `FrohmanianSymplecticTether.Uniqueness` | 16 | 0 |

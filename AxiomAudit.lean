@@ -89,3 +89,8 @@ open Lean Elab Command
 #print axioms FrohmanianSymplecticTether.FinalProductTheorem.nonzero_smooth_ns_solution_exists
 #print axioms FrohmanianSymplecticTether.FinalProductTheorem.near_field_stretching_absorbed_by_viscous_direction_damping
 #print axioms FrohmanianSymplecticTether.FinalProductTheorem.constantin_fefferman_near_far_cutoff_bridge
+
+#print axioms FrohmanianSymplecticTether.Stage6.polar_pythagoras_of_hasDerivAt
+#print axioms FrohmanianSymplecticTether.Stage6.bochner_leibniz_of_hasDerivAt
+#print axioms FrohmanianSymplecticTether.Stage6.shearU_heat
+#print axioms FrohmanianSymplecticTether.Stage6.shear_beltrami
