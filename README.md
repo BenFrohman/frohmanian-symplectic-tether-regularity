@@ -3,7 +3,7 @@
 **Author:** Benjamin Stanley Frohman ([ORCID: 0009-0006-7068-3718](https://orcid.org/0009-0006-7068-3718))  
 **Zenodo DOI (v1.1.0):** [`10.5281/zenodo.23717082`](https://doi.org/10.5281/zenodo.23717082) | **Concept DOI:** [`10.5281/zenodo.23652842`](https://doi.org/10.5281/zenodo.23652842) | **v1.0.0 DOI:** [`10.5281/zenodo.23652843`](https://doi.org/10.5281/zenodo.23652843)  
 **License:** Apache-2.0 (`Copyright (c) 2026 Benjamin Stanley Frohman`)  
-**Toolchain:** `leanprover/lean4:v4.30.0-rc1` + Mathlib 4 (`2702/2702` build jobs, **350 theorems across 13 modules**, **0 `sorry`**, **0 non-standard axioms**)  
+**Toolchain:** `leanprover/lean4:v4.30.0-rc1` + Mathlib 4 (`2702/2702` build jobs, **367 theorems across 13 modules**, **0 `sorry`**, **0 non-standard axioms**)  
 **Paper PDF:** [`Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.pdf`](Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.pdf)
 
 ---
@@ -27,11 +27,11 @@ $$\begin{aligned}
 
 ---
 
-## Exact Breakdown: Modules and Unconditionally Proved Theorems (`350 theorems`, `0 sorry`)
+## Exact Breakdown: Modules and Unconditionally Proved Theorems (`367 theorems`, `0 sorry`)
 
 | Module | Key Declarations | Status | Mathematical Content |
 |---|---|---|---|
-| `FinalProductTheorem.lean` | `frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem`, `kksSymplecticForm_skew`, `kksPointwise_cyclic_jacobi_identity`, `FrohmanianMetriplecticPairing_diag_eq_metric` | **PROVED (Unconditional, 9 theorems)** | Master 5-conjunct product theorem ($P_1 \wedge P_2 \wedge P_3 \wedge P_4 \wedge P_5$), KKS symplectic skew-symmetry and cyclic Jacobi identity, and exact metriplectic diagonal reduction. |
+| `FinalProductTheorem.lean` | `frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem`, `vorticity_sup_norm_eq_of_isSpatialMax`, `polar_pythagoras_3d_sum`, `bochner_laplacian_3d_identity`, `concrete_bochner_polar_viscous_damping_at_max`, `beltrami_casimir_projection_zero`, `nonzero_smooth_ns_solution_exists`, `near_field_stretching_absorbed_by_viscous_direction_damping`, `constantin_fefferman_near_far_cutoff_bridge` | **PROVED (Unconditional, 26 theorems)** | Master 5-conjunct product theorem ($P_1 \wedge P_2 \wedge P_3 \wedge P_4 \wedge P_5$), KKS symplectic skew-symmetry and cyclic Jacobi identity, Stage 2 `BddAbove`/`sSup` pinning, Stage 3 concrete 3D vector Bochner–polar identities, Stage 4 Beltrami Casimir projection vanishing & non-zero smooth NS flow inhabitation (`u_0 = c \neq 0`), and Stage 5 Constantin–Fefferman near/far cutoff bridge. |
 | `ForMathlib/Projection.lean` | `orthogonalProjectionOrthogonal`, idempotence, self-adjointness, kernel characterization | **PROVED (Unconditional, 7 theorems)** | Pointwise orthogonal projection $P_w^\perp v = v - \frac{\langle v,w\rangle}{\|w\|^2}w$ onto $w^\perp$. |
 | `ArnoldGeometric.lean` | `BiotSavart`, `KineticEnergyHamiltonian`, `classical_bracket_reproduces_Euler` | **PROVED (Unconditional, 43 theorems)** | Lie–Poisson bracket on $\mathrm{SDiff}(\mathbb{T}^3)^*$ and Biot–Savart Gâteaux derivative. |
 | `SymplecticTether.lean` | `CalderonZygmundConstant3D_eq_three_halves`, `kappa_pos`, `tether_preserves_casimirs`, `tetherPointwiseDensity_nonpos`, `tetherPointwiseDensity_strict_neg_of_noncasimir`, `tetherKernel_diagonal_nonpos`, `tetherKernel_strict_neg_of_orthogonal_component`, `tetherKernel_nondegenerate_on_casimir_defect` | **PROVED (Unconditional, 38 theorems)** | Construction of $\mathcal{K}_{\mathrm{FT}}$, exact Casimir conservation ($P_{\delta C}^\perp \omega = 0$), diagonal non-positivity, and **strict negativity on every non-Casimir transverse perturbation** $P_{\delta C}^\perp v \neq 0$ where $\omega \neq 0$. |
@@ -56,8 +56,8 @@ FrohmanianSymplecticTether.ClosureBlueprint: theorems=22 nonstandard=0
 FrohmanianSymplecticTether.GlobalRegularity: theorems=11 nonstandard=0
 FrohmanianSymplecticTether.ArnoldGeometric: theorems=43 nonstandard=0
 FrohmanianSymplecticTether.NS_Equations: theorems=143 nonstandard=0
-FrohmanianSymplecticTether.FinalProductTheorem: theorems=9 nonstandard=0
-TOTAL theorems=350 nonstandard=0
+FrohmanianSymplecticTether.FinalProductTheorem: theorems=26 nonstandard=0
+TOTAL theorems=367 nonstandard=0
 'FrohmanianSymplecticTether.FinalProductTheorem.frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 

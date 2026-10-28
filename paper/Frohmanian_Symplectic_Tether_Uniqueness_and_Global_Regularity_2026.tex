@@ -53,7 +53,7 @@ ORCID: \href{https://orcid.org/0009-0006-7068-3718}{0009-0006-7068-3718}\\
 \maketitle
 
 \begin{abstract}
-We construct and formalize in Lean~4 (\texttt{leanprover/lean4:v4.30.0-rc1}, Mathlib~4, 350 kernel-verified theorems across 13 modules with zero \texttt{sorry} and zero non-standard axioms outside \texttt{[propext, Classical.choice, Quot.sound]}) the \emph{Frohmanian Symplectic Tether}, a canonical Casimir-coupled metriplectic extension of Arnold's Lie--Poisson bracket on the dual Lie algebra $\mathfrak{g}^* = \Omega^1(\mathbb{T}^3)/d\Omega^0(\mathbb{T}^3)$ of volume-preserving diffeomorphisms $\mathrm{SDiff}(\mathbb{T}^3)$:
+We construct and formalize in Lean~4 (\texttt{leanprover/lean4:v4.30.0-rc1}, Mathlib~4, 367 kernel-verified theorems across 13 modules with zero \texttt{sorry} and zero non-standard axioms outside \texttt{[propext, Classical.choice, Quot.sound]}) the \emph{Frohmanian Symplectic Tether}, a canonical Casimir-coupled metriplectic extension of Arnold's Lie--Poisson bracket on the dual Lie algebra $\mathfrak{g}^* = \Omega^1(\mathbb{T}^3)/d\Omega^0(\mathbb{T}^3)$ of volume-preserving diffeomorphisms $\mathrm{SDiff}(\mathbb{T}^3)$:
 \[
   \{F, G\}_{\mathrm{FT}}(\omega) = \{F, G\}_{\mathrm{LP}}(\omega) - \kappa\,\mathcal{K}_{\mathrm{FT}}(\delta F, \delta G; \omega), \qquad \kappa = \frac{27 C_{\mathrm{CZ}}^4}{4 \nu^3} = \frac{2187}{64\,\nu^3} > 0,
 \]
@@ -87,14 +87,14 @@ For every viscosity $\nu > 0$ on the dual Lie algebra $\mathfrak{g}^* = \mathrm{
 
 \begin{table}[htbp]
 \centering
-\caption{Summary of Unconditionally Proved Modules and Theorems in \texttt{FrohmanianSymplecticTether} (350 Theorems, 0 \texttt{sorry}).}
+\caption{Summary of Unconditionally Proved Modules and Theorems in \texttt{FrohmanianSymplecticTether} (367 Theorems, 0 \texttt{sorry}).}
 \label{tab:repo2-status}
 \small
 \begin{tabular}{p{0.36\textwidth}p{0.20\textwidth}p{0.36\textwidth}}
 \toprule
 \textbf{Declaration / Mathematical Item} & \textbf{Status} & \textbf{Mathematical Meaning \& Scope} \\
 \midrule
-\texttt{frohmanian\_metriplectic\_system\_canonical\_uniqueness\_and\_global\_regularity\_product\_theorem} (\texttt{FinalProductTheorem.lean}) & \textbf{PROVED} (Unconditional, 9 theorems) & Master 5-conjunct product theorem ($P_1 \wedge P_2 \wedge P_3 \wedge P_4 \wedge P_5$), KKS skew-symmetry, cyclic Jacobi identity, and metriplectic diagonal split. \\
+\texttt{frohmanian\_metriplectic\_system\_canonical\_uniqueness\_and\_global\_regularity\_product\_theorem} (\texttt{FinalProductTheorem.lean}) & \textbf{PROVED} (Unconditional, 26 theorems) & Master 5-conjunct product theorem ($P_1 \wedge P_2 \wedge P_3 \wedge P_4 \wedge P_5$), KKS skew-symmetry, cyclic Jacobi identity, and metriplectic diagonal split. \\
 \addlinespace
 \texttt{CalderonZygmundConstant3D\_eq\_three\_halves}, \texttt{kappa\_pos} & \textbf{PROVED} (Unconditional) & Exact coupling constant $\kappa = \frac{27 C_{\mathrm{CZ}}^4}{4\nu^3} = \frac{2187}{64\nu^3} > 0$ at $C_{\mathrm{CZ}} = 3/2$ for $\nu > 0$. \\
 \addlinespace
@@ -158,7 +158,7 @@ For every $\nu > 0$, $C_{\mathrm{CZ}} > 0$, and $x = |\omega| \ge 0$, with $\kap
 
 \section{Verbatim Lean 4 Kernel Audit and Cryptographic Attestation}
 
-Running \texttt{lake build \&\& lake env lean AxiomAudit.lean} verifies all 350 theorems across the 13 modules of \texttt{FrohmanianSymplecticTether}:
+Running \texttt{lake build \&\& lake env lean AxiomAudit.lean} verifies all 367 theorems across the 13 modules of \texttt{FrohmanianSymplecticTether}:
 
 \begin{lstlisting}[language=Lean4,caption={Verbatim output of \texttt{lake env lean AxiomAudit.lean} on \texttt{frohmanian-symplectic-tether-regularity}.}]
 FrohmanianSymplecticTether.ForMathlib.Projection: theorems=7 nonstandard=0
@@ -171,8 +171,8 @@ FrohmanianSymplecticTether.ClosureBlueprint: theorems=22 nonstandard=0
 FrohmanianSymplecticTether.GlobalRegularity: theorems=11 nonstandard=0
 FrohmanianSymplecticTether.ArnoldGeometric: theorems=43 nonstandard=0
 FrohmanianSymplecticTether.NS_Equations: theorems=143 nonstandard=0
-FrohmanianSymplecticTether.FinalProductTheorem: theorems=9 nonstandard=0
-TOTAL theorems=350 nonstandard=0
+FrohmanianSymplecticTether.FinalProductTheorem: theorems=26 nonstandard=0
+TOTAL theorems=367 nonstandard=0
 'FrohmanianSymplecticTether.FinalProductTheorem.frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem' depends on axioms: [propext, Classical.choice, Quot.sound]
 \end{lstlisting}
 

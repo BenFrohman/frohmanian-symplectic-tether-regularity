@@ -9,7 +9,7 @@
     "path": "/workspace/frohmanian-symplectic-tether-regularity",
     "name": "frohmanian-symplectic-tether-regularity",
     "lean_toolchain": "leanprover/lean4:v4.30.0-rc1",
-    "git_head": "ad60fb8da437452ff8781b91e2ce864c53ed851d"
+    "git_head": "7eb4a1944cfc1d9a731ab31728bd07c4ad94d606"
   },
   "build": {
     "requested": false
@@ -19,8 +19,8 @@
     "exit_code": 0,
     "errors": [],
     "modules": 13,
-    "theorems": 350,
-    "clean_theorems": 350,
+    "theorems": 367,
+    "clean_theorems": 367,
     "nonstandard": [],
     "per_module": {
       "FrohmanianSymplecticTether.SymplecticTether": {
@@ -55,12 +55,12 @@
         "theorems": 7,
         "nonstandard": 0
       },
-      "FrohmanianSymplecticTether.GlobalRegularity": {
-        "theorems": 11,
+      "FrohmanianSymplecticTether.FinalProductTheorem": {
+        "theorems": 26,
         "nonstandard": 0
       },
-      "FrohmanianSymplecticTether.FinalProductTheorem": {
-        "theorems": 9,
+      "FrohmanianSymplecticTether.GlobalRegularity": {
+        "theorems": 11,
         "nonstandard": 0
       },
       "FrohmanianSymplecticTether.IndependentMajorant": {
@@ -118,12 +118,12 @@
     }
   },
   "tree": {
-    "sha256": "f4ad708229a59a0b7ddf6066a4636ee688bdf38acc1b9f4ec908cb1d115cee2f",
+    "sha256": "f1af7f4fc4eccfe9fa6f76ae008970cbab8373a2d0db3971dd6131b413c6eae3",
     "files": 17,
     "entries": [
       {
         "path": "AxiomAudit.lean",
-        "sha256": "a3a2411b488b8f46819742407de9a639efec31bbb28512a73a20efae7b1a6262"
+        "sha256": "88b34165d1860c8d430026901c15ff24459c01eeaad179cdee6f906db02669bc"
       },
       {
         "path": "FrohmanianSymplecticTether.lean",
@@ -147,7 +147,7 @@
       },
       {
         "path": "FrohmanianSymplecticTether/FinalProductTheorem.lean",
-        "sha256": "28cb8f0a3d52a53102a9f52a77d997f483a4c895a4404ceae70a65e4e237806f"
+        "sha256": "19876cbe885fe007817f3b48d71e4cf520a67a575cee6ce9e4d6d9188b3d4a70"
       },
       {
         "path": "FrohmanianSymplecticTether/ForMathlib/Projection.lean",
@@ -197,11 +197,11 @@
     "reasons": [],
     "vacuity_warnings_in_build": 5
   },
-  "generated_at_utc": "2026-10-28T00:51:01+00:00",
+  "generated_at_utc": "2026-10-28T22:04:33+00:00",
   "signature": {
     "alg": "ed25519",
     "public_key_b64": "ZOyujV1yUEldQRZEDhmXCHa4ikWGfcTD+meZYssNLpo=",
     "payload": "canonical JSON of report without 'signature' (sort_keys, compact, UTF-8)",
-    "value_b64": "Hy9k1oFIuE40B7nsAgaFwEf34xAhynloZVavEFJ36/OC7C3NuQbkvpb2EQ0rIRw9IpJYYeANfffPLlbQFptMBw=="
+    "value_b64": "epgI2JPW86WJo4IW8i2nT5vU2ZMIAIvyND1aL+ysk9kBxlQzbQ5eTnTjVLspOk9zubZ5LjnBJOpT6eAM41rrCw=="
   }
 }
