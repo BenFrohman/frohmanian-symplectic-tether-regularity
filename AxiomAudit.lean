@@ -94,3 +94,7 @@ open Lean Elab Command
 #print axioms FrohmanianSymplecticTether.Stage6.bochner_leibniz_of_hasDerivAt
 #print axioms FrohmanianSymplecticTether.Stage6.shearU_heat
 #print axioms FrohmanianSymplecticTether.Stage6.shear_beltrami
+#print axioms FrohmanianSymplecticTether.Stage6.inner_eq_zero_of_hasDerivAt_of_norm_eq_one
+#print axioms FrohmanianSymplecticTether.Stage6.norm_polar_deriv_sq_eq_of_hasDerivAt
+#print axioms FrohmanianSymplecticTether.Stage6.hasDerivAt_inner_self_deriv_of_hasDerivAt
+#print axioms FrohmanianSymplecticTether.Stage6.isShearBeltramiMode
