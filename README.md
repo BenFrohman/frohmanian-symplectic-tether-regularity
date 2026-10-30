@@ -21,7 +21,7 @@
 
 ## What Is Proved (`FinalProductTheorem.lean`, status as of 2026-10-30)
 
-The theorem `frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem` proves `P₁ ∧ P₂ ∧ P₃ ∧ P₄ ∧ P₅` with `0 sorry` and only the standard axioms `[propext, Classical.choice, Quot.sound]`. None of the five conjuncts takes a hypothesis. Each one says exactly the following.
+The theorem `frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem` proves `P₁ ∧ P₂ ∧ P₃ ∧ P₄` with `0 sorry` and only the standard axioms `[propext, Classical.choice, Quot.sound]`. None of the four conjuncts takes a hypothesis. Each one says exactly the following.
 
 **P₁ (uniqueness of the tether kernel).** Among bilinear corrections that satisfy coadjoint invariance, kinetic-energy degeneracy, controllable negative feedback, quadratic saturation and polarization, the minimal tether kernel with density $\alpha(\omega)=-\kappa\|\omega\|^2$ is the only one. It is homogeneous of degree 2 under $\omega\mapsto c\,\omega$.
 
@@ -30,13 +30,6 @@ The theorem `frohmanian_metriplectic_system_canonical_uniqueness_and_global_regu
 **P₃ (Young absorption).** With $\varepsilon=\kappa/4$, the quartic stretching term is absorbed by $-\kappa I_6$, which leaves $-\tfrac34\kappa I_6$. At an attained spatial maximum of $\|\omega\|$, the 3D polar Pythagoras / Bochner identity and the near/far Biot–Savart cutoff algebra absorb near-field stretching into the viscous term $-\nu M^2\|\nabla\xi\|^2$. These are algebraic and pointwise facts. They do not bound any solution of a PDE.
 
 **P₄ (ODE ceiling).** Every differentiable $y$ on $[0,\infty)$ with $y'\le Cy^2-\kappa''y^3$ ($C,\kappa''>0$) satisfies $y(t)\le\max(y(0),C/\kappa'')$. This is a fact about real functions. That the vorticity of an actual flow obeys this inequality is not proved.
-
-**P₅ (admissibility and trivial-data solutions of plain Navier–Stokes).** P₅ is about the plain equations `navier_stokes_eq`, with no tether term, and contains exactly three facts:
-1. The time-step field is not an `IsPhysicalNSSolution` (`stepField_not_physical`).
-2. For each $\nu>0$, zero data gives the zero solution, and it is the only admissible smooth solution with zero data (`global_regularity_for_NS_nonvacuous_at_zero`).
-3. For every constant $c\neq0$, $u\equiv c$ with $p\equiv0$ is a smooth solution (`nonzero_smooth_ns_solution_exists`).
-
-P₅ does not assert global regularity for general data. The Lean name `P5_TetheredGlobalRegularityAndNonVacuity` is kept unchanged so downstream references still build.
 
 **Global regularity for general data is conditional.** `global_regularity_for_NS` (`GlobalRegularity.lean`, and in the same form in `ClosureBlueprint.lean`) proves that a smooth, divergence-free, finite-energy $u_0$ with $\nu>0$ has a global smooth solution, unique among admissible smooth solutions. It takes four hypotheses:
 - `w : KatoLocalWitness`, a local-existence witness.
@@ -52,7 +45,7 @@ These hypotheses are discharged only at $u_0\equiv0$. Nothing in this repository
 
 | Module | Key Declarations | Status | Mathematical Content |
 |---|---|---|---|
-| `FinalProductTheorem.lean` | `frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem`, `vorticity_sup_norm_eq_of_isSpatialMax`, `polar_pythagoras_3d_sum`, `bochner_laplacian_3d_identity`, `concrete_bochner_polar_viscous_damping_at_max`, `beltrami_casimir_projection_zero`, `nonzero_smooth_ns_solution_exists`, `near_field_stretching_absorbed_by_viscous_direction_damping`, `constantin_fefferman_near_far_cutoff_bridge` | **PROVED (Unconditional, 26 theorems)** | Master 5-conjunct product theorem ($P_1 \wedge P_2 \wedge P_3 \wedge P_4 \wedge P_5$; P₅ covers admissibility and trivial data only), KKS skew-symmetry and cyclic Jacobi identity for the classical part, Stage 2 `BddAbove`/`sSup` pinning, Stage 3 concrete 3D vector Bochner–polar identities, Stage 4 Beltrami Casimir projection vanishing & non-zero smooth NS flow inhabitation (`u_0 = c \neq 0`), and Stage 5 Constantin–Fefferman near/far cutoff bridge. |
+| `FinalProductTheorem.lean` | `frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem`, `vorticity_sup_norm_eq_of_isSpatialMax`, `polar_pythagoras_3d_sum`, `bochner_laplacian_3d_identity`, `concrete_bochner_polar_viscous_damping_at_max`, `beltrami_casimir_projection_zero`, `nonzero_smooth_ns_solution_exists`, `near_field_stretching_absorbed_by_viscous_direction_damping`, `constantin_fefferman_near_far_cutoff_bridge` | **PROVED (Unconditional, 26 theorems)** | Master 4-conjunct product theorem ($P_1 \wedge P_2 \wedge P_3 \wedge P_4$), KKS skew-symmetry and cyclic Jacobi identity for the classical part, Stage 2 `BddAbove`/`sSup` pinning, Stage 3 concrete 3D vector Bochner–polar identities, Stage 4 Beltrami Casimir projection vanishing & non-zero smooth NS flow inhabitation (`u_0 = c \neq 0`), and Stage 5 Constantin–Fefferman near/far cutoff bridge. |
 | `ForMathlib/Projection.lean` | `orthogonalProjectionOrthogonal`, idempotence, self-adjointness, kernel characterization | **PROVED (Unconditional, 7 theorems)** | Pointwise orthogonal projection $P_w^\perp v = v - \frac{\langle v,w\rangle}{\|w\|^2}w$ onto $w^\perp$. |
 | `ArnoldGeometric.lean` | `BiotSavart`, `KineticEnergyHamiltonian`, `classical_bracket_reproduces_Euler` | **PROVED (Unconditional, 43 theorems)** | Lie–Poisson bracket on $\mathrm{SDiff}(\mathbb{T}^3)^*$ and Biot–Savart Gâteaux derivative. |
 | `SymplecticTether.lean` | `CalderonZygmundConstant3D_eq_three_halves`, `kappa_pos`, `tether_preserves_casimirs`, `tetherPointwiseDensity_nonpos`, `tetherPointwiseDensity_strict_neg_of_noncasimir`, `tetherKernel_diagonal_nonpos`, `tetherKernel_strict_neg_of_orthogonal_component`, `tetherKernel_nondegenerate_on_casimir_defect` | **PROVED (Unconditional, 38 theorems)** | Construction of $\mathcal{K}_{\mathrm{FT}}$, exact Casimir conservation ($P_{\delta C}^\perp \omega = 0$), diagonal non-positivity, and **strict negativity on every non-Casimir transverse perturbation** $P_{\delta C}^\perp v \neq 0$ where $\omega \neq 0$. |

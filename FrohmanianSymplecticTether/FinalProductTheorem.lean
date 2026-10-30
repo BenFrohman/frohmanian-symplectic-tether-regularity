@@ -23,7 +23,7 @@ open TetheredLyapunov GlobalRegularity ClosureBlueprint
 
 ## Single-Sentence Final Product Form (English Prose)
 
-For the three-dimensional incompressible Frohmanian tethered/metriplectic system on $\mathbb{T}^3$ with kinematic viscosity $\nu > 0$ and canonical tether coefficient $\kappa = C_{\mathrm{CZ}}(3) = 3/2 > 0$, the five-conjunct product theorem $P_1 \wedge P_2 \wedge P_3 \wedge P_4 \wedge P_5$ holds unconditionally: $(P_1)$ among all bilinear corrections $B(\omega)(F,G)$ on $\mathrm{SDiff}(\mathbb{T}^3)^*$ satisfying coadjoint invariance (C1), kinetic-energy degeneracy (C2), controllable negative feedback (C3), quadratic saturation, and polarization—or represented by the canonical density $\alpha_{\mathrm{can}}(\omega,x) = -\kappa\|\omega(x)\|^2$—the minimal Frohmanian tether kernel $B = \mathrm{TetherKernel}$ is uniquely forced and homogeneous of quadratic degree $c^2$ under vorticity rescaling $\omega \mapsto c\omega$ with zero higher-order ($d \ge 3$) remainder; $(P_2)$ the full metriplectic pairing $\mathfrak{T}_F = \omega_{\mathrm{KKS}} + \mathrm{TetherKernel}$ decomposes into the skew-symmetric Kirillov–Kostant–Souriau 2-form satisfying the cyclic Jacobi identity and the symmetric negative-semidefinite tether metric form over the $L^2$-orthogonal projection $\Pi_u$, which reproduces classical Euler dynamics on the kinetic-energy Hamiltonian ($\Pi_u u = 0$) and on every collinear Beltrami eigenmode ($\Pi_u(\lambda u) = 0$, $u \times (\lambda u) = 0$), while enforcing strict pointwise transverse damping $-\kappa\|\omega(x)\|^2\|\Pi_u(\delta F/\delta\omega)(x)\|^2 < 0$ whenever $\omega(x) \neq 0$ and $\Pi_u(\delta F/\delta\omega)(x) \neq 0$; $(P_3)$ Young absorption at the canonical threshold $\varepsilon_{\mathrm{abs}} = \kappa/4$ eliminates the quartic vortex-stretching factor $4 C_{\mathrm{CZ}} M I_4$ against $-\kappa I_6$ to leave the net coercive hyper-dissipation $-(3/4)\kappa I_6$, while at any attained spatial maximum $M = \|\omega(x_{\max})\|$ the concrete 3D Bochner–Weitzenböck polar Pythagoras identity and Constantin–Fefferman near/far Biot–Savart cutoff bridge absorb near-field stretching into viscous direction-curvature damping $-\nu M^2\|\nabla\xi\|^2$; $(P_4)$ every differentiable vorticity envelope $y(t)$ governed by the resulting cubic Riccati differential inequality $y'(t) \le C y(t)^2 - \kappa'' y(t)^3$ ($C, \kappa'' > 0$) obeys the uniform global ceiling $y(t) \le \max(y(0), C/\kappa'')$ for all $t \ge 0$; and $(P_5)$ the physical solution class $\mathrm{IsPhysicalNSSolution}$ excludes discontinuous parasitic step fields (`stepField_not_physical`), is unconditionally non-vacuous at quiescent initial data (`global_regularity_for_NS_nonvacuous_at_zero`), and admits strictly non-zero smooth divergence-free solutions $u_c(t,x) = c \neq 0$ for every $c \in \mathbb{R}^3 \setminus \{0\}$ (`nonzero_smooth_ns_solution_exists`).
+For the three-dimensional incompressible Frohmanian tethered/metriplectic system on $\mathbb{T}^3$ with kinematic viscosity $\nu > 0$ and canonical tether coefficient $\kappa = C_{\mathrm{CZ}}(3) = 3/2 > 0$, the four-conjunct product theorem $P_1 \wedge P_2 \wedge P_3 \wedge P_4$ holds unconditionally: $(P_1)$ among all bilinear corrections $B(\omega)(F,G)$ on $\mathrm{SDiff}(\mathbb{T}^3)^*$ satisfying coadjoint invariance (C1), kinetic-energy degeneracy (C2), controllable negative feedback (C3), quadratic saturation, and polarization—or represented by the canonical density $\alpha_{\mathrm{can}}(\omega,x) = -\kappa\|\omega(x)\|^2$—the minimal Frohmanian tether kernel $B = \mathrm{TetherKernel}$ is uniquely forced and homogeneous of quadratic degree $c^2$ under vorticity rescaling $\omega \mapsto c\omega$ with zero higher-order ($d \ge 3$) remainder; $(P_2)$ the full metriplectic pairing $\mathfrak{T}_F = \omega_{\mathrm{KKS}} + \mathrm{TetherKernel}$ decomposes into the skew-symmetric Kirillov–Kostant–Souriau 2-form satisfying the cyclic Jacobi identity and the symmetric negative-semidefinite tether metric form over the $L^2$-orthogonal projection $\Pi_u$, which reproduces classical Euler dynamics on the kinetic-energy Hamiltonian ($\Pi_u u = 0$) and on every collinear Beltrami eigenmode ($\Pi_u(\lambda u) = 0$, $u \times (\lambda u) = 0$), while enforcing strict pointwise transverse damping $-\kappa\|\omega(x)\|^2\|\Pi_u(\delta F/\delta\omega)(x)\|^2 < 0$ whenever $\omega(x) \neq 0$ and $\Pi_u(\delta F/\delta\omega)(x) \neq 0$; $(P_3)$ Young absorption at the canonical threshold $\varepsilon_{\mathrm{abs}} = \kappa/4$ eliminates the quartic vortex-stretching factor $4 C_{\mathrm{CZ}} M I_4$ against $-\kappa I_6$ to leave the net coercive hyper-dissipation $-(3/4)\kappa I_6$, while at any attained spatial maximum $M = \|\omega(x_{\max})\|$ the concrete 3D Bochner–Weitzenböck polar Pythagoras identity and Constantin–Fefferman near/far Biot–Savart cutoff bridge absorb near-field stretching into viscous direction-curvature damping $-\nu M^2\|\nabla\xi\|^2$; and $(P_4)$ every differentiable vorticity envelope $y(t)$ governed by the resulting cubic Riccati differential inequality $y'(t) \le C y(t)^2 - \kappa'' y(t)^3$ ($C, \kappa'' > 0$) obeys the uniform global ceiling $y(t) \le \max(y(0), C/\kappa'')$ for all $t \ge 0$.
 -/
 
 namespace FrohmanianSymplecticTether.FinalProductTheorem
@@ -399,7 +399,7 @@ public theorem constantin_fefferman_near_far_cutoff_bridge
               show (ν / 2) * G ^ 2 * M ^ 2 = (ν / 2) * M ^ 2 * G ^ 2 by ring]
   linarith
 
-/-! ## Section 3. The Five Components $P_1, P_2, P_3, P_4, P_5$ and the Master Product Theorem -/
+/-! ## Section 3. The Four Components $P_1, P_2, P_3, P_4$ and the Master Product Theorem -/
 
 /-- **Component $P_1$ (Canonical 5-Step Uniqueness & Quadratic Degree on $\mathrm{SDiff}(\mathbb{T}^3)^*$):**
 Every bilinear correction $B$ satisfying C1–C3, quadratic saturation, and polarization (under either antisymmetry or
@@ -514,45 +514,16 @@ $y(t) \le \max(y(0), C / \kappa'')$ for all $t \ge 0$. -/
       (∀ s ≥ (0 : ℝ), deriv y s ≤ C * (y s) ^ 2 - κ'' * (y s) ^ 3) →
       ∀ (t : ℝ), 0 ≤ t → y t ≤ max (y 0) (C / κ'')
 
-/-- **Component $P_5$ (Step-Field Exclusion, Quiescent Non-Vacuity, and Non-Zero Smooth Solution Inhabitation):**
-The physical solution class `IsPhysicalNSSolution` excludes discontinuous step fields (`¬ IsPhysicalNSSolution stepField`),
-for every $\nu > 0$ all hypotheses of `global_regularity_for_NS` are jointly satisfied at quiescent initial data $u_0 \equiv 0$,
-and for every non-zero vector $c \in \mathbb{R}^3 \setminus \{0\}$ there exists a strictly non-zero smooth solution $(u_c, 0)$
-with $u_c(0) \neq 0$ satisfying `navier_stokes_eq u_c 0 ν` on $[0, \infty)$.
-
-**Scope (2026-10-30):** despite the name, this conjunct does NOT assert global regularity for general
-data. It covers admissibility and trivial-data non-vacuity only. The general `global_regularity_for_NS` is
-conditional on `KatoLocalWitness`, `FrohmanianTetherBound`, `hrestart` and `huniq`, and is not part of P5. -/
-@[expose] public def P5_TetheredGlobalRegularityAndNonVacuity : Prop :=
-  (¬ IsPhysicalNSSolution stepField) ∧
-  (∀ (ν : ℝ), 0 < ν →
-    ∃ (u : TimeDependentVelocity),
-      (∀ t ≥ (0 : ℝ), IsSmooth (u t)) ∧
-      (u 0 = 0) ∧
-      (∀ t ≥ (0 : ℝ), satisfies_NavierStokes u ν) ∧
-      (∀ t ≥ (0 : ℝ), GlobalRegularity.vorticity_sup_norm (vorticity (u t)) ≥ 0) ∧
-      (∀ v : TimeDependentVelocity,
-        (∀ t ≥ (0 : ℝ), IsSmooth (v t)) →
-        v 0 = 0 →
-        (∀ t ≥ (0 : ℝ), satisfies_NavierStokes v ν) →
-        ∀ t ≥ (0 : ℝ), v t = u t)) ∧
-  (∀ (ν : ℝ) (c : T3), c ≠ 0 →
-    ∃ (u : TimeDependentVelocity) (p : TimeDependentPressure),
-      u 0 ≠ 0 ∧
-      (∀ t ≥ (0 : ℝ), IsSmooth (u t)) ∧
-      navier_stokes_eq u p ν)
-
 /-- **Master Single-Sentence Product Theorem (`frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem`):**
-Unconditional proof of the complete five-conjunct product statement
-$$P_1 \wedge P_2 \wedge P_3 \wedge P_4 \wedge P_5$$
+Unconditional proof of the four-conjunct product statement
+$$P_1 \wedge P_2 \wedge P_3 \wedge P_4$$
 for the Frohmanian tethered / metriplectic system on $\mathbb{T}^3$. -/
 public theorem frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem :
     P1_CanonicalFiveStepUniqueness ∧
     P2_MetriplecticSplitAndCasimirDamping ∧
     P3_QuarticYoungAbsorption ∧
-    P4_UnconditionalLyapunovCeiling ∧
-    P5_TetheredGlobalRegularityAndNonVacuity := by
-  refine ⟨?_, ?_, ?_, ?_, ?_⟩
+    P4_UnconditionalLyapunovCeiling := by
+  refine ⟨?_, ?_, ?_, ?_⟩
   · -- P1: 5-step canonical uniqueness and quadratic degree
     exact ⟨uniqueness_of_minimal_tether,
       uniqueness_of_minimal_symmetric_tether,
@@ -572,10 +543,6 @@ public theorem frohmanian_metriplectic_system_canonical_uniqueness_and_global_re
       constantin_fefferman_near_far_cutoff_bridge⟩
   · -- P4: Unconditional cubic Lyapunov ODE ceiling
     exact AnalyticPipeline.comparison_ode_stability
-  · -- P5: Step-field exclusion, quiescent non-vacuity, and strictly non-zero smooth solution inhabitation
-    exact ⟨stepField_not_physical,
-      global_regularity_for_NS_nonvacuous_at_zero,
-      nonzero_smooth_ns_solution_exists⟩
 
 end -- noncomputable section
 
