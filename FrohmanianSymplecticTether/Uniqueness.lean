@@ -392,12 +392,12 @@ public theorem step2_degree_of_ne_zero
   step2_degree F G ω c hFD_F hFD_G (hPi_of_ne_zero ω c hc)
 
 /-- Minimality: the correction saturates the C3 quadratic form of `TetherKernel`. -/
-public def SaturatesTetherQuadratic (kappa : ℝ)
+@[expose] public def SaturatesTetherQuadratic (kappa : ℝ)
     (B : CoadjointOrbit → Functional → Functional → ℝ) : Prop :=
   ∀ (F : Functional) (ω : CoadjointOrbit), B ω F F = TetherKernel kappa ω F F
 
 /-- Polarization identity on functionals (`F+G` is pointwise addition). -/
-public def Polarizes
+@[expose] public def Polarizes
     (B : CoadjointOrbit → Functional → Functional → ℝ) : Prop :=
   ∀ (ω : CoadjointOrbit) (F G : Functional),
     2 * B ω F G =

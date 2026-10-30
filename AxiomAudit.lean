@@ -100,3 +100,5 @@ open Lean Elab Command
 #print axioms FrohmanianSymplecticTether.Stage6.isShearBeltramiMode
 #print axioms ForMathlib.Pi_u_ae_eq_PiL2
 #print axioms ForMathlib.lerayL2_fixes_test
+#print axioms FrohmanianTether.c1_c3_not_unique
+#print axioms FrohmanianTether.uniqueness_of_two_sided_feedback
