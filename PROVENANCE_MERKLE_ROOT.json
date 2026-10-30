@@ -8,15 +8,15 @@
     "sealguard_doi": "10.5281/zenodo.23631670",
     "sentinel_gate_doi": "10.5281/zenodo.23632766"
   },
-  "merkle_root_sha256": "d3cada0c4dcd2aa071d30e87857cacded67d4bb5b520030e574730bf1a0be24d",
+  "merkle_root_sha256": "a7902b68a8995d272cf58ad39501465b54464c01a21565f5f89d009af2d15db4",
   "sentinel_gate_receipt": {
     "engine": "Sentinel Gate v1.0.0 (DOI: 10.5281/zenodo.23632766)",
     "author": "Benjamin Stanley Frohman (ORCID: 0009-0006-7068-3718)",
     "action_type": "seal_and_attest_public_release",
-    "action_id": "d3cada0c4dcd2aa071d30e87857cacded67d4bb5b520030e574730bf1a0be24d",
+    "action_id": "a7902b68a8995d272cf58ad39501465b54464c01a21565f5f89d009af2d15db4",
     "permitted": true,
     "reason": "PERMITTED_DETERMINISTIC_POLICY",
-    "receipt_sha256": "1b63b568a6ad9a099df5ea6a3f1e993c12d834cb5bb53e5d2e8af242d71c3a95"
+    "receipt_sha256": "fee30acfd8e3dae3026fbd85d1fbc2f66c549f142872a9ab9c7465aa28beaaad"
   },
   "files": {
     ".gitignore": {
@@ -28,72 +28,100 @@
       "bytes": 3384
     },
     "AxiomAudit.lean": {
-      "sha256": "0a64210391d1322ce94b5f07dc19d1b9b8cad0d50bd1e8fc2f09bb31c12aa399",
-      "bytes": 6128
+      "sha256": "9c7fd8a74734159ed469f185faf162395f1207d7e11b8fb5233c12dcda10169c",
+      "bytes": 8685
     },
     "CITATION.cff": {
       "sha256": "339019b24fbeeec84c090ccb63c5f4c4435fdfd378abbde7b6c74cf97a480f26",
       "bytes": 947
     },
     "FrohmanianSymplecticTether/AnalyticPipeline.lean": {
-      "sha256": "3431efefad27f8ec00bc5f82dda9fc3c99de907d1965d8ba607bc88295cb3933",
-      "bytes": 21621
+      "sha256": "52339f5a08e2e9ffeb65389a9e4bfe9eb9f99fd6bd9afd55b658fd2f807b2a23",
+      "bytes": 21628
     },
     "FrohmanianSymplecticTether/ArnoldGeometric.lean": {
       "sha256": "5df575b2d095c29511613f44a5b24a3310ada142c0277a246f133f6f93d94a39",
       "bytes": 50408
     },
     "FrohmanianSymplecticTether/Assumptions.lean": {
-      "sha256": "8454901330d46a6fa47c7e2ea25aa3f72f9d8fe0f6b392d3d0fdfeae7c678218",
-      "bytes": 5613
+      "sha256": "4fae76f73f49c355b741c8c5d0ec1fead50eeda2fde2f09b60f4ac61a98ac5f7",
+      "bytes": 4316
+    },
+    "FrohmanianSymplecticTether/C2Analysis.lean": {
+      "sha256": "ef84997e20c935e944a35c8bff471db0c5e98815f8ff4999d2c74f1d6e003680",
+      "bytes": 8860
     },
     "FrohmanianSymplecticTether/ClosureBlueprint.lean": {
-      "sha256": "a562e9509471e9474b0c24e8d7a909736d9757431b07ca3376289830de3a0c89",
-      "bytes": 18975
+      "sha256": "0736fc388d7fee5aa633ef71ce29878ce58a8b9de91a540520c555aea3c70589",
+      "bytes": 19104
+    },
+    "FrohmanianSymplecticTether/FieldMetriplectic.lean": {
+      "sha256": "31334d62e6b906aa1cc3f57bfe9ccf77897be5db8d7c7b596e0e128bc4d806f0",
+      "bytes": 24532
     },
     "FrohmanianSymplecticTether/FinalProductTheorem.lean": {
-      "sha256": "19876cbe885fe007817f3b48d71e4cf520a67a575cee6ce9e4d6d9188b3d4a70",
-      "bytes": 35158
+      "sha256": "755059f0cccea620d09a0bf868e32e8e8ea43fa033a1321e2e9196bedd85e86c",
+      "bytes": 33639
+    },
+    "FrohmanianSymplecticTether/ForMathlib/LeibnizGaussian.lean": {
+      "sha256": "0f0e565faadf7127f824a7e4a48727c64c8556143fc8158fb6dafc6a14a98b6c",
+      "bytes": 2449
+    },
+    "FrohmanianSymplecticTether/ForMathlib/Leray.lean": {
+      "sha256": "9d9da21b2ce277b9183f2691e4a05707ffdfab5ff5ef4e666f9118c9a694e885",
+      "bytes": 2988
+    },
+    "FrohmanianSymplecticTether/ForMathlib/PiUL2.lean": {
+      "sha256": "9ac649a94b216275702827891b77341ecba6617876751fadbb56185d9a4ae0b0",
+      "bytes": 3416
     },
     "FrohmanianSymplecticTether/ForMathlib/Projection.lean": {
       "sha256": "3a6f6ee37d92f9605924bdec5499abc02629591486bda9b67ef3948507e5a2da",
       "bytes": 6063
     },
     "FrohmanianSymplecticTether/GlobalRegularity.lean": {
-      "sha256": "2bd7900a0a59c6c124cc5563a5566bc49ffca7517cfb7f5988a5841cabfa4010",
-      "bytes": 29457
+      "sha256": "f75da2fc6999e15044f47c891cf695bdb051885d8cd2748e23c7234a0b117e8d",
+      "bytes": 29100
     },
     "FrohmanianSymplecticTether/IndependentMajorant.lean": {
       "sha256": "60292e0a31aaee10a00f6490c62f229ee0b05e6742f2dab90e32d001d7ef37d2",
       "bytes": 1660
     },
     "FrohmanianSymplecticTether/NS_Equations.lean": {
-      "sha256": "820b4d09f47fc887dbb6fa9b0bc077640b31f18b31488f25535a386c4bef3d96",
-      "bytes": 173087
+      "sha256": "dff90dd951aee477ddc23ff6e980bb883b381f7433acef2105cf4d3b9c63bc0d",
+      "bytes": 173801
     },
     "FrohmanianSymplecticTether/Stage6Calculus.lean": {
       "sha256": "46cad8eee93350c540ff1ad749d98c262fd56ab57d251f725b89e65f04dd5c13",
       "bytes": 11660
     },
     "FrohmanianSymplecticTether/SymplecticTether.lean": {
-      "sha256": "e622a1a63fdee5b4c423fcfc17d7113db66eb3cced7b77bbbc791e57cd6eb2e8",
-      "bytes": 71316
+      "sha256": "09e7d319b089fba31b2fa4d6161ce8dfce163afb0845841f7f569d750a0d322e",
+      "bytes": 72490
     },
     "FrohmanianSymplecticTether/TetheredLyapunov.lean": {
-      "sha256": "7b90d875201aa8c67626277ce936fbe2217576ed34d86ef50f995dda5fb627b2",
-      "bytes": 116119
+      "sha256": "d302e731c59f9e95cc28b9640edcadb431425661c9ae5996b44674273855a6da",
+      "bytes": 124298
     },
     "FrohmanianSymplecticTether/Uniqueness.lean": {
-      "sha256": "42b839471b749172c7aa41aceea7f8742b153cc526e2e1c99ef3f8b5aea88141",
-      "bytes": 21577
+      "sha256": "f404029e66aa36f652111efe67aa45b7a985b0e9d462e14a6d6bb7426fccdec4",
+      "bytes": 23020
+    },
+    "FrohmanianSymplecticTether/UniquenessC123.lean": {
+      "sha256": "1a359df40a1964c1d99c3c1fe1668fd5917e69ef9b22b1211a00d299c0308c60",
+      "bytes": 7379
+    },
+    "FrohmanianSymplecticTether/VelocityTether.lean": {
+      "sha256": "d85f7aa144cfc83a1cbf5c0fd9e9c910b6d74998e2ca993fa7505a7709df4bfb",
+      "bytes": 19980
     },
     "FrohmanianSymplecticTether.lean": {
-      "sha256": "10cef00e27a53ea8235c93867e8c8abc9c66c7d2f6bc3d328c5477a57776cc8b",
-      "bytes": 753
+      "sha256": "2dc9a73c8af259b966449c6013ccc3970e641290990ba1b325c6de3323329429",
+      "bytes": 1160
     },
     "Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.pdf": {
-      "sha256": "e5f99a85dcdf5c67676ab7f1e5c4eb8a1502cc0b135575d0772ee0081fa9f22d",
-      "bytes": 117095
+      "sha256": "689147db3db170a84aba6d0035eb4c9b52ef82318bc638b9a14c41c06c59b5f2",
+      "bytes": 122036
     },
     "LICENSE": {
       "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
@@ -104,32 +132,28 @@
       "bytes": 431
     },
     "README.md": {
-      "sha256": "81d42528262f88fb181857b7e00867f13d24d53a722c67e2b099280cd4e0f611",
-      "bytes": 16205
+      "sha256": "e16313a226d57722b426a00c68c43505784cec94db6321abdd570a78f4aa8d1f",
+      "bytes": 24652
     },
     "audit/TITAN_AUDIT_CERTIFICATE.json": {
-      "sha256": "97917dce39b64244039533df60c95adcfd2c60ae90d301dd182fe0df8fe9a5c4",
-      "bytes": 7515
+      "sha256": "9c22bddb67aca5f878d25688de909cf98caefdd456b21e4a0e4691cca3b20e80",
+      "bytes": 9500
     },
     "audit/TITAN_AUDIT_REPORT.md": {
-      "sha256": "f930822ed4cd811fd64ab99ec9ae58cd6726257ce8b5893a091bc1203d7ef17f",
-      "bytes": 2721
+      "sha256": "5d979dca4e3d259556ca1ba749478864cafbe9d39f2f1fe5ea44df8bf88f92e0",
+      "bytes": 3133
     },
     "audit/report.json": {
-      "sha256": "97917dce39b64244039533df60c95adcfd2c60ae90d301dd182fe0df8fe9a5c4",
-      "bytes": 7515
+      "sha256": "9c22bddb67aca5f878d25688de909cf98caefdd456b21e4a0e4691cca3b20e80",
+      "bytes": 9500
     },
     "audit/report.md": {
-      "sha256": "f930822ed4cd811fd64ab99ec9ae58cd6726257ce8b5893a091bc1203d7ef17f",
-      "bytes": 2721
+      "sha256": "5d979dca4e3d259556ca1ba749478864cafbe9d39f2f1fe5ea44df8bf88f92e0",
+      "bytes": 3133
     },
     "ci/titan-audit-and-sealguard.yml": {
       "sha256": "bff40a3f4424a15e7cc2b9ac5c51e9c3d6bef914ef3e1f421ce73fa167e11124",
       "bytes": 508
-    },
-    "frohmanian-symplectic-tether-regularity.bundle": {
-      "sha256": "f3f0c841d5a35d5581bad8d4f9c07dbeb7bd035b2b047dabad9fe645964a1a75",
-      "bytes": 34633
     },
     "ip_pipeline/seal_and_verify.py": {
       "sha256": "77864093021cdf5a80124ac294842fd09bdd8b9adc5a54af329db0c290ffa6e6",
@@ -148,12 +172,12 @@
       "bytes": 29
     },
     "paper/Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.pdf": {
-      "sha256": "e5f99a85dcdf5c67676ab7f1e5c4eb8a1502cc0b135575d0772ee0081fa9f22d",
-      "bytes": 117095
+      "sha256": "689147db3db170a84aba6d0035eb4c9b52ef82318bc638b9a14c41c06c59b5f2",
+      "bytes": 122036
     },
     "paper/Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.tex": {
-      "sha256": "3a9a14b1b20f7a7d73a827be25709dcaace254fd7e1d568583f5cf7a3bf875ef",
-      "bytes": 18557
+      "sha256": "a81e123a03e1d104461f5c77557fbdf4beab83a4e240e844cdb0897ba77c0470",
+      "bytes": 21061
     }
   }
 }

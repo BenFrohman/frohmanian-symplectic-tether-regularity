@@ -6,10 +6,10 @@
     "doi": "10.5281/zenodo.23630648"
   },
   "project": {
-    "path": "/workspace/frohmanian-symplectic-tether-regularity",
+    "path": "/workspace/fin/frohmanian-symplectic-tether-regularity",
     "name": "frohmanian-symplectic-tether-regularity",
     "lean_toolchain": "leanprover/lean4:v4.30.0-rc1",
-    "git_head": "e3d50ad88764e27473c2ed887cda8c8afee40792"
+    "git_head": "af74755b3ea7a15ac880badcb0672772e489a464"
   },
   "build": {
     "requested": false
@@ -18,17 +18,29 @@
     "ran": true,
     "exit_code": 0,
     "errors": [],
-    "modules": 14,
-    "theorems": 402,
-    "clean_theorems": 402,
+    "modules": 21,
+    "theorems": 587,
+    "clean_theorems": 587,
     "nonstandard": [],
     "per_module": {
+      "FrohmanianSymplecticTether.ForMathlib.PiUL2": {
+        "theorems": 11,
+        "nonstandard": 0
+      },
+      "FrohmanianSymplecticTether.FieldMetriplectic": {
+        "theorems": 100,
+        "nonstandard": 0
+      },
       "FrohmanianSymplecticTether.SymplecticTether": {
-        "theorems": 38,
+        "theorems": 36,
         "nonstandard": 0
       },
       "FrohmanianSymplecticTether.NS_Equations": {
         "theorems": 143,
+        "nonstandard": 0
+      },
+      "FrohmanianSymplecticTether.C2Analysis": {
+        "theorems": 18,
         "nonstandard": 0
       },
       "FrohmanianSymplecticTether.ClosureBlueprint": {
@@ -36,7 +48,11 @@
         "nonstandard": 0
       },
       "FrohmanianSymplecticTether.Uniqueness": {
-        "theorems": 16,
+        "theorems": 17,
+        "nonstandard": 0
+      },
+      "FrohmanianSymplecticTether.TetheredLyapunov": {
+        "theorems": 53,
         "nonstandard": 0
       },
       "FrohmanianSymplecticTether.ArnoldGeometric": {
@@ -47,16 +63,24 @@
         "theorems": 14,
         "nonstandard": 0
       },
+      "FrohmanianSymplecticTether.VelocityTether": {
+        "theorems": 28,
+        "nonstandard": 0
+      },
       "FrohmanianSymplecticTether.Stage6Calculus": {
         "theorems": 35,
         "nonstandard": 0
       },
-      "FrohmanianSymplecticTether.TetheredLyapunov": {
-        "theorems": 45,
-        "nonstandard": 0
-      },
       "FrohmanianSymplecticTether.ForMathlib.Projection": {
         "theorems": 7,
+        "nonstandard": 0
+      },
+      "FrohmanianSymplecticTether.ForMathlib.LeibnizGaussian": {
+        "theorems": 5,
+        "nonstandard": 0
+      },
+      "FrohmanianSymplecticTether.ForMathlib.Leray": {
+        "theorems": 9,
         "nonstandard": 0
       },
       "FrohmanianSymplecticTether.FinalProductTheorem": {
@@ -65,6 +89,10 @@
       },
       "FrohmanianSymplecticTether.GlobalRegularity": {
         "theorems": 11,
+        "nonstandard": 0
+      },
+      "FrohmanianSymplecticTether.UniquenessC123": {
+        "theorems": 7,
         "nonstandard": 0
       },
       "FrohmanianSymplecticTether.IndependentMajorant": {
@@ -103,7 +131,7 @@
       {
         "kind": "real_iSup_without_BddAbove",
         "file": "FrohmanianSymplecticTether/SymplecticTether.lean",
-        "line": 776,
+        "line": 773,
         "decl": "MollifiedSupNormFunctional",
         "detail": "Real iSup/sSup is 0 on unbounded ranges; downstream bounds on it may be vacuous unless BddAbove is required.",
         "in_build": true
@@ -111,7 +139,7 @@
       {
         "kind": "real_iSup_without_BddAbove",
         "file": "FrohmanianSymplecticTether/TetheredLyapunov.lean",
-        "line": 502,
+        "line": 504,
         "decl": "MollifiedSupNorm",
         "detail": "Real iSup/sSup is 0 on unbounded ranges; downstream bounds on it may be vacuous unless BddAbove is required.",
         "in_build": true
@@ -122,20 +150,20 @@
     }
   },
   "tree": {
-    "sha256": "ae053ed6fa22271711db3e37cacadf02cff28ca767a12f753b2ef86e6b5db551",
-    "files": 18,
+    "sha256": "4d4759604e793c6c1d9c22f6e304a2248d0085344a926f853bc97e2a8f5c5759",
+    "files": 25,
     "entries": [
       {
         "path": "AxiomAudit.lean",
-        "sha256": "0a64210391d1322ce94b5f07dc19d1b9b8cad0d50bd1e8fc2f09bb31c12aa399"
+        "sha256": "9c7fd8a74734159ed469f185faf162395f1207d7e11b8fb5233c12dcda10169c"
       },
       {
         "path": "FrohmanianSymplecticTether.lean",
-        "sha256": "10cef00e27a53ea8235c93867e8c8abc9c66c7d2f6bc3d328c5477a57776cc8b"
+        "sha256": "2dc9a73c8af259b966449c6013ccc3970e641290990ba1b325c6de3323329429"
       },
       {
         "path": "FrohmanianSymplecticTether/AnalyticPipeline.lean",
-        "sha256": "3431efefad27f8ec00bc5f82dda9fc3c99de907d1965d8ba607bc88295cb3933"
+        "sha256": "52339f5a08e2e9ffeb65389a9e4bfe9eb9f99fd6bd9afd55b658fd2f807b2a23"
       },
       {
         "path": "FrohmanianSymplecticTether/ArnoldGeometric.lean",
@@ -143,15 +171,35 @@
       },
       {
         "path": "FrohmanianSymplecticTether/Assumptions.lean",
-        "sha256": "8454901330d46a6fa47c7e2ea25aa3f72f9d8fe0f6b392d3d0fdfeae7c678218"
+        "sha256": "4fae76f73f49c355b741c8c5d0ec1fead50eeda2fde2f09b60f4ac61a98ac5f7"
+      },
+      {
+        "path": "FrohmanianSymplecticTether/C2Analysis.lean",
+        "sha256": "ef84997e20c935e944a35c8bff471db0c5e98815f8ff4999d2c74f1d6e003680"
       },
       {
         "path": "FrohmanianSymplecticTether/ClosureBlueprint.lean",
-        "sha256": "a562e9509471e9474b0c24e8d7a909736d9757431b07ca3376289830de3a0c89"
+        "sha256": "0736fc388d7fee5aa633ef71ce29878ce58a8b9de91a540520c555aea3c70589"
+      },
+      {
+        "path": "FrohmanianSymplecticTether/FieldMetriplectic.lean",
+        "sha256": "31334d62e6b906aa1cc3f57bfe9ccf77897be5db8d7c7b596e0e128bc4d806f0"
       },
       {
         "path": "FrohmanianSymplecticTether/FinalProductTheorem.lean",
-        "sha256": "19876cbe885fe007817f3b48d71e4cf520a67a575cee6ce9e4d6d9188b3d4a70"
+        "sha256": "755059f0cccea620d09a0bf868e32e8e8ea43fa033a1321e2e9196bedd85e86c"
+      },
+      {
+        "path": "FrohmanianSymplecticTether/ForMathlib/LeibnizGaussian.lean",
+        "sha256": "0f0e565faadf7127f824a7e4a48727c64c8556143fc8158fb6dafc6a14a98b6c"
+      },
+      {
+        "path": "FrohmanianSymplecticTether/ForMathlib/Leray.lean",
+        "sha256": "9d9da21b2ce277b9183f2691e4a05707ffdfab5ff5ef4e666f9118c9a694e885"
+      },
+      {
+        "path": "FrohmanianSymplecticTether/ForMathlib/PiUL2.lean",
+        "sha256": "9ac649a94b216275702827891b77341ecba6617876751fadbb56185d9a4ae0b0"
       },
       {
         "path": "FrohmanianSymplecticTether/ForMathlib/Projection.lean",
@@ -159,7 +207,7 @@
       },
       {
         "path": "FrohmanianSymplecticTether/GlobalRegularity.lean",
-        "sha256": "2bd7900a0a59c6c124cc5563a5566bc49ffca7517cfb7f5988a5841cabfa4010"
+        "sha256": "f75da2fc6999e15044f47c891cf695bdb051885d8cd2748e23c7234a0b117e8d"
       },
       {
         "path": "FrohmanianSymplecticTether/IndependentMajorant.lean",
@@ -167,7 +215,7 @@
       },
       {
         "path": "FrohmanianSymplecticTether/NS_Equations.lean",
-        "sha256": "820b4d09f47fc887dbb6fa9b0bc077640b31f18b31488f25535a386c4bef3d96"
+        "sha256": "dff90dd951aee477ddc23ff6e980bb883b381f7433acef2105cf4d3b9c63bc0d"
       },
       {
         "path": "FrohmanianSymplecticTether/Stage6Calculus.lean",
@@ -175,15 +223,23 @@
       },
       {
         "path": "FrohmanianSymplecticTether/SymplecticTether.lean",
-        "sha256": "e622a1a63fdee5b4c423fcfc17d7113db66eb3cced7b77bbbc791e57cd6eb2e8"
+        "sha256": "09e7d319b089fba31b2fa4d6161ce8dfce163afb0845841f7f569d750a0d322e"
       },
       {
         "path": "FrohmanianSymplecticTether/TetheredLyapunov.lean",
-        "sha256": "7b90d875201aa8c67626277ce936fbe2217576ed34d86ef50f995dda5fb627b2"
+        "sha256": "d302e731c59f9e95cc28b9640edcadb431425661c9ae5996b44674273855a6da"
       },
       {
         "path": "FrohmanianSymplecticTether/Uniqueness.lean",
-        "sha256": "42b839471b749172c7aa41aceea7f8742b153cc526e2e1c99ef3f8b5aea88141"
+        "sha256": "f404029e66aa36f652111efe67aa45b7a985b0e9d462e14a6d6bb7426fccdec4"
+      },
+      {
+        "path": "FrohmanianSymplecticTether/UniquenessC123.lean",
+        "sha256": "1a359df40a1964c1d99c3c1fe1668fd5917e69ef9b22b1211a00d299c0308c60"
+      },
+      {
+        "path": "FrohmanianSymplecticTether/VelocityTether.lean",
+        "sha256": "d85f7aa144cfc83a1cbf5c0fd9e9c910b6d74998e2ca993fa7505a7709df4bfb"
       },
       {
         "path": "lake-manifest.json",
@@ -205,11 +261,11 @@
     "reasons": [],
     "vacuity_warnings_in_build": 5
   },
-  "generated_at_utc": "2026-10-28T23:16:44+00:00",
+  "generated_at_utc": "2026-10-30T18:33:05+00:00",
   "signature": {
     "alg": "ed25519",
-    "public_key_b64": "ZOyujV1yUEldQRZEDhmXCHa4ikWGfcTD+meZYssNLpo=",
+    "public_key_b64": "YoEHEghXFxrXvYKQoWQb+oDunzwdxBgpk03gxrdC7WI=",
     "payload": "canonical JSON of report without 'signature' (sort_keys, compact, UTF-8)",
-    "value_b64": "emXVRHV63Rvfmg8y/9nun95s5N/nL6LeNJ4wLITubVbu9SvpnFNtgY8anePDnzD6OeY7DgSTGrf8WeyWKcz5Cg=="
+    "value_b64": "lNr/AVEsDWLdmqd8nUtsNaeCa0kBbc13EJT/n/X0Ty5APGWtv+JFmbHZvsjr94l+2E0tizWxBXmuxkErprZCBg=="
   }
 }
