@@ -437,16 +437,16 @@ public theorem stretching_bound_of_holder
         linarith [hrem]
 
 /-- Hölder I4 with the paper's Sobolev gate: `∫|ω|⁴|φ| ≤ C_Sob ‖φ‖_∞ (∫|ω|⁶)^{2/3}`
-once Haar volume of the model torus satisfies `(∫1)^{1/3} ≤ C_Sob`. -/
+for any constant `C_Sob` with `(∫1)^{1/3} ≤ C_Sob` (Haar volume of the model torus). -/
 public theorem holder_I4_le_sobolev
     (ω : VorticityField) (phi : T3 → ℝ) (phiLinf : ℝ)
     (hphi : ∀ x, |phi x| ≤ phiLinf)
-    (hφnn : 0 ≤ phiLinf)
+    (hφnn : 0 ≤ phiLinf) (C_Sob : ℝ)
     (hω : MemLp (fun x : T3 => ‖ω x‖ ^ 4) (ENNReal.ofReal ((3 : ℝ) / 2)) volume)
     (h1 : MemLp (fun _ : T3 => (1 : ℝ)) (ENNReal.ofReal 3) volume)
-    (hvol : (∫ _x, (1 : ℝ) ∂volume) ^ ((1 : ℝ) / 3) ≤ SobolevConstant3D) :
+    (hvol : (∫ _x, (1 : ℝ) ∂volume) ^ ((1 : ℝ) / 3) ≤ C_Sob) :
     ∫ x, ‖ω x‖ ^ 4 * |phi x| ∂volume ≤
-      SobolevConstant3D * phiLinf * (∫ x, ‖ω x‖ ^ 6 ∂volume) ^ ((2 : ℝ) / 3) := by
+      C_Sob * phiLinf * (∫ x, ‖ω x‖ ^ 6 ∂volume) ^ ((2 : ℝ) / 3) := by
   have hH := holder_I4 ω phi phiLinf hphi hφnn hω h1
   have hI6 : 0 ≤ (∫ x, ‖ω x‖ ^ 6 ∂volume) ^ ((2 : ℝ) / 3) :=
     Real.rpow_nonneg (integral_nonneg fun _ => pow_nonneg (norm_nonneg _) _) _
@@ -457,9 +457,9 @@ public theorem holder_I4_le_sobolev
         ≤ phiLinf * (∫ x, ‖ω x‖ ^ 6 ∂volume) ^ ((2 : ℝ) / 3) *
             (∫ x, (1 : ℝ) ∂volume) ^ ((1 : ℝ) / 3) := hH
     _ ≤ phiLinf * (∫ x, ‖ω x‖ ^ 6 ∂volume) ^ ((2 : ℝ) / 3) *
-            SobolevConstant3D :=
+            C_Sob :=
           mul_le_mul_of_nonneg_left hvol hprod
-    _ = SobolevConstant3D * phiLinf *
+    _ = C_Sob * phiLinf *
             (∫ x, ‖ω x‖ ^ 6 ∂volume) ^ ((2 : ℝ) / 3) := by
           ring
 

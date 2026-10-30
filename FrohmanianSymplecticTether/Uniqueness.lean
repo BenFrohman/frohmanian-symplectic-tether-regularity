@@ -106,13 +106,36 @@ lemma step3_projection
   intro F ω
   simpa [DegenerateWRTKineticEnergy] using h_deg F ω
 
-/-- Step 4: C3 forces the tether strength `κ = C_CZ(3)`. -/
+/-- Controllable negative feedback at an explicit tether strength `k`. -/
+public def ProducesNegativeFeedbackWith (k : ℝ)
+    (B : CoadjointOrbit → Functional → Functional → ℝ) : Prop :=
+  ∀ (F : Functional) (ω : CoadjointOrbit),
+    B ω F F ≤
+      -k * ∫ x,
+        ‖ω.val x‖ ^ 2 *
+          ‖Pi_u (velocity_from_vorticity ω) (FunctionalDerivative F ω) x‖ ^ 2
+        ∂volume
+
+/-- C3 is feedback at strength `κ`. -/
+public theorem producesControllableNegativeFeedback_iff_with_kappa
+    (B : CoadjointOrbit → Functional → Functional → ℝ) :
+    ProducesControllableNegativeFeedback B ↔ ProducesNegativeFeedbackWith kappa B :=
+  Iff.rfl
+
+/-- Step 4: feedback at any strength `k > 0` makes the diagonal of `B` nonpositive. -/
 lemma step4_coefficient
     (B : CoadjointOrbit → Functional → Functional → ℝ)
     (_h_sym : ∀ ω F G, B ω F G = B ω G F)
-    (_h_feedback : ProducesControllableNegativeFeedback B) :
-    kappa = CalderonZygmundConstant3D :=
-  rfl
+    (k : ℝ) (hk : 0 < k)
+    (h_feedback : ProducesNegativeFeedbackWith k B) :
+    ∀ (F : Functional) (ω : CoadjointOrbit), B ω F F ≤ 0 := by
+  intro F ω
+  have hI : 0 ≤ ∫ x,
+      ‖ω.val x‖ ^ 2 *
+        ‖Pi_u (velocity_from_vorticity ω) (FunctionalDerivative F ω) x‖ ^ 2 ∂volume :=
+    integral_nonneg fun _ => mul_nonneg (sq_nonneg _) (sq_nonneg _)
+  have := h_feedback F ω
+  nlinarith
 
 -- Step 5 for an arbitrary symmetric `B` is not a theorem from C2–C3
 -- alone. See `step5_higher_order` (`TetherKernel` via `step2_degree`).
@@ -409,7 +432,7 @@ public theorem uniqueness_of_minimal_tether
   intro ω F G
   have _h1 := step1_locality B h_sym hC1
   have _h3 := step3_projection B h_sym hC2
-  have _h4 := step4_coefficient B h_sym hC3
+  have _h4 := step4_coefficient B h_sym kappa kappa_pos hC3
   have hB := h_polarB ω F G
   have hT := h_polarT ω F G
   have hFF := h_sat F ω

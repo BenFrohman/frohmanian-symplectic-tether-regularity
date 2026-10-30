@@ -764,18 +764,19 @@ The uniform bound is obtained a posteriori by supremum over all such intervals.
 -/
 
 -- Supporting atomic lemma: the differential inequality after tether + absorption.
--- Algebraic Young cancellation is a closed term. Remaining `sorry`s are the
--- PDE identification (transport + viscous + CZ) and Hölder/Sobolev/Young
--- hypotheses on real integrals — never `True`.
+-- Algebraic Young cancellation is a closed term. The PDE identification
+-- (`hIdent`), the Sobolev constant `C_Sob` and the Hölder/Young inputs are
+-- explicit hypotheses on real integrals — never `True`, never `sorry`.
 lemma differential_inequality_after_tether_and_absorption
     (ε : ℝ) (ω : ℝ → VorticityField) (t : ℝ) (phi : T3 → ℝ) (C_abs : ℝ)
     (hCabs : 0 ≤ C_abs)
-    (hAbs : AnalyticPipeline.absorptionCoeff SobolevConstant3D (⨆ x, |phi x|) ≤ C_abs)
+    (C_Sob : ℝ) (hCSob : 0 < C_Sob)
+    (hAbs : AnalyticPipeline.absorptionCoeff C_Sob (⨆ x, |phi x|) ≤ C_abs)
     (hφbdd : BddAbove (Set.range fun x => |phi x|))
     (hωLp : MemLp (fun x : T3 => ‖MollifiedVorticity ω ε t x‖ ^ 4)
       (ENNReal.ofReal ((3 : ℝ) / 2)) volume)
     (h1 : MemLp (fun _ : T3 => (1 : ℝ)) (ENNReal.ofReal 3) volume)
-    (hvol : (∫ _x, (1 : ℝ) ∂volume) ^ ((1 : ℝ) / 3) ≤ SobolevConstant3D)
+    (hvol : (∫ _x, (1 : ℝ) ∂volume) ^ ((1 : ℝ) / 3) ≤ C_Sob)
     (hIdent : deriv (fun s => LyapunovS (MollifiedVorticity ω ε s) phi) t ≤
       4 * CalderonZygmundConstant3D * MollifiedSupNorm ω ε t *
         (∫ x, ‖MollifiedVorticity ω ε t x‖ ^ 4 * |phi x| ∂volume) -
@@ -799,20 +800,20 @@ lemma differential_inequality_after_tether_and_absorption
   have hphi_le : ∀ x, |phi x| ≤ phiLinf := fun x => le_ciSup hφbdd x
   -- Hölder (3/2, 3) + finite Haar measure of T³. Paper §3 Sobolev gate.
   have hHolder :
-      I4 ≤ SobolevConstant3D * phiLinf * I6 ^ ((2 : ℝ) / 3) := by
+      I4 ≤ C_Sob * phiLinf * I6 ^ ((2 : ℝ) / 3) := by
     simpa [I4, I6, phiLinf, ωε] using
       AnalyticPipeline.holder_I4_le_sobolev (ωε t) phi phiLinf
-        hphi_le hphi hωLp h1 hvol
+        hphi_le hphi C_Sob hωLp h1 hvol
   have hYoung0 :=
-    AnalyticPipeline.stretching_bound_of_holder M I4 I6 phiLinf SobolevConstant3D
-      hM hI4 hI6 hphi SobolevConstant3D_pos.le hHolder
+    AnalyticPipeline.stretching_bound_of_holder M I4 I6 phiLinf C_Sob
+      hM hI4 hI6 hphi hCSob.le hHolder
   -- The paper's C_abs is at least the explicit ε-Young coefficient.
   have hYoung :
       4 * CalderonZygmundConstant3D * M * I4 ≤
         (kappa / 4) * I6 + C_abs * (M ^ 3 * phiLinf ^ ((3 : ℝ) / 2)) := by
     have hκ : kappa = CalderonZygmundConstant3D := rfl
     have hAbs' :
-        AnalyticPipeline.absorptionCoeff SobolevConstant3D phiLinf ≤ C_abs := by
+        AnalyticPipeline.absorptionCoeff C_Sob phiLinf ≤ C_abs := by
       simpa [phiLinf] using hAbs
     have hnn :
         0 ≤ M ^ 3 * phiLinf ^ ((3 : ℝ) / 2) :=
@@ -843,12 +844,13 @@ def mollified_vorticity (ε : ℝ) (ω : ℝ → VorticityField) (t : ℝ) : Vor
 -- Key differential inequality after tether + mollification + absorption
 lemma key_differential_inequality (ε : ℝ) (ω : ℝ → VorticityField) (t : ℝ)
     (phi : T3 → ℝ) (C_abs : ℝ) (hCabs : 0 ≤ C_abs)
-    (hAbs : AnalyticPipeline.absorptionCoeff SobolevConstant3D (⨆ x, |phi x|) ≤ C_abs)
+    (C_Sob : ℝ) (hCSob : 0 < C_Sob)
+    (hAbs : AnalyticPipeline.absorptionCoeff C_Sob (⨆ x, |phi x|) ≤ C_abs)
     (hφbdd : BddAbove (Set.range fun x => |phi x|))
     (hωLp : MemLp (fun x : T3 => ‖MollifiedVorticity ω ε t x‖ ^ 4)
       (ENNReal.ofReal ((3 : ℝ) / 2)) volume)
     (h1 : MemLp (fun _ : T3 => (1 : ℝ)) (ENNReal.ofReal 3) volume)
-    (hvol : (∫ _x, (1 : ℝ) ∂volume) ^ ((1 : ℝ) / 3) ≤ SobolevConstant3D)
+    (hvol : (∫ _x, (1 : ℝ) ∂volume) ^ ((1 : ℝ) / 3) ≤ C_Sob)
     (hIdent : deriv (fun s => LyapunovS (MollifiedVorticity ω ε s) phi) t ≤
       4 * CalderonZygmundConstant3D * MollifiedSupNorm ω ε t *
         (∫ x, ‖MollifiedVorticity ω ε t x‖ ^ 4 * |phi x| ∂volume) -
@@ -857,7 +859,7 @@ lemma key_differential_inequality (ε : ℝ) (ω : ℝ → VorticityField) (t : 
       C_abs * (1 + MollifiedSupNorm ω ε t ^ 3 *
         (⨆ x, |phi x|) ^ ((3 : ℝ) / 2)) -
       kappa' * ∫ x, ‖MollifiedVorticity ω ε t x‖ ^ 6 ∂volume :=
-  differential_inequality_after_tether_and_absorption ε ω t phi C_abs hCabs hAbs
+  differential_inequality_after_tether_and_absorption ε ω t phi C_abs hCabs C_Sob hCSob hAbs
     hφbdd hωLp h1 hvol hIdent
 
 /-
