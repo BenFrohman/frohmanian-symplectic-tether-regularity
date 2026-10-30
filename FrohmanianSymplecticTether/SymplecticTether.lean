@@ -341,7 +341,7 @@ The analytic pipeline's ε-Young that produces I₆ coefficient `κ/4` uses
 
 /-! ## The Quadratic Metric Correction (the Tether) -/
 
-/-- Canonical Frohmanian tether kernel
+/-- **Scaffolding (ψ-slot).** C2 fails for this form (`shear_C2_fails`); the model is `TetherKernelVel` (VelocityTether.lean). Canonical Frohmanian tether kernel
 `B(F,G)(ω) = -κ ∫ |ω|² (Π_u (δF/δω) · Π_u (δG/δω)) dλ`. -/
 @[expose] public noncomputable def TetherKernel (kappa : ℝ) (ω : CoadjointOrbit) (F G : Functional) : ℝ :=
   -kappa * ∫ x,
@@ -1021,7 +1021,7 @@ public theorem tetherKernel_C2_of_no_gateaux
   rw [FunctionalDerivative_eq_zero_of_not h]
   exact Pi_u_zero _
 
-/-- C2 mechanism (Reconstruction Lemma 2.3.2): if `FunctionalDerivative H = u`
+/-- **Scaffolding (ψ-slot).** C2 fails for this form (`shear_C2_fails`); the model is `TetherKernelVel` (VelocityTether.lean). C2 mechanism (Reconstruction Lemma 2.3.2): if `FunctionalDerivative H = u`
 and `div u = 0`, the projector kills the Hamiltonian slot on finite-energy
 orbits. Energy-nonzero is `Π_u u = 0`; the zero field is `Pi_u_zero`;
 integrable energy-zero is `u = 0` a.e. The paper is on `𝕋³` with finite
@@ -1063,7 +1063,7 @@ public theorem tetherKernel_degenerates_on_kinetic_energy
       rw [integral_congr_ae hker]
       simp [integral_zero]
 
-/-- C2 for `TetherKernel` given the Biot–Savart identifications `δH = u`,
+/-- **Scaffolding (ψ-slot).** C2 fails for this form (`shear_C2_fails`); the model is `TetherKernelVel` (VelocityTether.lean). C2 for `TetherKernel` given the Biot–Savart identifications `δH = u`,
 `div u = 0`, and finite kinetic energy. The identifications themselves
 remain named lemmas. -/
 public theorem tetherKernel_C2_of_identifications

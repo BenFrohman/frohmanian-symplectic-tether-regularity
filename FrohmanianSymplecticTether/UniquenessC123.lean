@@ -48,7 +48,7 @@ public theorem scaled_tether_admissible (hκ : 0 < kappa) (c : ℝ) (hc : 1 ≤ 
   have : 0 ≤ (c - 1) * (kappa * I) := mul_nonneg (by linarith) (mul_nonneg hκ.le hI)
   nlinarith
 
-/-- C1–C3 and symmetry do not single out `TetherKernel`. -/
+/-- **Scaffolding (ψ-slot).** C2 fails for this form (`shear_C2_fails`); the model is `TetherKernelVel` (VelocityTether.lean). C1–C3 and symmetry do not single out `TetherKernel`. -/
 public theorem c1_c3_not_unique (hκ : 0 < kappa)
     (hC2T : DegenerateWRTKineticEnergy (TetherKernel kappa))
     (hne : ∃ ω F, TetherKernel kappa ω F F ≠ 0) :
@@ -78,7 +78,7 @@ public theorem saturates_of_two_sided_feedback
   rw [tetherKernel_quadratic_form]
   exact le_antisymm (hC3 F ω) (hmin F ω)
 
-/-- Uniqueness from C3, minimality and polarization, without assuming saturation. -/
+/-- **Scaffolding (ψ-slot).** C2 fails for this form (`shear_C2_fails`); the model is `TetherKernelVel` (VelocityTether.lean). Uniqueness from C3, minimality and polarization, without assuming saturation. -/
 public theorem uniqueness_of_two_sided_feedback
     (B : CoadjointOrbit → Functional → Functional → ℝ)
     (hC3 : ProducesControllableNegativeFeedback kappa B) (hmin : FeedbackAtMost kappa B)
@@ -120,7 +120,7 @@ public theorem step5_higher_order_vanishes {X : Type*} (scale : X → X) (c : �
 @[expose] public def scaleOrbit (c : ℝ) (ω : CoadjointOrbit) : CoadjointOrbit :=
   ⟨fun x => c • ω.val x, fun x => by rw [NavierStokes3D.div_smul, ω.property x, mul_zero]⟩
 
-/-- **Step 5 for `TetherKernel`.** Fix `F, G` whose functional derivatives are invariant under
+/-- **Scaffolding (ψ-slot).** C2 fails for this form (`shear_C2_fails`); the model is `TetherKernelVel` (VelocityTether.lean). **Step 5 for `TetherKernel`.** Fix `F, G` whose functional derivatives are invariant under
 `ω ↦ c • ω` (`|c| > 1`). If a correction `B = TetherKernel + R` is degree 2 under this scaling
 and `R` is degree `n ≥ 3`, then `R = 0`, i.e. `B = TetherKernel`. -/
 public theorem step5_tetherKernel (F G : Functional) (c : ℝ) (hc : 1 < |c|)

@@ -3,16 +3,31 @@
 **Author:** Benjamin Stanley Frohman ([ORCID: 0009-0006-7068-3718](https://orcid.org/0009-0006-7068-3718))  
 **Zenodo DOI (v1.1.0):** [`10.5281/zenodo.23717082`](https://doi.org/10.5281/zenodo.23717082) | **Concept DOI:** [`10.5281/zenodo.23652842`](https://doi.org/10.5281/zenodo.23652842) | **v1.0.0 DOI:** [`10.5281/zenodo.23652843`](https://doi.org/10.5281/zenodo.23652843)  
 **License:** Apache-2.0 (`Copyright (c) 2026 Benjamin Stanley Frohman`)  
-**Toolchain:** `leanprover/lean4:v4.30.0-rc1` + Mathlib 4 (`2738` build jobs, **547 theorems across 18 modules**, **0 `sorry`**, **0 non-standard axioms**)  
+**Toolchain:** `leanprover/lean4:v4.30.0-rc1` + Mathlib 4 (`2740` build jobs, **568 theorems across 19 modules**, **0 `sorry`**, **0 non-standard axioms**)  
 **Paper PDF:** [`Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.pdf`](Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.pdf)
 
 ---
+
+## The Model: Velocity-Slot Tether (`VelocityTether.lean`)
+
+The tether is `TetherKernelVel`: it projects the velocity slot $\operatorname{curl}(\delta F/\delta\omega)$ transverse to $u$. The older ψ-slot forms (`TetherKernel` and results built on it) are scaffolding: C2 fails for them (`shear_C2_fails`). They still compile and are marked as scaffolding in their docstrings. `FieldMetriplectic.lean` already uses the velocity slot.
+
+Assumptions of each result:
+- Unconditional: symmetry `tetherKernelVel_comm`, quadratic form `tetherKernelVel_quadratic_form`, sign `tetherKernelVel_diag_nonpos` (κ ≥ 0), `velPointwiseDensity_strict_neg`, C1 `tetherKernelVel_C1`, C3 `tetherKernelVel_C3`, `tetherKernelVel_feedbackAtMost`, `metriplecticPairingVel_diag`, `tetheredBracketVel_energy`.
+- C2 (`tetherKernelVel_C2_at`, `tetherKernelVel_degenerate`): assumes `KineticEnergyCurlIdentity` (hcurl: $\operatorname{curl}(\delta H/\delta\omega)=u$) and integrability.
+- Polarization (`tetherKernelVel_polarizes_at`, `tetherKernelVel_polarizes`): assumes additivity of the projected slot and integrability.
+- Uniqueness (`uniqueness_vel`): C1–C3 with `FeedbackAtMostVel`, plus polarization hypotheses.
+- Non-uniqueness (`c1_c3_not_unique_vel`, `c1_c3_not_unique_vel_of_curl`): assumes C2 (or hcurl) and `hne` (some $\omega,F$ with nonzero pairing).
+- Scaling (`velSlot_scale`, `step2_degree_vel`, `step5_tetherKernelVel`): assume scale invariance of $\delta F/\delta\omega$.
+- Product theorem `velocity_tether_product_theorem`: assumes κ ≥ 0; gives P1Vel ∧ P2Vel ∧ P3 ∧ P4.
+
+**Not proved:** hcurl itself. `FunctionalDerivative` is a `Classical.choose` of a non-unique Gâteaux representative, and the repo has no Biot–Savart Gâteaux calculus, so it stays a named hypothesis. `hne` likewise needs an explicit functional derivative and stays a hypothesis. None of this claims regularity for plain Navier–Stokes.
 
 ## Supporting Facts (unconditional)
 
 Attained-maximum ⇒ `BddAbove` and sup-norm equality; Bochner and polar Pythagoras identities, now *derived* from `HasDerivAt` along coordinate lines (`Stage6Calculus.lean`); the near/far cutoff absorption algebra; Burgers-strain exclusion on 𝕋³; the comparison-ODE ceiling; and a genuinely non-constant exact periodic shear Beltrami mode `e^{-4π²νt}(sin 2πz, cos 2πz, 0)` checked component-wise.
 
-## What Is Proved (`FinalProductTheorem.lean`, status as of 2026-10-30)
+## What Is Proved (`FinalProductTheorem.lean`, ψ-slot scaffolding, status as of 2026-10-30)
 
 The theorem `frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem` proves `P₁ ∧ P₂ ∧ P₃ ∧ P₄` with `0 sorry` and only the standard axioms `[propext, Classical.choice, Quot.sound]`. The tether strength $\kappa$ is a parameter. The theorem takes the single hypothesis $0<\kappa$. Each conjunct says exactly the following.
 
@@ -34,7 +49,7 @@ These hypotheses are discharged only at $u_0\equiv0$. Nothing in this repository
 
 ---
 
-## Modules (`547 theorems`, `0 sorry`)
+## Modules (`568 theorems`, `0 sorry`)
 
 | Module | Key Declarations | Status | Mathematical Content |
 |---|---|---|---|
@@ -53,6 +68,7 @@ These hypotheses are discharged only at $u_0\equiv0$. Nothing in this repository
 | `ForMathlib/Leray.lean` | `LerayProj.ofSubspace`, `divFreeL2`, `lerayL2`, `lerayL2_fixes_test` | **PROVED** | Leray projection built from the orthogonal projection onto the closure of smooth, compactly supported, divergence-free fields; self-adjointness and idempotence are theorems. |
 | `UniquenessC123.lean` | `c1_c3_not_unique`, `uniqueness_of_two_sided_feedback`, `step5_higher_order_vanishes`, `step5_tetherKernel` | **PROVED** | C1–C3 and symmetry do not determine `TetherKernel`: if it satisfies C2 and is nonzero somewhere, `2·TetherKernel` also satisfies C1–C3. Adding the minimality bound $B(F,F)\ge-\kappa\int|\omega|^2\|\Pi_u\delta F\|^2$ forces the quadratic form, and polarization gives uniqueness. A degree $n\ge3$ homogeneous remainder of a degree-2 kernel vanishes; for `TetherKernel` this gives $B=$ `TetherKernel`. |
 | `ForMathlib/LeibnizGaussian.lean` | `hasDerivAt_inner_curve`, `hasDerivAt_norm_sq_curve`, `hasDerivAt_norm_pow_four_curve`, `integral_heatKernel1D` | **PROVED** | Product rules for $\langle f,g\rangle$, $\|f\|^2$, $\|f\|^4$ along curves; the 1D heat kernel is positive with unit mass. |
+| `VelocityTether.lean` | `velocity_tether_product_theorem`, `uniqueness_vel`, `tetherKernelVel_polarizes`, `step5_tetherKernelVel` | **PROVED (assumptions as listed above, 21 theorems)** | The model tether: the velocity-slot redo of symmetry, sign, polarization, C1–C3 uniqueness, non-uniqueness, scaling, metriplectic and product results. |
 | `C2Analysis.lean` | `tetherKernel_C2_of_parallel`, `shear_C2_fails`, `tetherKernelVel_C2` | **PROVED** | C2 for `TetherKernel` is not true in general. $\delta H/\delta\omega$ is the stream function $\psi$, not $u$. C2 holds when $\psi\parallel u$ (Beltrami). It fails on the shear $u=(\sin z+\sin 2z,\cos z+\cos 2z,0)$, where $\operatorname{curl}\psi=u$, $\operatorname{curl}u=\omega$ and the $H$–$H$ tether pairing is $-\tfrac34\kappa\pi\neq0$. Projecting the velocity slot $\operatorname{curl}(\delta F/\delta\omega)$ (`TetherKernelVel`) restores C2. |
 
 ---

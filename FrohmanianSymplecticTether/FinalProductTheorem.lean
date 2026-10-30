@@ -403,7 +403,7 @@ public theorem constantin_fefferman_near_far_cutoff_bridge
 
 /-! ## Section 3. The Four Components $P_1, P_2, P_3, P_4$ and the Master Product Theorem -/
 
-/-- **Component $P_1$ (Canonical 5-Step Uniqueness & Quadratic Degree on $\mathrm{SDiff}(\mathbb{T}^3)^*$):**
+/-- **Scaffolding (ψ-slot).** C2 fails for this form (`shear_C2_fails`); the model is `TetherKernelVel` (VelocityTether.lean). **Component $P_1$ (Canonical 5-Step Uniqueness & Quadratic Degree on $\mathrm{SDiff}(\mathbb{T}^3)^*$):**
 Every bilinear correction $B$ satisfying C1–C3, quadratic saturation, and polarization (under
 metriplectic symmetry), or having the canonical kernel density $\alpha_{\mathrm{can}}(\omega,x) = -\kappa\|\omega(x)\|^2$,
 equals `TetherKernel`, and `TetherKernel` has exact quadratic homogeneity $c^2$ under $\omega \mapsto c\omega$ with no
@@ -442,7 +442,7 @@ degree $\ge 3$ remainder. -/
     TetherKernel kappa ⟨fun x => c • ω.val x, fun x => by rw [div_smul, ω.property x, mul_zero]⟩ F G =
       c ^ 2 * TetherKernel kappa ω F G)
 
-/-- **Component $P_2$ (Exact Metriplectic Split, KKS Skew-Symmetry & Cyclic Jacobi, Casimir/Beltrami Conservation, and Strict Transverse Damping):**
+/-- **Scaffolding (ψ-slot).** C2 fails for this form (`shear_C2_fails`); the model is `TetherKernelVel` (VelocityTether.lean). **Component $P_2$ (Exact Metriplectic Split, KKS Skew-Symmetry & Cyclic Jacobi, Casimir/Beltrami Conservation, and Strict Transverse Damping):**
 The Frohmanian pairing $\mathfrak{T}_F = \omega_{\mathrm{KKS}} + \mathrm{TetherKernel}$ splits into the skew-symmetric KKS 2-form
 satisfying the cyclic Jacobi identity and the symmetric negative-semidefinite tether metric form over the $L^2$-orthogonal
 projection $\Pi_u$, which reproduces classical Euler dynamics on the kinetic-energy Hamiltonian ($\Pi_u u = 0$) and on
@@ -516,7 +516,7 @@ $y(t) \le \max(y(0), C / \kappa'')$ for all $t \ge 0$. -/
       (∀ s ≥ (0 : ℝ), deriv y s ≤ C * (y s) ^ 2 - κ'' * (y s) ^ 3) →
       ∀ (t : ℝ), 0 ≤ t → y t ≤ max (y 0) (C / κ'')
 
-/-- **Master Single-Sentence Product Theorem (`frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem`):**
+/-- **Scaffolding (ψ-slot).** C2 fails for this form (`shear_C2_fails`); the model is `TetherKernelVel` (VelocityTether.lean). **Master Single-Sentence Product Theorem (`frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem`):**
 Unconditional proof of the four-conjunct product statement
 $$P_1 \wedge P_2 \wedge P_3 \wedge P_4$$
 for the Frohmanian tethered / metriplectic system on $\mathbb{T}^3$. -/

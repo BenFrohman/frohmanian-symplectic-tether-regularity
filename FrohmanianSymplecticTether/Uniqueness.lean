@@ -418,7 +418,7 @@ public theorem tetherKernel_polarizes
   intro hP
   simpa using hP ω F G
 
-/-- Unique minimal bilinear correction: C1–C3 plus saturation of the
+/-- **Scaffolding (ψ-slot).** C2 fails for this form (`shear_C2_fails`); the model is `TetherKernelVel` (VelocityTether.lean). Unique minimal bilinear correction: C1–C3 plus saturation of the
 quadratic form plus polarization. This is the paper's "minimal" uniqueness,
 stated for a symmetric `B`, the metriplectic (dissipative) component. -/
 public theorem uniqueness_of_minimal_tether (hκ : 0 < kappa)
