@@ -5,17 +5,17 @@
     "engine": "Sentinel Gate v1.0.0 (DOI: 10.5281/zenodo.23632766)",
     "author": "Benjamin Stanley Frohman (ORCID: 0009-0006-7068-3718)",
     "action_type": "seal_and_attest_public_release",
-    "action_id": "1714944d976cc671e02fb3e545c81d2e7f585fa82340e5f5efc2a093eebfae85",
+    "action_id": "33511501f7586b28a2ec2dd4cf83cdebaa192b2831765715da80f80eee9cd5e7",
     "permitted": true,
     "reason": "PERMITTED_DETERMINISTIC_POLICY",
-    "receipt_sha256": "74e7cfce3a7e119f4d058845261732c57cea068ab046937942cccb38519b5329"
+    "receipt_sha256": "bd179edbed4c6d98347b7fc9dc233d8bc15ccf2dc422a474cf476cdf7fd1ce45"
   },
   "author": {
     "name": "Benjamin Stanley Frohman",
     "orcid": "0009-0006-7068-3718"
   },
   "repository": "frohmanian-symplectic-tether-regularity",
-  "public_merkle_root_sha256": "1714944d976cc671e02fb3e545c81d2e7f585fa82340e5f5efc2a093eebfae85",
+  "public_merkle_root_sha256": "33511501f7586b28a2ec2dd4cf83cdebaa192b2831765715da80f80eee9cd5e7",
   "classified_ip_containment": {
     "plane": "Plane-4 Encrypted Parameterization Capsule",
     "plaintext_commitment_sha256": "09a6e0857e796071f4b43d70ad483ed758c2e9fb3fd4a1830ef55f2dd0270bd0",

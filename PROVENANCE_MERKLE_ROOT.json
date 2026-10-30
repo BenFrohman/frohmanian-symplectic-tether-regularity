@@ -8,15 +8,15 @@
     "sealguard_doi": "10.5281/zenodo.23631670",
     "sentinel_gate_doi": "10.5281/zenodo.23632766"
   },
-  "merkle_root_sha256": "1714944d976cc671e02fb3e545c81d2e7f585fa82340e5f5efc2a093eebfae85",
+  "merkle_root_sha256": "33511501f7586b28a2ec2dd4cf83cdebaa192b2831765715da80f80eee9cd5e7",
   "sentinel_gate_receipt": {
     "engine": "Sentinel Gate v1.0.0 (DOI: 10.5281/zenodo.23632766)",
     "author": "Benjamin Stanley Frohman (ORCID: 0009-0006-7068-3718)",
     "action_type": "seal_and_attest_public_release",
-    "action_id": "1714944d976cc671e02fb3e545c81d2e7f585fa82340e5f5efc2a093eebfae85",
+    "action_id": "33511501f7586b28a2ec2dd4cf83cdebaa192b2831765715da80f80eee9cd5e7",
     "permitted": true,
     "reason": "PERMITTED_DETERMINISTIC_POLICY",
-    "receipt_sha256": "74e7cfce3a7e119f4d058845261732c57cea068ab046937942cccb38519b5329"
+    "receipt_sha256": "bd179edbed4c6d98347b7fc9dc233d8bc15ccf2dc422a474cf476cdf7fd1ce45"
   },
   "files": {
     ".gitignore": {
@@ -28,8 +28,8 @@
       "bytes": 3384
     },
     "AxiomAudit.lean": {
-      "sha256": "ba46419d12c309d397dc774bafcbc8dfe639e8589be4c09a92c8aa77971ed97e",
-      "bytes": 9345
+      "sha256": "6575bc8611772b86f43b240bc0e93e3b5d3808682f83d7572bb25385d553b810",
+      "bytes": 9091
     },
     "CITATION.cff": {
       "sha256": "339019b24fbeeec84c090ccb63c5f4c4435fdfd378abbde7b6c74cf97a480f26",
@@ -96,8 +96,8 @@
       "bytes": 177877
     },
     "FrohmanianSymplecticTether/Stage6Calculus.lean": {
-      "sha256": "46cad8eee93350c540ff1ad749d98c262fd56ab57d251f725b89e65f04dd5c13",
-      "bytes": 11660
+      "sha256": "9fb95bd756287ae0fd471340be857d82e734226143983166ac2dfee01535864d",
+      "bytes": 10059
     },
     "FrohmanianSymplecticTether/SymplecticTether.lean": {
       "sha256": "09e7d319b089fba31b2fa4d6161ce8dfce163afb0845841f7f569d750a0d322e",
@@ -140,19 +140,19 @@
       "bytes": 26405
     },
     "audit/TITAN_AUDIT_CERTIFICATE.json": {
-      "sha256": "b1920d96a79485c21667bb5ea36e86ec274fa19b6ea368e221388d6b91bd1fa0",
+      "sha256": "09edf3a89b93835c6574c5f17465c41105429ed2d335d7f100eb80fc21507de1",
       "bytes": 9789
     },
     "audit/TITAN_AUDIT_REPORT.md": {
-      "sha256": "673ab7ad60caeefd590bb8d381d357b5fae87c2814b1cee3e671493f2f2e2ebf",
+      "sha256": "26149bf071d7f05b6a25205a274bfb572868fd509489aebd51f537f0b19530ec",
       "bytes": 3197
     },
     "audit/report.json": {
-      "sha256": "b1920d96a79485c21667bb5ea36e86ec274fa19b6ea368e221388d6b91bd1fa0",
+      "sha256": "09edf3a89b93835c6574c5f17465c41105429ed2d335d7f100eb80fc21507de1",
       "bytes": 9789
     },
     "audit/report.md": {
-      "sha256": "673ab7ad60caeefd590bb8d381d357b5fae87c2814b1cee3e671493f2f2e2ebf",
+      "sha256": "26149bf071d7f05b6a25205a274bfb572868fd509489aebd51f537f0b19530ec",
       "bytes": 3197
     },
     "ci/titan-audit-and-sealguard.yml": {
