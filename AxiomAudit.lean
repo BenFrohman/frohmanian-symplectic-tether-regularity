@@ -67,6 +67,10 @@ open Lean Elab Command
 #print axioms TetheredLyapunov.global_regularity_of_restart
 #print axioms TetheredLyapunov.global_regularity
 #print axioms TetheredLyapunov.global_regularity_of_bkmIntegrability
+#print axioms TetheredLyapunov.global_regularity_of_bkm_uniqueness
+#print axioms TetheredLyapunov.Tstar_top_of_restart_without_vorticity_bound
+#print axioms NavierStokes3D.beale_kato_majda_scaffold_integrability_unused
+#print axioms NavierStokes3D.Tstar_eq_top_of_bkm
 #print axioms TetheredLyapunov.finiteTimeVorticityBound_of_uniform
 #print axioms TetheredLyapunov.physicalFiniteTimeVorticityBound_of_uniform
 #print axioms TetheredLyapunov.bkmIntegrability_of_finiteTime

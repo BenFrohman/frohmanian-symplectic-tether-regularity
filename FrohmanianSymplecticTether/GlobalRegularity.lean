@@ -200,7 +200,7 @@ public def satisfies_NavierStokes (u : TimeDependentVelocity) (ν : ℝ) : Prop 
 `hRiccati : FrohmanianTetherBound (u0 0) ν` is a time-uniform bound on `‖ω‖_∞`.
 It is open; by BKM it is equivalent in difficulty to regularity itself
 (see `FrohmanianSymplecticTether/GlobalRegularity.lean`, `FrohmanianTetherClosingBound`). Given it, plus the
-classical local-theory binders `w`, `hrestart`, `huniq`, every smooth, divergence-free
+classical local-theory binders `w`, `hcrit` (BKM continuation criterion), `huniq`, every smooth, divergence-free
 initial field generates a unique global smooth solution. Not an unconditional Navier–Stokes solution.
 
 This is the top-level statement whose proof proceeds via the Frohmanian Symplectic Tether
@@ -214,16 +214,8 @@ public theorem global_regularity_for_NS
     (ν : ℝ) (h_ν_pos : ν > 0)
     (w : KatoLocalWitness (u0 0) ν)
     (hRiccati : FrohmanianTetherBound (u0 0) ν)
-    (τ : ℝ) (hτ : 0 < τ)
-    (hrestart : ∀ t : ℝ, 0 ≤ t → (t : EReal) < Tstar (u0 0) ν →
-      ∃ T' ∈ existenceTimes (u0 0) ν, t + τ ≤ T')
-    (huniq : ∀ (T' : ℝ) (v : TimeDependentVelocity) (q : TimeDependentPressure),
-      T' ∈ existenceTimes (u0 0) ν →
-      v 0 = u0 0 →
-      NS_PDE v q ν →
-      (∀ t ∈ Set.Icc (0 : ℝ) T', ContDiff ℝ (⊤ : ℕ∞) (v t)) →
-      IsPhysicalNSSolution v →
-      ∀ t ∈ Set.Icc (0 : ℝ) T', w.u t = v t) :
+    (hcrit : TetheredLyapunov.PhysicalBKMContinuationCriterionFor (u0 0) ν)
+    (huniq : TetheredLyapunov.KatoUniquenessOnExistenceTimes (u0 0) ν w) :
   ∃ (u : TimeDependentVelocity),
     (∀ t ≥ (0 : ℝ), IsSmooth (u t)) ∧
     (u 0 = u0 0) ∧
@@ -235,11 +227,10 @@ public theorem global_regularity_for_NS
       (∀ t ≥ (0 : ℝ), satisfies_NavierStokes v ν) →
       ∀ t ≥ (0 : ℝ), v t = u t) := by
   obtain ⟨hNS, hu0, hsm, hnn, _hdiv⟩ :=
-    TetheredLyapunov.global_regularity_of_restart (u0 0) ν
-      (fun x => h_div_free 0 x) h_smooth h_finite_energy h_ν_pos
+    TetheredLyapunov.global_regularity_of_bkm_uniqueness (u0 0) ν h_ν_pos
       w (TetheredLyapunov.physicalFiniteTimeVorticityBound_of_uniform
           (TetheredLyapunov.physicalUniformVorticityCeiling_of_tetherBound hRiccati))
-      τ hτ hrestart huniq
+      hcrit huniq
   refine ⟨w.u, hsm, hu0, ?ns, hnn, ?uniq⟩
   · intro _t _ht
     exact ⟨w.phys, w.p, hNS⟩
@@ -514,7 +505,7 @@ public theorem frohmanianTetherRate_zero (ν : ℝ) : FrohmanianTetherRate 0 ν 
 /-- **Kernel-verified non-vacuity of `GlobalRegularity.global_regularity_for_NS`:**
 at quiescent initial data `u0 = 0`, every hypothesis of `global_regularity_for_NS`
 (`h_div_free`, `h_smooth`, `h_finite_energy`, `w = kato_witness_zero ν`,
-`hRiccati = frohmanianTetherBound_zero ν`, `hrestart`, and `huniq = repaired_huniq_at_zero ν`)
+`hRiccati = frohmanianTetherBound_zero ν`, `hcrit`, and `huniq = repaired_huniq_at_zero ν`)
 is unconditionally discharged, producing a global smooth solution without any unproved assumptions. -/
 public theorem global_regularity_for_NS_nonvacuous_at_zero (ν : ℝ) (hν : 0 < ν) :
     ∃ (u : TimeDependentVelocity),
@@ -535,8 +526,10 @@ public theorem global_regularity_for_NS_nonvacuous_at_zero (ν : ℝ) (hν : 0 <
     ν hν
     (kato_witness_zero ν)
     (frohmanianTetherBound_zero ν)
-    1 one_pos
-    (fun t ht _ => ⟨t + 1, mem_existenceTimes_zero ν (by linarith), le_rfl⟩)
+    (by
+      intro u p _ hu0 _ T hT
+      rw [hu0, Tstar_zero_eq_top] at hT
+      exact absurd hT.symm (EReal.coe_ne_top T))
     (repaired_huniq_at_zero ν (kato_witness_zero ν))
 
 #print axioms stepField_not_physical
