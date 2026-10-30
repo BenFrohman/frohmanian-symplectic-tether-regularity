@@ -3,7 +3,7 @@
 **Author:** Benjamin Stanley Frohman ([ORCID: 0009-0006-7068-3718](https://orcid.org/0009-0006-7068-3718))  
 **Zenodo DOI (v1.1.0):** [`10.5281/zenodo.23717082`](https://doi.org/10.5281/zenodo.23717082) | **Concept DOI:** [`10.5281/zenodo.23652842`](https://doi.org/10.5281/zenodo.23652842) | **v1.0.0 DOI:** [`10.5281/zenodo.23652843`](https://doi.org/10.5281/zenodo.23652843)  
 **License:** Apache-2.0 (`Copyright (c) 2026 Benjamin Stanley Frohman`)  
-**Toolchain:** `leanprover/lean4:v4.30.0-rc1` + Mathlib 4 (`2738` build jobs, **532 theorems across 17 modules**, **0 `sorry`**, **0 non-standard axioms**)  
+**Toolchain:** `leanprover/lean4:v4.30.0-rc1` + Mathlib 4 (`2738` build jobs, **533 theorems across 17 modules**, **0 `sorry`**, **0 non-standard axioms**)  
 **Paper PDF:** [`Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.pdf`](Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.pdf)
 
 ---
@@ -34,7 +34,7 @@ These hypotheses are discharged only at $u_0\equiv0$. Nothing in this repository
 
 ---
 
-## Modules (`532 theorems`, `0 sorry`)
+## Modules (`533 theorems`, `0 sorry`)
 
 | Module | Key Declarations | Status | Mathematical Content |
 |---|---|---|---|
@@ -51,7 +51,7 @@ These hypotheses are discharged only at $u_0\equiv0$. Nothing in this repository
 | `FieldMetriplectic.lean` | `jacF_eq_zero`, `tetF_symm`, `tetF_energy_left`, `tetF_energy_right`, `dissF_nonpos`, `shearX_mixed_ne_zero`, `shearY_transverse_ne_zero` | **PROVED (Unconditional, 100 theorems)** | Metriplectic bracket on trigonometric-polynomial fields: Jacobi for the KKS part, symmetric energy-degenerate nonpositive tether part, explicit Jacobi failure of the full bracket. |
 | `ForMathlib/PiUL2.lean` | `PiL2`, `PiL2_apply`, `PiL2_idem`, `PiL2_selfAdjoint`, `PiL2_norm_le`, `PiL2_ker`, `PiL2_range`, `Pi_u_ae_eq_PiL2` | **PROVED** | $\Pi_u$ on $L^2(\mathbb{R}^3;\mathbb{R}^3)$ is Mathlib's orthogonal projection onto $(\mathrm{span}\{u\})^\perp$: linear, idempotent, self-adjoint, norm $\le1$, kernel $\mathrm{span}\{u\}$, range $(\mathrm{span}\{u\})^\perp$; equal a.e. to the pointwise `Pi_u`. |
 | `ForMathlib/Leray.lean` | `LerayProj.ofSubspace`, `divFreeL2`, `lerayL2`, `lerayL2_fixes_test` | **PROVED** | Leray projection built from the orthogonal projection onto the closure of smooth, compactly supported, divergence-free fields; self-adjointness and idempotence are theorems. |
-| `UniquenessC123.lean` | `c1_c3_not_unique`, `uniqueness_of_two_sided_feedback`, `step5_higher_order_vanishes` | **PROVED** | C1–C3 and symmetry do not determine `TetherKernel`: if it satisfies C2 and is nonzero somewhere, `2·TetherKernel` also satisfies C1–C3. Adding the minimality bound $B(F,F)\ge-\kappa\int|\omega|^2\|\Pi_u\delta F\|^2$ forces the quadratic form, and polarization gives uniqueness. A degree $n\ge3$ homogeneous remainder of a degree-2 kernel vanishes. |
+| `UniquenessC123.lean` | `c1_c3_not_unique`, `uniqueness_of_two_sided_feedback`, `step5_higher_order_vanishes`, `step5_tetherKernel` | **PROVED** | C1–C3 and symmetry do not determine `TetherKernel`: if it satisfies C2 and is nonzero somewhere, `2·TetherKernel` also satisfies C1–C3. Adding the minimality bound $B(F,F)\ge-\kappa\int|\omega|^2\|\Pi_u\delta F\|^2$ forces the quadratic form, and polarization gives uniqueness. A degree $n\ge3$ homogeneous remainder of a degree-2 kernel vanishes; for `TetherKernel` this gives $B=$ `TetherKernel`. |
 | `ForMathlib/LeibnizGaussian.lean` | `hasDerivAt_inner_curve`, `hasDerivAt_norm_sq_curve`, `hasDerivAt_norm_pow_four_curve`, `integral_heatKernel1D` | **PROVED** | Product rules for $\langle f,g\rangle$, $\|f\|^2$, $\|f\|^4$ along curves; the 1D heat kernel is positive with unit mass. |
 
 ---
