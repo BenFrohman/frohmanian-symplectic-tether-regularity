@@ -243,7 +243,7 @@ This module follows the guidance in §7 Definitions, with the following delibera
   - `uniqueness_of_minimal_tether` (the 5-step canonicity Theorem 2.3)
   - `tether_coadjoint_invariance`
   - `tethered_reproduces_classical_euler`
-  - `tethered_jacobi_identity` (the explicit verification on test functionals F_p)
+  - `tethered_jacobi_identity_conditional` (conditional on `hident`/`hvanish`; full-bracket Jacobi fails, see `FieldMetriplectic`)
 
 - `noncomputable section` + `noncomputable def` (7.1 Modifiers) is used because large parts of the development rely on classical reasoning (choice for existence of solutions to ODEs, excluded middle in case distinctions, etc.). This is the recommended pattern when a section contains noncomputable definitions.
 
@@ -1108,34 +1108,33 @@ theorem degeneracy_for_mollified_sup_norm_proxy (ε : ℝ) (ω : CoadjointOrbit)
 /-! ## Jacobi identity on the reduced orbit (Marsden–Weinstein–Ratiu + explicit test functionals) -/
 
 /-!
-### Note on the remaining `sorry` inside `tethered_jacobi_identity`
+### Status of Jacobi for the tethered bracket (corrected 2026-10-30)
 
-The large block titled "FINAL SUMMED FORMULATION" (with the explicit three-term integral
-expression involving the quadratic tether kernel B) is the result of the most recent cracking
-pass. Every term is named and the target identity is written out.
+The full tethered bracket (KKS/Lie–Poisson part + symmetric tether) does **not** satisfy
+the Jacobi identity in general. Explicit field-level counterexamples are proved in
+`FieldMetriplectic.lean` (`shearX_mixed_ne_zero`, `shearY_transverse_ne_zero`), and so is the exact
+formula Jacobiator = mixed cyclic sum (`jacT_eq_mixedSum`). The correct structure is
+**metriplectic** (Morrison). Jacobi holds for the antisymmetric classical part (`jacF_eq_zero`).
+The tether part is symmetric (`tetF_symm`), degenerate in the energy direction
+(`tetF_energy_left/right`), and nonpositive on all real fields (`dissF_nonpos`).
 
-The `sorry` that remains inside `h_cyclic_integrand_zero` (and the supporting classical MWR part)
-is of the "Classical black-box" kind for the following reasons:
-- The classical Marsden–Weinstein–Ratiu reduction theorem is a standard result in
-  infinite-dimensional symplectic geometry.
-- The cancellation of the three correction contributions when ∇ · δu = 0 follows from the
-  specific algebraic form of the quadratic correction (after L² projection Π_u) being
-  compatible with the coadjoint action of volume-preserving diffeomorphisms. This is asserted
-  in all three source documents for the test family F_p, but the sources do not contain the
-  fully expanded term-by-term algebra.
-
-These are therefore expected classical integral identities on the reduced orbit, **not** gaps
-in the novel 5-step canonicity argument. The structure around them is now fully explicit.
+`tethered_jacobi_identity_conditional` below is a **conditional** statement only. It assumes
+both `hident` (the Jacobiator equals a cyclic Lie pairing) and `hvanish` (that pairing vanishes).
+It is a rewriting of those hypotheses, not a proof of Jacobi, and the counterexamples show the
+hypotheses cannot hold for every choice of the tether data.
 -/
 
-/-- Jacobiator of the tethered bracket. Vanishing is the Jacobi identity. -/
+/-- Jacobiator of the tethered bracket. It does not vanish in general (see `FieldMetriplectic`). -/
 public noncomputable def jacobiator (F G H : Functional) (ω : CoadjointOrbit) : ℝ :=
   let GH : Functional := fun ω' => TetheredBracket G H ω'
   let HF : Functional := fun ω' => TetheredBracket H F ω'
   let FG : Functional := fun ω' => TetheredBracket F G ω'
   TetheredBracket F GH ω + TetheredBracket G HF ω + TetheredBracket H FG ω
 
-public theorem tethered_jacobi_identity (F G H : Functional) (ω : CoadjointOrbit)
+/-- **Conditional only.** If the Jacobiator equals the cyclic Lie pairing (`hident`) and that
+pairing vanishes (`hvanish`), then the Jacobiator vanishes. This is not a proof of Jacobi for the
+tethered bracket, which fails in general (`FieldJacobi.shearX_mixed_ne_zero`). -/
+public theorem tethered_jacobi_identity_conditional (F G H : Functional) (ω : CoadjointOrbit)
     (X Y Z : VelocityField)
     (_hF : FunctionalDerivative F ω = X)
     (_hG : FunctionalDerivative G ω = Y)
@@ -1247,7 +1246,7 @@ the original mathematical work (5-step canonicity + explicit Jacobi on F_p).
 While the Jacobi crack is still in progress they will show `sorryAx` — this is the honest signal.
 -/
 
-#print axioms tethered_jacobi_identity
+#print axioms tethered_jacobi_identity_conditional
 #print axioms tetherKernel_comm
 #print axioms antisymmetric_correction_diagonal_zero
 #print axioms tetherKernel_C2_of_no_gateaux

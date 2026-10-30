@@ -153,7 +153,9 @@ public theorem uniqueness_of_kernel_density
     ∀ ω F G, B ω F G = TetherKernel ω F G :=
   FrohmanianTether.uniqueness_of_kernel_density B α h_repr hα
 
-/-- Jacobi identity of the tethered bracket on the reduced orbit. -/
+/-- **Conditional** Jacobi for the tethered bracket: it only rewrites the hypotheses `hident`/`hvanish`.
+The full bracket fails Jacobi in general (`FieldJacobi.shearX_mixed_ne_zero`); the proved
+structure is metriplectic. -/
 public theorem tether_kernel_jacobi
     (F G H : Functional) (ω : CoadjointOrbit)
     (X Y Z : VelocityField)
@@ -164,7 +166,7 @@ public theorem tether_kernel_jacobi
       ∫ x, cyclicLiePairing X Y Z x ∂volume)
     (hvanish : (∫ x, cyclicLiePairing X Y Z x ∂volume) = 0) :
     jacobiator F G H ω = 0 :=
-  tethered_jacobi_identity F G H ω X Y Z hF hG hH hident hvanish
+  tethered_jacobi_identity_conditional F G H ω X Y Z hF hG hH hident hvanish
 
 /-- Picard existence for `y' = C y² − κ'' y³`. Classical ODE. -/
 public theorem comparison_ode_solution_existence
@@ -306,7 +308,7 @@ public theorem jacobi_cyclic_sum_skeleton
       ∫ x, cyclicLiePairing X Y Z x ∂volume)
     (hvanish : (∫ x, cyclicLiePairing X Y Z x ∂volume) = 0) :
     jacobiator F G H ω = 0 :=
-  tethered_jacobi_identity F G H ω X Y Z hF hG hH hident hvanish
+  tethered_jacobi_identity_conditional F G H ω X Y Z hF hG hH hident hvanish
 
 /-- Quartic Lyapunov product-rule cancellation is the Young identity of §1. -/
 public theorem lyapunov_quartic_cancellation_skeleton
