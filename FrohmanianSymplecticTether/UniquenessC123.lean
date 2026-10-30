@@ -19,6 +19,8 @@ public import FrohmanianSymplecticTether.Uniqueness
 * `uniqueness_of_two_sided_feedback`: replace saturation by the minimality bound
   `B ω F F ≥ -κ ∫ |ω|² ‖Π_u δF‖²`. Together with C3 this forces the diagonal of `B`, and
   polarization gives `B = TetherKernel`.
+* `step5_higher_order_vanishes`: a homogeneous remainder of degree `n ≥ 3` added to a
+  degree-2 kernel cannot keep the sum of degree 2; it vanishes.
 -/
 
 open MeasureTheory ForMathlib ArnoldGeometric
@@ -92,5 +94,26 @@ public theorem uniqueness_of_two_sided_feedback
 /-- `TetherKernel` meets the minimality bound, so the class is nonempty. -/
 public theorem tetherKernel_feedbackAtMost : FeedbackAtMost kappa (TetherKernel kappa) :=
   fun F ω => le_of_eq (tetherKernel_quadratic_form F ω).symm
+
+/-- Step 5. If `B = Q + R` where `B` and `Q` scale with degree 2 and `R` with degree `n ≥ 3`
+under some scaling `c` with `|c| > 1`, then `R = 0`. -/
+public theorem step5_higher_order_vanishes {X : Type*} (scale : X → X) (c : ℝ) (hc : 1 < |c|)
+    (B Q R : X → ℝ) (n : ℕ) (hn : 3 ≤ n)
+    (hsum : ∀ x, B x = Q x + R x)
+    (hB : ∀ x, B (scale x) = c ^ 2 * B x) (hQ : ∀ x, Q (scale x) = c ^ 2 * Q x)
+    (hR : ∀ x, R (scale x) = c ^ n * R x) :
+    ∀ x, R x = 0 := by
+  intro x
+  have h1 := hsum (scale x)
+  rw [hB, hQ, hR, hsum x] at h1
+  have hne : c ^ n ≠ c ^ 2 := by
+    intro h
+    have h' : |c| ^ n = |c| ^ 2 := by rw [← abs_pow, ← abs_pow, h]
+    have : |c| ^ 2 < |c| ^ n := pow_lt_pow_right₀ hc (by omega)
+    linarith
+  have : (c ^ n - c ^ 2) * R x = 0 := by linarith
+  rcases mul_eq_zero.mp this with h | h
+  · exact absurd (sub_eq_zero.mp h) hne
+  · exact h
 
 end FrohmanianTether
