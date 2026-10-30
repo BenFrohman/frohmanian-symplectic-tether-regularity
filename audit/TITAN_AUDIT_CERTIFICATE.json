@@ -6,10 +6,10 @@
     "doi": "10.5281/zenodo.23630648"
   },
   "project": {
-    "path": "/workspace/fin/frohmanian-symplectic-tether-regularity",
+    "path": "/workspace/frohmanian-symplectic-tether-regularity",
     "name": "frohmanian-symplectic-tether-regularity",
     "lean_toolchain": "leanprover/lean4:v4.30.0-rc1",
-    "git_head": "af74755b3ea7a15ac880badcb0672772e489a464"
+    "git_head": "2518c46723862bfa370aea3fd26230361ec69263"
   },
   "build": {
     "requested": false
@@ -18,9 +18,9 @@
     "ran": true,
     "exit_code": 0,
     "errors": [],
-    "modules": 21,
-    "theorems": 587,
-    "clean_theorems": 587,
+    "modules": 22,
+    "theorems": 614,
+    "clean_theorems": 614,
     "nonstandard": [],
     "per_module": {
       "FrohmanianSymplecticTether.ForMathlib.PiUL2": {
@@ -36,7 +36,7 @@
         "nonstandard": 0
       },
       "FrohmanianSymplecticTether.NS_Equations": {
-        "theorems": 143,
+        "theorems": 148,
         "nonstandard": 0
       },
       "FrohmanianSymplecticTether.C2Analysis": {
@@ -52,7 +52,7 @@
         "nonstandard": 0
       },
       "FrohmanianSymplecticTether.TetheredLyapunov": {
-        "theorems": 53,
+        "theorems": 58,
         "nonstandard": 0
       },
       "FrohmanianSymplecticTether.ArnoldGeometric": {
@@ -91,6 +91,10 @@
         "theorems": 11,
         "nonstandard": 0
       },
+      "FrohmanianSymplecticTether.GateauxRepresentative": {
+        "theorems": 17,
+        "nonstandard": 0
+      },
       "FrohmanianSymplecticTether.UniquenessC123": {
         "theorems": 7,
         "nonstandard": 0
@@ -107,7 +111,7 @@
       {
         "kind": "real_iSup_without_BddAbove",
         "file": "FrohmanianSymplecticTether/NS_Equations.lean",
-        "line": 2290,
+        "line": 2291,
         "decl": "Tstar",
         "detail": "Real iSup/sSup is 0 on unbounded ranges; downstream bounds on it may be vacuous unless BddAbove is required.",
         "in_build": true
@@ -115,7 +119,7 @@
       {
         "kind": "real_iSup_without_BddAbove",
         "file": "FrohmanianSymplecticTether/NS_Equations.lean",
-        "line": 2801,
+        "line": 2802,
         "decl": "vorticity_sup_norm",
         "detail": "Real iSup/sSup is 0 on unbounded ranges; downstream bounds on it may be vacuous unless BddAbove is required.",
         "in_build": true
@@ -123,7 +127,7 @@
       {
         "kind": "real_iSup_without_BddAbove",
         "file": "FrohmanianSymplecticTether/NS_Equations.lean",
-        "line": 2815,
+        "line": 2816,
         "decl": "strain_sup_norm",
         "detail": "Real iSup/sSup is 0 on unbounded ranges; downstream bounds on it may be vacuous unless BddAbove is required.",
         "in_build": true
@@ -150,24 +154,24 @@
     }
   },
   "tree": {
-    "sha256": "4d4759604e793c6c1d9c22f6e304a2248d0085344a926f853bc97e2a8f5c5759",
-    "files": 25,
+    "sha256": "a9a302154ac01c0c70c51d8393eed1ec5c83c273c678ac1966f31d4d919903b4",
+    "files": 26,
     "entries": [
       {
         "path": "AxiomAudit.lean",
-        "sha256": "9c7fd8a74734159ed469f185faf162395f1207d7e11b8fb5233c12dcda10169c"
+        "sha256": "ba46419d12c309d397dc774bafcbc8dfe639e8589be4c09a92c8aa77971ed97e"
       },
       {
         "path": "FrohmanianSymplecticTether.lean",
-        "sha256": "2dc9a73c8af259b966449c6013ccc3970e641290990ba1b325c6de3323329429"
+        "sha256": "180e78f0d2e0d6d41e4c2511e7b2e785cfb4ad0be3afb9a7c58c7da65a131b69"
       },
       {
         "path": "FrohmanianSymplecticTether/AnalyticPipeline.lean",
-        "sha256": "52339f5a08e2e9ffeb65389a9e4bfe9eb9f99fd6bd9afd55b658fd2f807b2a23"
+        "sha256": "39eb592ab19bc8d424085e7f901a99a7844cb55fc03e12d22016beeebe26aecd"
       },
       {
         "path": "FrohmanianSymplecticTether/ArnoldGeometric.lean",
-        "sha256": "5df575b2d095c29511613f44a5b24a3310ada142c0277a246f133f6f93d94a39"
+        "sha256": "d60be36c3c9ed8d92a2480e9857336e415bce5973b6e83e771f14f37647f2ff0"
       },
       {
         "path": "FrohmanianSymplecticTether/Assumptions.lean",
@@ -179,7 +183,7 @@
       },
       {
         "path": "FrohmanianSymplecticTether/ClosureBlueprint.lean",
-        "sha256": "0736fc388d7fee5aa633ef71ce29878ce58a8b9de91a540520c555aea3c70589"
+        "sha256": "c765bba8355e948d92473d5521c2642a79a9876295b6f6ac9bc602f876022bc5"
       },
       {
         "path": "FrohmanianSymplecticTether/FieldMetriplectic.lean",
@@ -206,8 +210,12 @@
         "sha256": "3a6f6ee37d92f9605924bdec5499abc02629591486bda9b67ef3948507e5a2da"
       },
       {
+        "path": "FrohmanianSymplecticTether/GateauxRepresentative.lean",
+        "sha256": "3af69df006c45f8a3414fdd0aa671e35f020f6925c98f0899b09424eca821ba1"
+      },
+      {
         "path": "FrohmanianSymplecticTether/GlobalRegularity.lean",
-        "sha256": "f75da2fc6999e15044f47c891cf695bdb051885d8cd2748e23c7234a0b117e8d"
+        "sha256": "cc92802ce86c2428e0c466f06a5b65463e5a9e2e6d25a1fd63fab9064e69657f"
       },
       {
         "path": "FrohmanianSymplecticTether/IndependentMajorant.lean",
@@ -215,7 +223,7 @@
       },
       {
         "path": "FrohmanianSymplecticTether/NS_Equations.lean",
-        "sha256": "dff90dd951aee477ddc23ff6e980bb883b381f7433acef2105cf4d3b9c63bc0d"
+        "sha256": "08a84c7357a7bcdbb2983c5897bf40f5991e29d7126e38d037ee12fb1185c6ed"
       },
       {
         "path": "FrohmanianSymplecticTether/Stage6Calculus.lean",
@@ -227,7 +235,7 @@
       },
       {
         "path": "FrohmanianSymplecticTether/TetheredLyapunov.lean",
-        "sha256": "d302e731c59f9e95cc28b9640edcadb431425661c9ae5996b44674273855a6da"
+        "sha256": "037d15f8b62bb49732077c2ceaf7543ec9536cebba09287bdcb3f396d811b5fc"
       },
       {
         "path": "FrohmanianSymplecticTether/Uniqueness.lean",
@@ -239,7 +247,7 @@
       },
       {
         "path": "FrohmanianSymplecticTether/VelocityTether.lean",
-        "sha256": "d85f7aa144cfc83a1cbf5c0fd9e9c910b6d74998e2ca993fa7505a7709df4bfb"
+        "sha256": "d5922b6045b019e9a2a1876e6e8c8f0630bb3c12492a60fa9ba47c2b33a60267"
       },
       {
         "path": "lake-manifest.json",
@@ -261,11 +269,11 @@
     "reasons": [],
     "vacuity_warnings_in_build": 5
   },
-  "generated_at_utc": "2026-10-30T18:33:05+00:00",
+  "generated_at_utc": "2026-10-30T18:54:35+00:00",
   "signature": {
     "alg": "ed25519",
     "public_key_b64": "YoEHEghXFxrXvYKQoWQb+oDunzwdxBgpk03gxrdC7WI=",
     "payload": "canonical JSON of report without 'signature' (sort_keys, compact, UTF-8)",
-    "value_b64": "lNr/AVEsDWLdmqd8nUtsNaeCa0kBbc13EJT/n/X0Ty5APGWtv+JFmbHZvsjr94l+2E0tizWxBXmuxkErprZCBg=="
+    "value_b64": "FInNN8ERLwWjxtZbloTJzfZjew7XwHMdmzzOtw89q0knQE//uW+K+mQuGSBTPjaeWBcqu9nt0riYg3Hy81+WAQ=="
   }
 }
