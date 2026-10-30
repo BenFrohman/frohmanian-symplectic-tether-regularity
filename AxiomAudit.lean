@@ -146,3 +146,9 @@ open Lean Elab Command
 #print axioms FrohmanianTether.metriplecticPairingVel_diag
 #print axioms FrohmanianTether.tetheredBracketVel_energy
 #print axioms FrohmanianTether.velocity_tether_product_theorem
+#print axioms FrohmanianTether.not_gateauxRepresentativeUnique
+#print axioms FrohmanianTether.not_streamFunctionRepresentative
+#print axioms FrohmanianTether.isGateauxRepresentative_of_not_differentiable
+#print axioms FrohmanianTether.regularRep_unique
+#print axioms FrohmanianTether.regularFunctionalDerivative_eq
+#print axioms FrohmanianTether.kineticEnergyCurlIdentityReg_of_regularStream

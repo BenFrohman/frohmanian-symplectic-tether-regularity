@@ -232,7 +232,7 @@ public theorem orbit_add_smul_div_free (ω ε : CoadjointOrbit) (t : ℝ)
 
 /-- Gâteaux representing field: along C¹ orbit variations, `d/dt |_{0} F(ω + t ε)`
 equals the L² pairing against `δ`. -/
-public def IsGateauxRepresentative (F : CoadjointOrbit → ℝ) (ω : CoadjointOrbit)
+@[expose] public def IsGateauxRepresentative (F : CoadjointOrbit → ℝ) (ω : CoadjointOrbit)
     (δ : T3 → EuclideanSpace ℝ (Fin 3)) : Prop :=
   ∀ (ε : CoadjointOrbit)
     (hω : ∀ i x, DifferentiableAt ℝ (fun y => ω.val y i) x)

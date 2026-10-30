@@ -50,7 +50,8 @@ theorem tetherKernelVel_eq (ω : CoadjointOrbit) (F G : Functional) :
 def KineticEnergyCurlIdentity (ω : CoadjointOrbit) : Prop :=
   curl (FunctionalDerivative KineticEnergyHamiltonian ω) = velocity_from_vorticity ω
 
-/-- `dH` is the only Gâteaux representative of `F` at `ω`. -/
+/-- `dH` is the only Gâteaux representative of `F` at `ω`. Scaffolding: false whenever `dH` is a
+representative (`not_gateauxRepresentativeUnique`). -/
 def GateauxRepresentativeUnique (F : CoadjointOrbit → ℝ) (ω : CoadjointOrbit)
     (dH : T3 → EuclideanSpace ℝ (Fin 3)) : Prop :=
   ∀ d, IsGateauxRepresentative F ω d → d = dH
@@ -66,9 +67,9 @@ theorem functionalDerivative_eq_of_unique_repr (F : CoadjointOrbit → ℝ) (ω 
 
 /-- Remaining hypothesis for `KineticEnergyCurlIdentity` at `ω`: there is a stream function `ψ`
 that is the unique Gâteaux representative of the kinetic energy at `ω` and has `curl ψ = u`.
-Not proved here for fields on `T3` (it needs Biot–Savart integration by parts). On a single
-Fourier mode the analogous statement is proved in torus-fourier-ns-lemmas
-(`curl_modeFunctionalDerivative_eq_u`). -/
+Scaffolding: false for every `ω` (`not_streamFunctionRepresentative`, GateauxRepresentative.lean),
+since a representative changed on a null set is again a representative. The regular-representative
+form is `RegularStreamRepresentative`. -/
 def StreamFunctionRepresentative (ω : CoadjointOrbit) : Prop :=
   ∃ ψ : T3 → EuclideanSpace ℝ (Fin 3),
     IsGateauxRepresentative KineticEnergyHamiltonian ω ψ ∧
