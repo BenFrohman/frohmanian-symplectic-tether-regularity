@@ -122,13 +122,12 @@ public theorem beale_kato_majda_criterion
 
 /-- Calderón–Zygmund stretching: `|ω · ∇u| ≲ C_CZ(3) ‖ω‖_∞ |ω|` once the
 strain operator-norm bound `‖Du‖ ≤ C_CZ(3) ‖ω‖_∞` is supplied (Riesz / Biot–Savart).
-Linear algebra is `convective_norm_le_of_CZ`; the Riesz bound remains the
-named CZ hyp. -/
+Linear algebra is `convective_norm_le_of_CZ`. Conditional on
+`PointwiseStrainSupBound`, which is false in general at `L∞` (CZ fails at `p = ∞`). -/
 public theorem calderon_zygmund_stretching_bound
     (ω : VorticityField) (u : VelocityField)
     (hu : ∀ x, DifferentiableAt ℝ u x)
-    (hCZ : ∀ x, ‖fderiv ℝ u x‖ ≤
-      CalderonZygmundConstant3D * vorticity_sup_norm ω) :
+    (hCZ : ∀ x, PointwiseStrainSupBound u ω CalderonZygmundConstant3D x) :
     ∀ x : T3,
       ‖convective ω u x‖ ≤
         CalderonZygmundConstant3D * vorticity_sup_norm ω * ‖ω x‖ :=
@@ -247,11 +246,7 @@ public theorem continuation_under_global_existence
     (h_finite_energy : Integrable (fun x : T3 => ‖u₀ x‖ ^ 2))
     (h_pos_ν : ν > 0)
     (w : KatoLocalWitness u₀ ν)
-    (hRiccati : ∀ u : ℝ → VelocityField, ∀ p : ℝ → PressureField,
-      NS_PDE u p ν → u 0 = u₀ →
-        ∃ Y : ℝ,
-          (∀ τ ≥ (0 : ℝ), vorticity_sup_norm (vorticity (u τ)) ≤ Y) ∧
-          Continuous (fun τ : ℝ => vorticity_sup_norm (vorticity (u τ))))
+    (hRiccati : TetheredLyapunov.UniformVorticityCeiling u₀ ν)
     (hTstar : ∀ u : ℝ → VelocityField, Tstar (u 0) ν = ⊤)
     (hbelow : ∀ u : ℝ → VelocityField,
       ∀ T : ℝ, (T : EReal) < Tstar (u 0) ν →
@@ -335,6 +330,20 @@ hypothesis on those real types, never `True` and never `sorry`.
 `∫ < ∞` comparisons on `ℝ` are not used.
 -/
 
+/-- **Riccati majorant hypothesis** (open for general data). Along every solution of the
+unmodified equations from `u₀`, `M(t) = ‖ω(t)‖_∞` is continuous and is dominated by a
+differentiable `y` obeying `y' ≤ C y² − κ'' y³` with `C, κ'' > 0`. A named, dischargeable
+`Prop`; it is not proved for general data. -/
+@[expose] public def RiccatiMajorantExists (u₀ : VelocityField) (ν : ℝ) : Prop :=
+  ∀ u : ℝ → VelocityField, ∀ p : ℝ → PressureField,
+    NS_PDE u p ν → u 0 = u₀ →
+      ∃ (C κ'' : ℝ), 0 < C ∧ 0 < κ'' ∧
+        ∃ y : ℝ → ℝ,
+          (∀ s ≥ (0 : ℝ), DifferentiableAt ℝ y s) ∧
+          (∀ s ≥ (0 : ℝ), deriv y s ≤ C * (y s) ^ 2 - κ'' * (y s) ^ 3) ∧
+          (∀ t ≥ (0 : ℝ), vorticity_sup_norm (vorticity (u t)) ≤ y t) ∧
+          Continuous (fun τ : ℝ => vorticity_sup_norm (vorticity (u τ)))
+
 /-- Sequential composition of the Symplectic Tether path.
 
 1. `local_existence_kato` produces `u` and `NS_PDE u p ν`.
@@ -342,7 +351,7 @@ hypothesis on those real types, never `True` and never `sorry`.
    (`4 C_CZ(3)` absorbed, residual `-(3/4)κ I₆`) that forces the Riccati
    field `y' ≤ C y² − κ'' y³`.
 3. A differentiable majorant of `M(t) = ‖ω(u t)‖_∞` obeying that field is
-   an explicit hypothesis (`hRiccati`); it is not proved here.
+   the named hypothesis `RiccatiMajorantExists`; it is not proved here.
 4. `regularity_from_riccati_majorant` consumes it: comparison ceiling →
    `IntegrableOn M (Icc 0 T)` → BKM `ContDiff ℝ (⊤ : ℕ∞) (u t)`.
 -/
@@ -355,14 +364,7 @@ public theorem type_composition_sequence
     (hsm : ContDiff ℝ (⊤ : ℕ∞) u₀)
     (hE : Integrable (fun x : T3 => ‖u₀ x‖ ^ 2))
     (w : KatoLocalWitness u₀ ν)
-    (hRiccati : ∀ u : ℝ → VelocityField, ∀ p : ℝ → PressureField,
-      NS_PDE u p ν → u 0 = u₀ →
-        ∃ (C κ'' : ℝ), 0 < C ∧ 0 < κ'' ∧
-          ∃ y : ℝ → ℝ,
-            (∀ s ≥ (0 : ℝ), DifferentiableAt ℝ y s) ∧
-            (∀ s ≥ (0 : ℝ), deriv y s ≤ C * (y s) ^ 2 - κ'' * (y s) ^ 3) ∧
-            (∀ t ≥ (0 : ℝ), vorticity_sup_norm (vorticity (u t)) ≤ y t) ∧
-            Continuous (fun τ : ℝ => vorticity_sup_norm (vorticity (u τ))))
+    (hRiccati : RiccatiMajorantExists u₀ ν)
     (hTstar : ∀ u : ℝ → VelocityField, Tstar (u 0) ν = ⊤)
     (hbelow : ∀ u : ℝ → VelocityField,
       ∀ T : ℝ, (T : EReal) < Tstar (u 0) ν →

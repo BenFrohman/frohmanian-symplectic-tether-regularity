@@ -47,6 +47,12 @@ The theorem `frohmanian_metriplectic_system_canonical_uniqueness_and_global_regu
 
 These hypotheses are discharged only at $u_0\equiv0$. Nothing in this repository proves global regularity for plain 3D Navier–Stokes, and nothing here solves the Clay Millennium Problem.
 
+**Named hypotheses.** Every open analytic hypothesis is a named `Prop` taken as an explicit argument:
+- `TetheredLyapunov.UniformVorticityCeiling u₀ ν` (`global_regularity`), `PhysicalUniformVorticityCeiling u₀ ν` (`global_regularity_of_restart`, `global_regularity_of_kato_estimates`), `PhysicalVorticityCubicRate u₀ ν` (`global_regularity_of_constructions`). `FrohmanianTetherBound` and `FrohmanianTetherRate` imply the physical versions (`physicalUniformVorticityCeiling_of_tetherBound`, `physicalVorticityCubicRate_of_tetherRate`). These bounds are open.
+- `ClosureBlueprint.RiccatiMajorantExists u₀ ν` (`type_composition_sequence`); `continuation_under_global_existence` takes `UniformVorticityCeiling`. Open.
+- `NavierStokes3D.PointwiseStrainSupBound u ω C x`: `‖∇u(x)‖ ≤ C‖ω‖_∞`. This is false in general: Calderón–Zygmund fails at $p=\infty$. `strain_sup_le_of_CZ`, `calderon_zygmund_stretching_bound` and `ConjecturedUnmodifiedTetherPairing` are conditional on a bound that is false in general.
+- `FrohmanianTether.StreamFunctionRepresentative ω`: a stream function $\psi$ that is the unique Gâteaux representative of the kinetic energy at $\omega$ with $\operatorname{curl}\psi=u$. It implies `KineticEnergyCurlIdentity ω` (`kineticEnergyCurlIdentity_of_streamFunctionRepresentative`, via `functionalDerivative_eq_of_unique_repr`). It is not proved for fields on $\mathbb{T}^3$. The single-Fourier-mode version, with the derivative defined by choice in the same way, is proved in torus-fourier-ns-lemmas (`curl_modeFunctionalDerivative_eq_u`).
+
 ---
 
 ## Modules (`577 theorems`, `0 sorry`)
