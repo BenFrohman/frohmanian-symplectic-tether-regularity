@@ -41,6 +41,8 @@ open Set Filter
 
 namespace AnalyticPipeline
 
+variable {kappa : ℝ}
+
 /-- Vector field of the independent majorant: `f(z) = z² (C − κ'' z)`. -/
 public theorem majorant_vector_field_eq (C κ'' z : ℝ) :
     C * z ^ 2 - κ'' * z ^ 3 = z ^ 2 * (C - κ'' * z) := by
@@ -73,7 +75,6 @@ public theorem youngs_absorption_elimination
     4 * CalderonZygmundConstant3D * M * I₄ - kappa * I₆ ≤
       C_abs * (M ^ 3 * phi_norm ^ ((3 : ℝ) / 2)) -
         (3 / 4 : ℝ) * kappa * I₆ := by
-  have : kappa = CalderonZygmundConstant3D := rfl
   linarith
 
 /-- Phase-plane upper bound for the Riccati differential *inequality*
@@ -350,21 +351,21 @@ public theorem young_inequality_eps
 
 /-- Explicit absorption coefficient after ε-Young with `ε = 3κ/8`
 (so the `I₆` coefficient is exactly `κ/4`). -/
-public noncomputable def absorptionCoeff (C_Sob phi : ℝ) : ℝ :=
+public noncomputable def absorptionCoeff (kappa : ℝ) (C_Sob phi : ℝ) : ℝ :=
   let ε : ℝ := 3 * kappa / 8
   ε ^ (-(2 : ℝ)) / 3 * (4 * kappa * C_Sob) ^ 3 * (phi ^ ((3 : ℝ) / 2) + 1)
 
 /-- From Hölder `I₄ ≤ C_Sob φ I₆^{2/3}`, ε-Young with `ε = 3κ/8` yields
 the exact stretching absorption used by `youngs_absorption_elimination`. -/
-public theorem stretching_bound_of_holder
+public theorem stretching_bound_of_holder (hκ : 0 < kappa)
     (M I4 I6 phi C_Sob : ℝ)
     (hM : 0 ≤ M) (_hI4 : 0 ≤ I4) (hI6 : 0 ≤ I6) (hphi : 0 ≤ phi)
     (hS : 0 ≤ C_Sob)
     (hH : I4 ≤ C_Sob * phi * I6 ^ ((2 : ℝ) / 3)) :
     4 * kappa * M * I4 ≤
       (kappa / 4) * I6 +
-        absorptionCoeff C_Sob phi * (M ^ 3 * phi ^ ((3 : ℝ) / 2)) := by
-  have hκ := kappa_pos
+        absorptionCoeff kappa C_Sob phi * (M ^ 3 * phi ^ ((3 : ℝ) / 2)) := by
+  have hκ := hκ
   set a := I6 ^ ((2 : ℝ) / 3)
   set b := 4 * kappa * C_Sob * M * phi
   set ε : ℝ := 3 * kappa / 8
@@ -398,7 +399,7 @@ public theorem stretching_bound_of_holder
     nlinarith [hφ]
   have hrem :
       ε ^ (-((3 : ℝ) / ((3 : ℝ) / 2))) * b ^ (3 : ℝ) / 3 ≤
-        absorptionCoeff C_Sob phi * (M ^ 3 * phi ^ ((3 : ℝ) / 2)) := by
+        absorptionCoeff kappa C_Sob phi * (M ^ 3 * phi ^ ((3 : ℝ) / 2)) := by
     have hb_nonneg : 0 ≤ 4 * kappa * C_Sob :=
       mul_nonneg (mul_nonneg (by norm_num : (0 : ℝ) ≤ 4) hκ.le) hS
     have hb_rpow :
@@ -412,7 +413,7 @@ public theorem stretching_bound_of_holder
     have hε2 : ε ^ (-((3 : ℝ) / ((3 : ℝ) / 2))) = ε ^ (-(2 : ℝ)) := by
       rw [hqp]
     have hAbs :
-        absorptionCoeff C_Sob phi =
+        absorptionCoeff kappa C_Sob phi =
           ε ^ (-(2 : ℝ)) / 3 * (4 * kappa * C_Sob) ^ 3 *
             (phi ^ ((3 : ℝ) / 2) + 1) := rfl
     have hpow3 : (4 * kappa * C_Sob) ^ (3 : ℝ) = (4 * kappa * C_Sob) ^ 3 :=
@@ -433,7 +434,7 @@ public theorem stretching_bound_of_holder
     _ = (kappa / 4) * I6 +
           ε ^ (-((3 : ℝ) / ((3 : ℝ) / 2))) * b ^ (3 : ℝ) / 3 := by rw [hcoeff]
     _ ≤ (kappa / 4) * I6 +
-          absorptionCoeff C_Sob phi * (M ^ 3 * phi ^ ((3 : ℝ) / 2)) := by
+          absorptionCoeff kappa C_Sob phi * (M ^ 3 * phi ^ ((3 : ℝ) / 2)) := by
         linarith [hrem]
 
 /-- Hölder I4 with the paper's Sobolev gate: `∫|ω|⁴|φ| ≤ C_Sob ‖φ‖_∞ (∫|ω|⁶)^{2/3}`

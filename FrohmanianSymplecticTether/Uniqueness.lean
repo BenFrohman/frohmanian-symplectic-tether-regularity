@@ -60,6 +60,8 @@ open NavierStokes3D
 open MeasureTheory ForMathlib
 open scoped InnerProductSpace
 
+variable {kappa : ℝ}
+
 /-!
 ## Tether Uniqueness (5-Step Canonicity)
 
@@ -119,7 +121,7 @@ public def ProducesNegativeFeedbackWith (k : ℝ)
 /-- C3 is feedback at strength `κ`. -/
 public theorem producesControllableNegativeFeedback_iff_with_kappa
     (B : CoadjointOrbit → Functional → Functional → ℝ) :
-    ProducesControllableNegativeFeedback B ↔ ProducesNegativeFeedbackWith kappa B :=
+    ProducesControllableNegativeFeedback kappa B ↔ ProducesNegativeFeedbackWith kappa B :=
   Iff.rfl
 
 /-- Step 4: feedback at any strength `k > 0` makes the diagonal of `B` nonpositive. -/
@@ -156,7 +158,7 @@ public def HasTetherKernelDensity
         ∂volume
 
 /-- Canonical density of `TetherKernel`: `-κ |ω(x)|²`. -/
-public noncomputable def canonicalTetherDensity (ω : CoadjointOrbit) (x : T3) : ℝ :=
+public noncomputable def canonicalTetherDensity (kappa : ℝ) (ω : CoadjointOrbit) (x : T3) : ℝ :=
   -kappa * ‖ω.val x‖ ^ 2
 
 /-- If `B` is defined by a density `α` and `α = -κ |ω|²` pointwise, then
@@ -167,8 +169,8 @@ public theorem uniqueness_of_kernel_density
     (B : CoadjointOrbit → Functional → Functional → ℝ)
     (α : CoadjointOrbit → T3 → ℝ)
     (h_repr : HasTetherKernelDensity B α)
-    (hα : ∀ ω x, α ω x = canonicalTetherDensity ω x) :
-    ∀ (ω : CoadjointOrbit) (F G : Functional), B ω F G = TetherKernel ω F G := by
+    (hα : ∀ ω x, α ω x = canonicalTetherDensity kappa ω x) :
+    ∀ (ω : CoadjointOrbit) (F G : Functional), B ω F G = TetherKernel kappa ω F G := by
   intro ω F G
   have hB := h_repr ω F G
   let KFG : T3 → ℝ := fun x =>
@@ -185,7 +187,7 @@ public theorem uniqueness_of_kernel_density
     _ = ∫ x, (-kappa) * (‖ω.val x‖ ^ 2 * KFG x) ∂volume := by rw [hfun]
     _ = -kappa * ∫ x, ‖ω.val x‖ ^ 2 * KFG x ∂volume :=
         integral_const_mul (μ := volume) _ _
-    _ = TetherKernel ω F G := by
+    _ = TetherKernel kappa ω F G := by
         simp [TetherKernel, KFG]
 
 /-- Function-equality form: a density equal to `canonicalTetherDensity` as
@@ -194,8 +196,8 @@ public theorem uniqueness_of_kernel_density_fun
     (B : CoadjointOrbit → Functional → Functional → ℝ)
     (α : CoadjointOrbit → T3 → ℝ)
     (h_repr : HasTetherKernelDensity B α)
-    (hα : α = canonicalTetherDensity) :
-    B = TetherKernel := by
+    (hα : α = canonicalTetherDensity kappa) :
+    B = TetherKernel kappa := by
   funext ω
   funext F
   funext G
@@ -203,7 +205,7 @@ public theorem uniqueness_of_kernel_density_fun
 
 /-- `TetherKernel` is exactly the pairing against the canonical density. -/
 public theorem tetherKernel_has_canonical_density :
-    HasTetherKernelDensity TetherKernel canonicalTetherDensity := by
+    HasTetherKernelDensity (TetherKernel kappa) (canonicalTetherDensity kappa) := by
   intro ω F G
   unfold TetherKernel canonicalTetherDensity
   have hf :
@@ -230,7 +232,7 @@ public theorem step2_degree_of_canonical_density
     (B : CoadjointOrbit → Functional → Functional → ℝ)
     (α : CoadjointOrbit → T3 → ℝ)
     (h_repr : HasTetherKernelDensity B α)
-    (hα : ∀ ω x, α ω x = canonicalTetherDensity ω x)
+    (hα : ∀ ω x, α ω x = canonicalTetherDensity kappa ω x)
     (F G : Functional) (ω : CoadjointOrbit) (c : ℝ)
     (hFD_F : FunctionalDerivative F
         ⟨fun x => c • ω.val x, fun x => by
@@ -251,8 +253,8 @@ public theorem step2_degree_of_canonical_density
   set ωc : CoadjointOrbit :=
     ⟨fun x => c • ω.val x, fun x => by
       rw [div_smul, ω.property x, mul_zero]⟩
-  have hTc : B ωc F G = TetherKernel ωc F G := hB ωc F G
-  have hT : B ω F G = TetherKernel ω F G := hB ω F G
+  have hTc : B ωc F G = TetherKernel kappa ωc F G := hB ωc F G
+  have hT : B ω F G = TetherKernel kappa ω F G := hB ω F G
   have hfun :
       (fun x =>
         ‖ωc.val x‖ ^ 2 *
@@ -269,7 +271,7 @@ public theorem step2_degree_of_canonical_density
     simp [ωc, hFD_F, hFD_G, hPi, norm_smul, Real.norm_eq_abs, sq_abs, mul_pow,
       mul_assoc]
   calc
-    B ωc F G = TetherKernel ωc F G := hTc
+    B ωc F G = TetherKernel kappa ωc F G := hTc
     _ = -kappa *
           ∫ x,
             ‖ωc.val x‖ ^ 2 *
@@ -297,7 +299,7 @@ public theorem step2_degree_of_canonical_density
               ∂volume) := by
           rw [integral_const_mul (μ := volume)]
           ring
-    _ = c ^ 2 * TetherKernel ω F G := by
+    _ = c ^ 2 * TetherKernel kappa ω F G := by
           simp [TetherKernel]
     _ = c ^ 2 * B ω F G := by
           rw [hT]
@@ -344,10 +346,10 @@ public theorem step2_degree
         ⟨fun x => c • ω.val x, fun x => by
           rw [div_smul, ω.property x, mul_zero]⟩) =
       Pi_u (velocity_from_vorticity ω)) :
-    TetherKernel ⟨fun x => c • ω.val x, fun x => by
+    TetherKernel kappa ⟨fun x => c • ω.val x, fun x => by
           rw [div_smul, ω.property x, mul_zero]⟩ F G =
-      c ^ 2 * TetherKernel ω F G :=
-  step2_degree_of_canonical_density TetherKernel canonicalTetherDensity
+      c ^ 2 * TetherKernel kappa ω F G :=
+  step2_degree_of_canonical_density (TetherKernel kappa) (canonicalTetherDensity kappa)
     tetherKernel_has_canonical_density (fun _ _ => rfl) F G ω c hFD_F hFD_G hPi
 
 /-- Step 5 for `TetherKernel`: no degree `≥ 3` remainder, because the kernel
@@ -368,9 +370,9 @@ public theorem step5_higher_order
           rw [div_smul, ω.property x, mul_zero]⟩) =
       Pi_u (velocity_from_vorticity ω))
     {n : Nat} (_hn : 3 ≤ n) :
-    TetherKernel ⟨fun x => c • ω.val x, fun x => by
+    TetherKernel kappa ⟨fun x => c • ω.val x, fun x => by
           rw [div_smul, ω.property x, mul_zero]⟩ F G =
-      c ^ 2 * TetherKernel ω F G :=
+      c ^ 2 * TetherKernel kappa ω F G :=
   step2_degree F G ω c hFD_F hFD_G hPi
 
 /-- `step2_degree` with the `Π_u` hypothesis discharged for `c ≠ 0`. -/
@@ -384,15 +386,15 @@ public theorem step2_degree_of_ne_zero
         ⟨fun x => c • ω.val x, fun x => by
           rw [div_smul, ω.property x, mul_zero]⟩ =
       FunctionalDerivative G ω) :
-    TetherKernel ⟨fun x => c • ω.val x, fun x => by
+    TetherKernel kappa ⟨fun x => c • ω.val x, fun x => by
           rw [div_smul, ω.property x, mul_zero]⟩ F G =
-      c ^ 2 * TetherKernel ω F G :=
+      c ^ 2 * TetherKernel kappa ω F G :=
   step2_degree F G ω c hFD_F hFD_G (hPi_of_ne_zero ω c hc)
 
 /-- Minimality: the correction saturates the C3 quadratic form of `TetherKernel`. -/
-public def SaturatesTetherQuadratic
+public def SaturatesTetherQuadratic (kappa : ℝ)
     (B : CoadjointOrbit → Functional → Functional → ℝ) : Prop :=
-  ∀ (F : Functional) (ω : CoadjointOrbit), B ω F F = TetherKernel ω F F
+  ∀ (F : Functional) (ω : CoadjointOrbit), B ω F F = TetherKernel kappa ω F F
 
 /-- Polarization identity on functionals (`F+G` is pointwise addition). -/
 public def Polarizes
@@ -409,30 +411,30 @@ public theorem tetherKernel_polarizes
     (ω : CoadjointOrbit) (F G : Functional)
     (_hδ : FunctionalDerivative (fun ω' => F ω' + G ω') ω =
       FunctionalDerivative F ω + FunctionalDerivative G ω) :
-    Polarizes TetherKernel →
-      2 * TetherKernel ω F G =
-        TetherKernel ω (fun ω' => F ω' + G ω') (fun ω' => F ω' + G ω') -
-          TetherKernel ω F F - TetherKernel ω G G := by
+    Polarizes (TetherKernel kappa) →
+      2 * TetherKernel kappa ω F G =
+        TetherKernel kappa ω (fun ω' => F ω' + G ω') (fun ω' => F ω' + G ω') -
+          TetherKernel kappa ω F F - TetherKernel kappa ω G G := by
   intro hP
   simpa using hP ω F G
 
 /-- Unique minimal bilinear correction: C1–C3 plus saturation of the
 quadratic form plus polarization. This is the paper's "minimal" uniqueness,
 stated for a symmetric `B`, the metriplectic (dissipative) component. -/
-public theorem uniqueness_of_minimal_tether
+public theorem uniqueness_of_minimal_tether (hκ : 0 < kappa)
     (B : CoadjointOrbit → Functional → Functional → ℝ)
     (h_sym : ∀ ω F G, B ω F G = B ω G F)
     (hC1 : InvariantUnderCoadjointAction B)
     (hC2 : DegenerateWRTKineticEnergy B)
-    (hC3 : ProducesControllableNegativeFeedback B)
-    (h_sat : SaturatesTetherQuadratic B)
+    (hC3 : ProducesControllableNegativeFeedback kappa B)
+    (h_sat : SaturatesTetherQuadratic kappa B)
     (h_polarB : Polarizes B)
-    (h_polarT : Polarizes TetherKernel) :
-    ∀ (ω : CoadjointOrbit) (F G : Functional), B ω F G = TetherKernel ω F G := by
+    (h_polarT : Polarizes (TetherKernel kappa)) :
+    ∀ (ω : CoadjointOrbit) (F G : Functional), B ω F G = TetherKernel kappa ω F G := by
   intro ω F G
   have _h1 := step1_locality B h_sym hC1
   have _h3 := step3_projection B h_sym hC2
-  have _h4 := step4_coefficient B h_sym kappa kappa_pos hC3
+  have _h4 := step4_coefficient B h_sym kappa hκ hC3
   have hB := h_polarB ω F G
   have hT := h_polarT ω F G
   have hFF := h_sat F ω
@@ -443,7 +445,7 @@ public theorem uniqueness_of_minimal_tether
 /-- `TetherKernel` is symmetric in `F` and `G` because the real inner product
 `⟨Π_u δF, Π_u δG⟩` is symmetric. -/
 public theorem tetherKernel_symmetric (ω : CoadjointOrbit) (F G : Functional) :
-    TetherKernel ω F G = TetherKernel ω G F :=
+    TetherKernel kappa ω F G = TetherKernel kappa ω G F :=
   tetherKernel_comm ω F G
 
 /-- Symmetric polarization uniqueness of `TetherKernel`: because `TetherKernel` is a
@@ -455,11 +457,11 @@ public theorem uniqueness_of_minimal_symmetric_tether
     (_h_sym : ∀ ω F G, B ω F G = B ω G F)
     (_hC1 : InvariantUnderCoadjointAction B)
     (_hC2 : DegenerateWRTKineticEnergy B)
-    (_hC3 : ProducesControllableNegativeFeedback B)
-    (h_sat : SaturatesTetherQuadratic B)
+    (_hC3 : ProducesControllableNegativeFeedback kappa B)
+    (h_sat : SaturatesTetherQuadratic kappa B)
     (h_polarB : Polarizes B)
-    (h_polarT : Polarizes TetherKernel) :
-    ∀ (ω : CoadjointOrbit) (F G : Functional), B ω F G = TetherKernel ω F G := by
+    (h_polarT : Polarizes (TetherKernel kappa)) :
+    ∀ (ω : CoadjointOrbit) (F G : Functional), B ω F G = TetherKernel kappa ω F G := by
   intro ω F G
   have hB := h_polarB ω F G
   have hT := h_polarT ω F G

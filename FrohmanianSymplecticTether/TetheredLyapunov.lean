@@ -480,6 +480,8 @@ open Filter Topology Metric Set
 open scoped InnerProductSpace NNReal
 
 noncomputable section
+
+variable {kappa : ℝ}
 -- Required because the majorant ODE comparison and integral estimates in Lemma 3.1
 -- depend on MeasureTheory.integral (noncomputable in this mathlib pin).
 -- All novel geometric content stays in SymplecticTether.
@@ -516,16 +518,16 @@ public noncomputable def EnstrophyAccumulation (u : ℝ → VelocityField) (ω :
 /-- Mollified quartic Lyapunov functional
 `S_ε(t) = ∫ (½ |ω_ε|² + (κ/4) |ω_ε|⁴ φ_ε) dλ`. The factor `1/4` is cancelled by the
 product-rule `4` when differentiating the quartic. -/
-public noncomputable def LyapunovS (ωε : VorticityField) (phi : T3 → ℝ) : ℝ :=
+public noncomputable def LyapunovS (kappa : ℝ) (ωε : VorticityField) (phi : T3 → ℝ) : ℝ :=
   ∫ x, (1 / 2) * ‖ωε x‖ ^ 2 + (kappa / 4) * ‖ωε x‖ ^ 4 * phi x ∂volume
 
 /-- Paper 21 May 2026 §10 (10): unweighted mollified Lyapunov
 `S_ε = ∫ (½|ω_ε|² + (κ/4)|ω_ε|⁴) dλ`. This is `LyapunovS` at the constant weight `φ ≡ 1`. -/
-public noncomputable def LyapunovSε (ωε : VorticityField) : ℝ :=
-  LyapunovS ωε (fun _ => 1)
+public noncomputable def LyapunovSε (kappa : ℝ) (ωε : VorticityField) : ℝ :=
+  LyapunovS kappa ωε (fun _ => 1)
 
 public theorem lyapunovSε_eq (ωε : VorticityField) :
-    LyapunovSε ωε =
+    LyapunovSε kappa ωε =
       ∫ x, (1 / 2) * ‖ωε x‖ ^ 2 + (kappa / 4) * ‖ωε x‖ ^ 4 ∂volume := by
   simp [LyapunovSε, LyapunovS]
 
@@ -533,11 +535,11 @@ public theorem lyapunovSε_eq (ωε : VorticityField) :
 `S = ∫ ½|ω|² − (κ/2)|ω|⁴ φ`. The minus is what turns the `|ω|⁶` source
 in `dQ/dt` (`Q = ∫|ω|⁴ φ`) into the leading negative quartic. This is
 not `LyapunovS` (May 21 (10) uses `+(κ/4)`). -/
-@[expose] public noncomputable def LyapunovSminus (ωε : VorticityField) (phi : T3 → ℝ) : ℝ :=
+@[expose] public noncomputable def LyapunovSminus (kappa : ℝ) (ωε : VorticityField) (phi : T3 → ℝ) : ℝ :=
   ∫ x, (1 / 2) * ‖ωε x‖ ^ 2 - (kappa / 2) * ‖ωε x‖ ^ 4 * phi x ∂volume
 
 public theorem lyapunovSminus_eq (ωε : VorticityField) (phi : T3 → ℝ) :
-    LyapunovSminus ωε phi =
+    LyapunovSminus kappa ωε phi =
       ∫ x, (1 / 2) * ‖ωε x‖ ^ 2 - (kappa / 2) * ‖ωε x‖ ^ 4 * phi x ∂volume := by
   simp [LyapunovSminus]
 
@@ -556,11 +558,11 @@ public theorem lyapunovSminus_source_density (ω : EuclideanSpace ℝ (Fin 3)) :
 /-- Plus/minus dichotomy, upper bound: if `φ ≥ 0` then
 `½|ω|² − (κ/2)|ω|⁴ φ ≤ ½|ω|²`. The minus-weight functional does not
 control enstrophy from above any better than the quadratic part. -/
-public theorem lyapunovSminus_density_le_half_norm_sq
+public theorem lyapunovSminus_density_le_half_norm_sq (hκ : 0 < kappa)
     (ω : EuclideanSpace ℝ (Fin 3)) (phi : ℝ) (hφ : 0 ≤ phi) :
     (1 / 2 : ℝ) * ‖ω‖ ^ 2 - (kappa / 2) * ‖ω‖ ^ 4 * phi ≤
       (1 / 2 : ℝ) * ‖ω‖ ^ 2 := by
-  have hκ : 0 ≤ kappa / 2 := div_nonneg kappa_pos.le (by norm_num)
+  have hκ : 0 ≤ kappa / 2 := div_nonneg hκ.le (by norm_num)
   have hterm : 0 ≤ (kappa / 2) * ‖ω‖ ^ 4 * phi :=
     mul_nonneg (mul_nonneg hκ (pow_nonneg (norm_nonneg _) _)) hφ
   linarith
@@ -568,12 +570,12 @@ public theorem lyapunovSminus_density_le_half_norm_sq
 /-- Lower bound for the minus density: `½|ω|² − (κ/2)|ω|⁴ φ` is at least
 `½|ω|² − (κ/2) B |ω|⁴` when `|φ| ≤ B`. This is **not** nonnegative:
 the next lemma records when it is strictly negative. -/
-public theorem lyapunovSminus_density_ge_of_abs_phi
+public theorem lyapunovSminus_density_ge_of_abs_phi (hκ : 0 < kappa)
     (ω : EuclideanSpace ℝ (Fin 3)) (phi B : ℝ)
     (_hB : 0 ≤ B) (hφ : |phi| ≤ B) :
     (1 / 2 : ℝ) * ‖ω‖ ^ 2 - (kappa / 2) * B * ‖ω‖ ^ 4 ≤
       (1 / 2 : ℝ) * ‖ω‖ ^ 2 - (kappa / 2) * ‖ω‖ ^ 4 * phi := by
-  have hκ : 0 ≤ kappa / 2 := div_nonneg kappa_pos.le (by norm_num)
+  have hκ : 0 ≤ kappa / 2 := div_nonneg hκ.le (by norm_num)
   have h4 : 0 ≤ ‖ω‖ ^ 4 := pow_nonneg (norm_nonneg _) _
   have hphi_le : phi ≤ B := (abs_le.mp hφ).2
   have hmul :
@@ -585,11 +587,11 @@ public theorem lyapunovSminus_density_ge_of_abs_phi
 density is strictly negative. Accumulated `φ ∼ ∫|ω|²` along trajectories
 crosses this threshold whenever `M` stays large, so `S_minus` is not a
 global Lyapunov for `‖ω‖_∞`. -/
-public theorem lyapunovSminus_density_neg_of_large_weight
+public theorem lyapunovSminus_density_neg_of_large_weight (hκ : 0 < kappa)
     (ω : EuclideanSpace ℝ (Fin 3)) (phi : ℝ)
     (hω : 0 < ‖ω‖) (hφ : (1 / kappa) < ‖ω‖ ^ 2 * phi) :
     (1 / 2 : ℝ) * ‖ω‖ ^ 2 - (kappa / 2) * ‖ω‖ ^ 4 * phi < 0 := by
-  have hk : 0 < kappa := kappa_pos
+  have hk : 0 < kappa := hκ
   have hω2 : 0 < ‖ω‖ ^ 2 := sq_pos_of_pos hω
   have h1 : (1 : ℝ) < kappa * (‖ω‖ ^ 2 * phi) := by
     have hmul := mul_lt_mul_of_pos_left hφ hk
@@ -676,7 +678,7 @@ public theorem hasDerivAt_lyapunov_density_unweighted
       (fun s => (1 / 2 : ℝ) * ‖v s‖ ^ 2 + (kappa / 4) * ‖v s‖ ^ 4)
       (inner ℝ (v t) v' * (1 + kappa * ‖v t‖ ^ 2)) t := by
   have hφ : HasDerivAt (fun _ : ℝ => (1 : ℝ)) (0 : ℝ) t := hasDerivAt_const t (1 : ℝ)
-  have h := hasDerivAt_lyapunov_density hv hφ
+  have h := hasDerivAt_lyapunov_density (kappa := kappa) hv hφ
   have hfun :
       (fun s => (1 / 2 : ℝ) * ‖v s‖ ^ 2 + (kappa / 4) * ‖v s‖ ^ 4) =
         fun s =>
@@ -701,7 +703,7 @@ public theorem hasDerivAt_lyapunov_plus_of_enstrophy_source
       (fun s => (1 / 2 : ℝ) * ‖v s‖ ^ 2 + (kappa / 4) * ‖v s‖ ^ 4 * phi s)
       (inner ℝ (v t) v' * (1 + kappa * ‖v t‖ ^ 2 * phi t)
         + (kappa / 4) * ‖v t‖ ^ 6) t := by
-  have h := hasDerivAt_lyapunov_density hv hφ
+  have h := hasDerivAt_lyapunov_density (kappa := kappa) hv hφ
   convert h using 1
   ring
 
@@ -767,24 +769,24 @@ The uniform bound is obtained a posteriori by supremum over all such intervals.
 -- Algebraic Young cancellation is a closed term. The PDE identification
 -- (`hIdent`), the Sobolev constant `C_Sob` and the Hölder/Young inputs are
 -- explicit hypotheses on real integrals — never `True`, never `sorry`.
-lemma differential_inequality_after_tether_and_absorption
+lemma differential_inequality_after_tether_and_absorption (hκCZ : kappa = CalderonZygmundConstant3D) (hκ : 0 < kappa)
     (ε : ℝ) (ω : ℝ → VorticityField) (t : ℝ) (phi : T3 → ℝ) (C_abs : ℝ)
     (hCabs : 0 ≤ C_abs)
     (C_Sob : ℝ) (hCSob : 0 < C_Sob)
-    (hAbs : AnalyticPipeline.absorptionCoeff C_Sob (⨆ x, |phi x|) ≤ C_abs)
+    (hAbs : AnalyticPipeline.absorptionCoeff kappa C_Sob (⨆ x, |phi x|) ≤ C_abs)
     (hφbdd : BddAbove (Set.range fun x => |phi x|))
     (hωLp : MemLp (fun x : T3 => ‖MollifiedVorticity ω ε t x‖ ^ 4)
       (ENNReal.ofReal ((3 : ℝ) / 2)) volume)
     (h1 : MemLp (fun _ : T3 => (1 : ℝ)) (ENNReal.ofReal 3) volume)
     (hvol : (∫ _x, (1 : ℝ) ∂volume) ^ ((1 : ℝ) / 3) ≤ C_Sob)
-    (hIdent : deriv (fun s => LyapunovS (MollifiedVorticity ω ε s) phi) t ≤
+    (hIdent : deriv (fun s => LyapunovS kappa (MollifiedVorticity ω ε s) phi) t ≤
       4 * CalderonZygmundConstant3D * MollifiedSupNorm ω ε t *
         (∫ x, ‖MollifiedVorticity ω ε t x‖ ^ 4 * |phi x| ∂volume) -
       kappa * ∫ x, ‖MollifiedVorticity ω ε t x‖ ^ 6 ∂volume) :
-    deriv (fun s => LyapunovS (MollifiedVorticity ω ε s) phi) t ≤
+    deriv (fun s => LyapunovS kappa (MollifiedVorticity ω ε s) phi) t ≤
       C_abs * (1 + MollifiedSupNorm ω ε t ^ 3 *
         (⨆ x, |phi x|) ^ ((3 : ℝ) / 2)) -
-      kappa' * ∫ x, ‖MollifiedVorticity ω ε t x‖ ^ 6 ∂volume := by
+      kappa' kappa * ∫ x, ‖MollifiedVorticity ω ε t x‖ ^ 6 ∂volume := by
   set ωε := fun s => MollifiedVorticity ω ε s
   set I6 := ∫ x, ‖ωε t x‖ ^ 6 ∂volume
   set I4 := ∫ x, ‖ωε t x‖ ^ 4 * |phi x| ∂volume
@@ -805,15 +807,15 @@ lemma differential_inequality_after_tether_and_absorption
       AnalyticPipeline.holder_I4_le_sobolev (ωε t) phi phiLinf
         hphi_le hphi C_Sob hωLp h1 hvol
   have hYoung0 :=
-    AnalyticPipeline.stretching_bound_of_holder M I4 I6 phiLinf C_Sob
+    AnalyticPipeline.stretching_bound_of_holder hκ M I4 I6 phiLinf C_Sob
       hM hI4 hI6 hphi hCSob.le hHolder
   -- The paper's C_abs is at least the explicit ε-Young coefficient.
   have hYoung :
       4 * CalderonZygmundConstant3D * M * I4 ≤
         (kappa / 4) * I6 + C_abs * (M ^ 3 * phiLinf ^ ((3 : ℝ) / 2)) := by
-    have hκ : kappa = CalderonZygmundConstant3D := rfl
+    have hκ : kappa = CalderonZygmundConstant3D := hκCZ
     have hAbs' :
-        AnalyticPipeline.absorptionCoeff C_Sob phiLinf ≤ C_abs := by
+        AnalyticPipeline.absorptionCoeff kappa C_Sob phiLinf ≤ C_abs := by
       simpa [phiLinf] using hAbs
     have hnn :
         0 ≤ M ^ 3 * phiLinf ^ ((3 : ℝ) / 2) :=
@@ -828,11 +830,11 @@ lemma differential_inequality_after_tether_and_absorption
         C_abs * (1 + M ^ 3 * phiLinf ^ ((3 : ℝ) / 2)) :=
     mul_le_mul_of_nonneg_left (le_add_of_nonneg_left zero_le_one) hCabs
   calc
-    deriv (fun s => LyapunovS (ωε s) phi) t
+    deriv (fun s => LyapunovS kappa (ωε s) phi) t
         ≤ 4 * CalderonZygmundConstant3D * M * I4 - kappa * I6 := hIdent
     _ ≤ C_abs * (M ^ 3 * phiLinf ^ ((3 : ℝ) / 2)) - (3 / 4 : ℝ) * kappa * I6 := hAlg
-    _ ≤ C_abs * (1 + M ^ 3 * phiLinf ^ ((3 : ℝ) / 2)) - kappa' * I6 := by
-        have hκ' : kappa' = (3 / 4 : ℝ) * kappa := rfl
+    _ ≤ C_abs * (1 + M ^ 3 * phiLinf ^ ((3 : ℝ) / 2)) - kappa' kappa * I6 := by
+        have hκ' : kappa' kappa = (3 / 4 : ℝ) * kappa := rfl
         rw [hκ']
         linarith [hgap]
 
@@ -842,24 +844,24 @@ def mollified_vorticity (ε : ℝ) (ω : ℝ → VorticityField) (t : ℝ) : Vor
   MollifiedVorticity ω ε t
 
 -- Key differential inequality after tether + mollification + absorption
-lemma key_differential_inequality (ε : ℝ) (ω : ℝ → VorticityField) (t : ℝ)
+lemma key_differential_inequality (hκCZ : kappa = CalderonZygmundConstant3D) (hκ : 0 < kappa) (ε : ℝ) (ω : ℝ → VorticityField) (t : ℝ)
     (phi : T3 → ℝ) (C_abs : ℝ) (hCabs : 0 ≤ C_abs)
     (C_Sob : ℝ) (hCSob : 0 < C_Sob)
-    (hAbs : AnalyticPipeline.absorptionCoeff C_Sob (⨆ x, |phi x|) ≤ C_abs)
+    (hAbs : AnalyticPipeline.absorptionCoeff kappa C_Sob (⨆ x, |phi x|) ≤ C_abs)
     (hφbdd : BddAbove (Set.range fun x => |phi x|))
     (hωLp : MemLp (fun x : T3 => ‖MollifiedVorticity ω ε t x‖ ^ 4)
       (ENNReal.ofReal ((3 : ℝ) / 2)) volume)
     (h1 : MemLp (fun _ : T3 => (1 : ℝ)) (ENNReal.ofReal 3) volume)
     (hvol : (∫ _x, (1 : ℝ) ∂volume) ^ ((1 : ℝ) / 3) ≤ C_Sob)
-    (hIdent : deriv (fun s => LyapunovS (MollifiedVorticity ω ε s) phi) t ≤
+    (hIdent : deriv (fun s => LyapunovS kappa (MollifiedVorticity ω ε s) phi) t ≤
       4 * CalderonZygmundConstant3D * MollifiedSupNorm ω ε t *
         (∫ x, ‖MollifiedVorticity ω ε t x‖ ^ 4 * |phi x| ∂volume) -
       kappa * ∫ x, ‖MollifiedVorticity ω ε t x‖ ^ 6 ∂volume) :
-    deriv (fun s => LyapunovS (MollifiedVorticity ω ε s) phi) t ≤
+    deriv (fun s => LyapunovS kappa (MollifiedVorticity ω ε s) phi) t ≤
       C_abs * (1 + MollifiedSupNorm ω ε t ^ 3 *
         (⨆ x, |phi x|) ^ ((3 : ℝ) / 2)) -
-      kappa' * ∫ x, ‖MollifiedVorticity ω ε t x‖ ^ 6 ∂volume :=
-  differential_inequality_after_tether_and_absorption ε ω t phi C_abs hCabs C_Sob hCSob hAbs
+      kappa' kappa * ∫ x, ‖MollifiedVorticity ω ε t x‖ ^ 6 ∂volume :=
+  differential_inequality_after_tether_and_absorption hκCZ hκ ε ω t phi C_abs hCabs C_Sob hCSob hAbs
     hφbdd hωLp h1 hvol hIdent
 
 /-
@@ -1696,11 +1698,11 @@ stretching, `dS/dt ≤ 4 C_CZ M I₄ − κ I₆`. The three pairings are named 
 from vorticity transport + `stretching_inner_le` + the quartic density. -/
 public theorem lyapunov_ident_of_transport_cz
     (ωε : ℝ → VorticityField) (phi : T3 → ℝ) (t : ℝ)
-    (hIdent : deriv (fun s => LyapunovS (ωε s) phi) t ≤
+    (hIdent : deriv (fun s => LyapunovS kappa (ωε s) phi) t ≤
       4 * CalderonZygmundConstant3D * (⨆ x, ‖ωε t x‖) *
         (∫ x, ‖ωε t x‖ ^ 4 * |phi x| ∂volume) -
       kappa * ∫ x, ‖ωε t x‖ ^ 6 ∂volume) :
-    deriv (fun s => LyapunovS (ωε s) phi) t ≤
+    deriv (fun s => LyapunovS kappa (ωε s) phi) t ≤
       4 * CalderonZygmundConstant3D * (⨆ x, ‖ωε t x‖) *
         (∫ x, ‖ωε t x‖ ^ 4 * |phi x| ∂volume) -
       kappa * ∫ x, ‖ωε t x‖ ^ 6 ∂volume :=
@@ -1709,7 +1711,7 @@ public theorem lyapunov_ident_of_transport_cz
 /-- Enstrophy half of paper §3: after transport IBP at a spatial max,
 CZ stretching, and non-positive viscosity,
 `d/dt |ω(x)|² ≤ 2 κ M |ω(x)|²` with `κ = C_CZ(3)`. -/
-public theorem enstrophy_di_of_spatial_max
+public theorem enstrophy_di_of_spatial_max (hκCZ : kappa = CalderonZygmundConstant3D)
     (u : TimeDependentVelocity) (p : TimeDependentPressure) (ν : ℝ)
     (t : ℝ) (ht : 0 ≤ t) (x : T3)
     (hNS : NS_PDE u p ν)
@@ -1727,7 +1729,7 @@ public theorem enstrophy_di_of_spatial_max
     deriv (fun s => ‖vorticity (u s) x‖ ^ 2) t ≤
       2 * kappa * vorticity_sup_norm (vorticity (u t)) *
         ‖vorticity (u t) x‖ ^ 2 := by
-  have hκ : kappa = CalderonZygmundConstant3D := rfl
+  have hκ : kappa = CalderonZygmundConstant3D := hκCZ
   simpa [hκ] using
     stretching_enstrophy_di_at_spatial_max u p ν t ht x hNS hreg hu
       kappa hCZ htransp hvisc hν hdt
@@ -1738,7 +1740,7 @@ public theorem enstrophy_di_of_spatial_max
 Transport vanish, CZ stretching, and viscosity `≤ 0` are the same
 hyps as `enstrophy_di_of_spatial_max`; the quartic factor is the
 closed product rule, not `hIdent`. Integrated `dS/dt` remains named. -/
-public theorem lyapunov_density_unweighted_di_at_spatial_max
+public theorem lyapunov_density_unweighted_di_at_spatial_max (hκ : 0 < kappa)
     (u : TimeDependentVelocity) (p : TimeDependentPressure) (ν : ℝ)
     (t : ℝ) (ht : 0 ≤ t) (x : T3)
     (hNS : NS_PDE u p ν)
@@ -1762,7 +1764,7 @@ public theorem lyapunov_density_unweighted_di_at_spatial_max
         ‖vorticity (u t) x‖ ^ 2 *
         (1 + kappa * ‖vorticity (u t) x‖ ^ 2) := by
   have hden :=
-    hasDerivAt_lyapunov_density_unweighted
+    hasDerivAt_lyapunov_density_unweighted (kappa := kappa)
       (v := fun s => vorticity (u s) x) hdt
   rw [hden.deriv]
   have hpair :=
@@ -1771,7 +1773,7 @@ public theorem lyapunov_density_unweighted_di_at_spatial_max
   set ω := vorticity (u t) x
   set M := vorticity_sup_norm (vorticity (u t))
   have hfac : 0 ≤ 1 + kappa * ‖ω‖ ^ 2 :=
-    add_nonneg zero_le_one (mul_nonneg kappa_pos.le (sq_nonneg _))
+    add_nonneg zero_le_one (mul_nonneg hκ.le (sq_nonneg _))
   have hmul :
       inner ℝ ω (time_deriv (fun s => vorticity (u s)) t x) *
           (1 + kappa * ‖ω‖ ^ 2) ≤

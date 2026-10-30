@@ -40,7 +40,7 @@ open Lean Elab Command
 
 -- Explicit #print axioms checks on all primary exported theorems:
 #print axioms FrohmanianTether.CalderonZygmundConstant3D_eq_three_halves
-#print axioms FrohmanianTether.kappa_pos
+#print axioms FrohmanianTether.kappa_pos_of_eq_CZ
 #print axioms FrohmanianTether.tetherKernel_quadratic_form
 #print axioms FrohmanianTether.tetherKernel_comm
 #print axioms FrohmanianTether.tetherPointwiseDensity_nonpos

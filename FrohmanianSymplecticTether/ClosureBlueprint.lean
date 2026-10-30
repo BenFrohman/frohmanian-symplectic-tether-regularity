@@ -37,20 +37,22 @@ open MeasureTheory
 
 namespace ClosureBlueprint
 
+variable {kappa : ℝ}
+
 /-! ## Admissible phase-space corrections (real C1–C3) -/
 
 /-- A bilinear correction is admissible when it is symmetric (metriplectic) and satisfies
 the three necessary conditions extracted from vorticity transport. -/
-public structure IsAdmissibleCorrection
+public structure IsAdmissibleCorrection (kappa : ℝ)
     (B : CoadjointOrbit → Functional → Functional → ℝ) : Prop where
   symm : ∀ ω F G, B ω F G = B ω G F
   invariance : InvariantUnderCoadjointAction B
   degeneracy : DegenerateWRTKineticEnergy B
-  feedback : ProducesControllableNegativeFeedback B
+  feedback : ProducesControllableNegativeFeedback kappa B
 
 /-- Pointwise integrand of the tether kernel (after `Π_u`):
 `-κ ⟨δF, δG⟩ |ω|²`. The assembled object is `TetherKernel`. -/
-public noncomputable def frohmanian_tether_integrand
+public noncomputable def frohmanian_tether_integrand (kappa : ℝ)
     (ω : CoadjointOrbit) (δF δG : T3 → EuclideanSpace ℝ (Fin 3)) (x : T3) : ℝ :=
   -kappa * inner ℝ (δF x) (δG x) * ‖ω.val x‖ ^ 2
 
@@ -133,14 +135,14 @@ public theorem calderon_zygmund_stretching_bound
   fun x => convective_norm_le_of_CZ ω u x CalderonZygmundConstant3D (hu x) (hCZ x)
 
 /-- Unique minimal admissible correction is `TetherKernel`. -/
-public theorem tether_kernel_uniqueness
+public theorem tether_kernel_uniqueness (hκ : 0 < kappa)
     (B : CoadjointOrbit → Functional → Functional → ℝ)
-    (hB : IsAdmissibleCorrection B)
-    (h_sat : SaturatesTetherQuadratic B)
+    (hB : IsAdmissibleCorrection kappa B)
+    (h_sat : SaturatesTetherQuadratic kappa B)
     (h_polarB : Polarizes B)
-    (h_polarT : Polarizes TetherKernel) :
-    ∀ ω F G, B ω F G = TetherKernel ω F G :=
-  uniqueness_of_minimal_tether B hB.symm hB.invariance hB.degeneracy hB.feedback
+    (h_polarT : Polarizes (TetherKernel kappa)) :
+    ∀ ω F G, B ω F G = TetherKernel kappa ω F G :=
+  uniqueness_of_minimal_tether hκ B hB.symm hB.invariance hB.degeneracy hB.feedback
     h_sat h_polarB h_polarT
 
 /-- Density-form uniqueness: substitution of `α = -κ |ω|²` into the
@@ -149,8 +151,8 @@ public theorem uniqueness_of_kernel_density
     (B : CoadjointOrbit → Functional → Functional → ℝ)
     (α : CoadjointOrbit → T3 → ℝ)
     (h_repr : HasTetherKernelDensity B α)
-    (hα : ∀ ω x, α ω x = canonicalTetherDensity ω x) :
-    ∀ ω F G, B ω F G = TetherKernel ω F G :=
+    (hα : ∀ ω x, α ω x = canonicalTetherDensity kappa ω x) :
+    ∀ ω F G, B ω F G = TetherKernel kappa ω F G :=
   FrohmanianTether.uniqueness_of_kernel_density B α h_repr hα
 
 /-- **Conditional** Jacobi for the tethered bracket: it only rewrites the hypotheses `hident`/`hvanish`.
@@ -162,10 +164,10 @@ public theorem tether_kernel_jacobi
     (hF : FunctionalDerivative F ω = X)
     (hG : FunctionalDerivative G ω = Y)
     (hH : FunctionalDerivative H ω = Z)
-    (hident : jacobiator F G H ω =
+    (hident : jacobiator kappa F G H ω =
       ∫ x, cyclicLiePairing X Y Z x ∂volume)
     (hvanish : (∫ x, cyclicLiePairing X Y Z x ∂volume) = 0) :
-    jacobiator F G H ω = 0 :=
+    jacobiator kappa F G H ω = 0 :=
   tethered_jacobi_identity_conditional F G H ω X Y Z hF hG hH hident hvanish
 
 /-- Picard existence for `y' = C y² − κ'' y³`. Classical ODE. -/
@@ -304,10 +306,10 @@ public theorem jacobi_cyclic_sum_skeleton
     (hF : FunctionalDerivative F ω = X)
     (hG : FunctionalDerivative G ω = Y)
     (hH : FunctionalDerivative H ω = Z)
-    (hident : jacobiator F G H ω =
+    (hident : jacobiator kappa F G H ω =
       ∫ x, cyclicLiePairing X Y Z x ∂volume)
     (hvanish : (∫ x, cyclicLiePairing X Y Z x ∂volume) = 0) :
-    jacobiator F G H ω = 0 :=
+    jacobiator kappa F G H ω = 0 :=
   tethered_jacobi_identity_conditional F G H ω X Y Z hF hG hH hident hvanish
 
 /-- Quartic Lyapunov product-rule cancellation is the Young identity of §1. -/
@@ -369,15 +371,6 @@ public theorem type_composition_sequence
       NS_PDE u p ν ∧ u 0 = u₀ ∧ ∀ t ≥ (0 : ℝ), ContDiff ℝ (⊤ : ℕ∞) (u t) := by
   obtain ⟨_Tloc, _hTloc, u, _hloc, hu0, _hphys, p, hNS⟩ :=
     local_existence_kato u₀ ν hsm hdiv hE hν w
-  have _young :
-      ∀ M I₄ I₆ phi_norm C_abs : ℝ, 0 ≤ I₆ →
-        4 * CalderonZygmundConstant3D * M * I₄ ≤
-            (kappa / 4) * I₆ + C_abs * (M ^ 3 * phi_norm ^ ((3 : ℝ) / 2)) →
-          4 * CalderonZygmundConstant3D * M * I₄ - kappa * I₆ ≤
-            C_abs * (M ^ 3 * phi_norm ^ ((3 : ℝ) / 2)) -
-              (3 / 4 : ℝ) * kappa * I₆ :=
-    fun M I₄ I₆ phi_norm C_abs hI6 hY =>
-      youngs_absorption_elimination M I₄ I₆ phi_norm C_abs hI6 hY
   obtain ⟨C, κ'', hC, hκ, y, hdiff, hy_dot, hmaj, hcont⟩ :=
     hRiccati u p hNS hu0
   refine ⟨u, p, hNS, hu0, ?_⟩

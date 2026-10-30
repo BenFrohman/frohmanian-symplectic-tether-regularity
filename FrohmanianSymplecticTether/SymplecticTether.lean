@@ -299,19 +299,24 @@ public theorem CalderonZygmundConstant3D_pos : 0 < CalderonZygmundConstant3D := 
   rw [CalderonZygmundConstant3D_eq_three_halves]
   exact div_pos three_pos two_pos
 
-/-- Tether strength. ASCII name `kappa`; `κ` is notation only.
-Forced by (C3) to equal `C_CZ(3) = 3/2`, not the stand-in `1`. -/
-@[expose] public noncomputable def kappa : ℝ := CalderonZygmundConstant3D
+/-! ## Tether strength as a parameter
 
-scoped notation "κ" => kappa
+The tether strength `kappa` is an explicit real parameter of every definition and
+theorem below. Results that use its sign take `0 < kappa` as a hypothesis. Results
+that need the canonical value take `kappa = CalderonZygmundConstant3D` as a
+hypothesis; `CalderonZygmundConstant3D_eq_three_halves` computes that value. -/
 
-public theorem kappa_eq_three_halves : kappa = 3 / 2 :=
-  CalderonZygmundConstant3D_eq_three_halves
+variable {kappa : ℝ}
 
-public theorem kappa_ne_one : kappa ≠ 1 :=
-  CalderonZygmundConstant3D_ne_one
+/-- With the canonical choice `kappa = C_CZ(3)`, the tether strength is `3/2`. -/
+public theorem kappa_eq_three_halves_of_eq_CZ {kappa : ℝ}
+    (h : kappa = CalderonZygmundConstant3D) : kappa = 3 / 2 :=
+  h.trans CalderonZygmundConstant3D_eq_three_halves
 
-public theorem kappa_pos : 0 < kappa := CalderonZygmundConstant3D_pos
+/-- With the canonical choice `kappa = C_CZ(3)`, the tether strength is positive. -/
+public theorem kappa_pos_of_eq_CZ {kappa : ℝ}
+    (h : kappa = CalderonZygmundConstant3D) : 0 < kappa :=
+  h ▸ CalderonZygmundConstant3D_pos
 
 /-- Quartic product-rule multiplier times the 3D CZ constant: `4 * C_CZ(3) = 6`. -/
 @[expose] public noncomputable def quartic_stretching_bound_coeff : ℝ :=
@@ -322,23 +327,23 @@ This packages the I₆ remainder after `ε = 3 κ / 8` (so the absorbed I₆
 coefficient is `κ/4`). The paper's alternate writing `κ' = κ/2 − C_abs'`
 with `C_abs' ≤ 2` keeps a Gagliardo–Nirenberg piece on I₆; here `C_abs`
 stays off I₆, so positivity is `κ > 0` rather than `κ > 4`. -/
-@[expose] public noncomputable def kappa' : ℝ := (3 / 4) * kappa
+@[expose] public noncomputable def kappa' (kappa : ℝ) : ℝ := (3 / 4) * kappa
 
-public theorem kappa'_pos : 0 < kappa' := by
+public theorem kappa'_pos {kappa : ℝ} (hκ : 0 < kappa) : 0 < kappa' kappa := by
   have h34 : (0 : ℝ) < 3 / 4 := by
     exact div_pos three_pos four_pos
-  exact mul_pos h34 kappa_pos
+  exact mul_pos h34 hκ
 
 /-- Canonical absorption parameter `ε_abs = κ/4` used in Young (p = 3/2, q = 3).
 The analytic pipeline's ε-Young that produces I₆ coefficient `κ/4` uses
 `ε = 3 κ / 8`; `ε_abs` is the canonicity-forced scale `κ/4`. -/
-@[expose] public noncomputable def epsilon_abs : ℝ := kappa / 4
+@[expose] public noncomputable def epsilon_abs (kappa : ℝ) : ℝ := kappa / 4
 
 /-! ## The Quadratic Metric Correction (the Tether) -/
 
 /-- Canonical Frohmanian tether kernel
 `B(F,G)(ω) = -κ ∫ |ω|² (Π_u (δF/δω) · Π_u (δG/δω)) dλ`. -/
-@[expose] public noncomputable def TetherKernel (ω : CoadjointOrbit) (F G : Functional) : ℝ :=
+@[expose] public noncomputable def TetherKernel (kappa : ℝ) (ω : CoadjointOrbit) (F G : Functional) : ℝ :=
   -kappa * ∫ x,
     ‖ω.val x‖ ^ 2 *
       inner ℝ
@@ -346,11 +351,11 @@ The analytic pipeline's ε-Young that produces I₆ coefficient `κ/4` uses
         (Pi_u (velocity_from_vorticity ω) (FunctionalDerivative G ω) x)
     ∂volume
 
-public noncomputable def TetheredBracket (F G : Functional) (ω : CoadjointOrbit) : ℝ :=
+public noncomputable def TetheredBracket (kappa : ℝ) (F G : Functional) (ω : CoadjointOrbit) : ℝ :=
   -- The Frohmanian Symplectic Tether bracket: the classical Arnold Lie–Poisson bracket
   -- plus the minimal quadratic correction (the tether kernel) that satisfies (C1)–(C3).
   -- This is the unique such extension (Theorem 1 / 5-step canonicity).
-  ClassicalBracket F G ω + TetherKernel ω F G
+  ClassicalBracket F G ω + TetherKernel kappa ω F G
 
 /-! ## The Three Necessary Conditions (C1)–(C3) — exactly as in the audited LaTeX -/
 
@@ -375,7 +380,7 @@ This is a predicate on the higher-order object `B`, not a theorem asserting a sp
     B ω F KineticEnergyHamiltonian = 0
 
 /-- (C3): after `Π_u`, the correction is negative-semidefinite with leading coefficient `-κ`. -/
-@[expose] public def ProducesControllableNegativeFeedback
+@[expose] public def ProducesControllableNegativeFeedback (kappa : ℝ)
     (B : CoadjointOrbit → Functional → Functional → ℝ) : Prop :=
   ∀ (F : Functional) (ω : CoadjointOrbit),
     B ω F F ≤
@@ -386,7 +391,7 @@ This is a predicate on the higher-order object `B`, not a theorem asserting a sp
 
 /-- C3 as equality for the canonical kernel: `𝔗(F,F) = -κ ∫ |ω|² ‖Π_u δF‖²`. -/
 public theorem tetherKernel_quadratic_form (F : Functional) (ω : CoadjointOrbit) :
-    TetherKernel ω F F =
+    TetherKernel kappa ω F F =
       -kappa * ∫ x,
         ‖ω.val x‖ ^ 2 *
           ‖Pi_u (velocity_from_vorticity ω) (FunctionalDerivative F ω) x‖ ^ 2
@@ -401,7 +406,7 @@ public theorem tetherKernel_quadratic_form (F : Functional) (ω : CoadjointOrbit
 A Poisson correction must be antisymmetric; these cannot both hold
 unless the kernel vanishes. -/
 public theorem tetherKernel_comm (ω : CoadjointOrbit) (F G : Functional) :
-    TetherKernel ω F G = TetherKernel ω G F := by
+    TetherKernel kappa ω F G = TetherKernel kappa ω G F := by
   unfold TetherKernel
   congr 1
   congr 1
@@ -421,7 +426,7 @@ public theorem antisymmetric_correction_diagonal_zero
   linarith
 
 public theorem tetherKernel_C3 (F : Functional) (ω : CoadjointOrbit) :
-    TetherKernel ω F F ≤
+    TetherKernel kappa ω F F ≤
       -kappa * ∫ x,
         ‖ω.val x‖ ^ 2 *
           ‖Pi_u (velocity_from_vorticity ω) (FunctionalDerivative F ω) x‖ ^ 2
@@ -452,7 +457,7 @@ The reduced inequality is the left-hand side of the equivalence below.
 It is not discharged: cancelling `κ M⁴` is strictly stronger than the
 cubic source, and the C3 diagonal is not a summand of `⟨ω, ∂ₜω⟩`.
 Does not assume `CorrectedMaxRate` or `ReducedStrain`. -/
-public theorem unmodified_pairing_and_c3_diagonal
+public theorem unmodified_pairing_and_c3_diagonal (hκ : 0 < kappa)
     (u : TimeDependentVelocity) (p : TimeDependentPressure) (ν : ℝ)
     (t : ℝ) (ht : 0 ≤ t) (x : T3)
     (hNS : NS_PDE u p ν)
@@ -466,7 +471,7 @@ public theorem unmodified_pairing_and_c3_diagonal
     (hν : 0 ≤ ν)
     (hmax : ‖vorticity (u t) x‖ = vorticity_sup_norm (vorticity (u t)))
     (orbit : CoadjointOrbit) (testF : Functional)
-    (hC3 : ProducesControllableNegativeFeedback TetherKernel) :
+    (hC3 : ProducesControllableNegativeFeedback kappa (TetherKernel kappa)) :
     inner ℝ (vorticity (u t) x)
         (time_deriv (fun s => vorticity (u s)) t x) ≤
       C * vorticity_sup_norm (vorticity (u t)) ^ 3 ∧
@@ -476,12 +481,12 @@ public theorem unmodified_pairing_and_c3_diagonal
           kappa * vorticity_sup_norm (vorticity (u t)) ^ 2) *
         vorticity_sup_norm (vorticity (u t)) ^ 2 +
         kappa * vorticity_sup_norm (vorticity (u t)) ^ 4 ∧
-    TetherKernel orbit testF testF ≤
+    TetherKernel kappa orbit testF testF ≤
       -kappa * ∫ y,
         ‖orbit.val y‖ ^ 2 *
           ‖Pi_u (velocity_from_vorticity orbit)
               (FunctionalDerivative testF orbit) y‖ ^ 2 ∂volume ∧
-    TetherKernel orbit testF testF ≤ 0 ∧
+    TetherKernel kappa orbit testF testF ≤ 0 ∧
     (inner ℝ (vorticity (u t) x)
         (time_deriv (fun s => vorticity (u s)) t x) ≤
       (C * vorticity_sup_norm (vorticity (u t)) -
@@ -512,7 +517,7 @@ public theorem unmodified_pairing_and_c3_diagonal
       C * M ^ 3 = (C * M - kappa * M ^ 2) * M ^ 2 + kappa * M ^ 4 := by ring
   have hrem : pairing ≤ (C * M - kappa * M ^ 2) * M ^ 2 + kappa * M ^ 4 :=
     hcubic.trans (le_of_eq hsplit)
-  have hdiag : TetherKernel orbit testF testF ≤
+  have hdiag : TetherKernel kappa orbit testF testF ≤
       -kappa * ∫ y, integrand y ∂volume := by
     simpa [ProducesControllableNegativeFeedback, integrand] using
       hC3 testF orbit
@@ -520,8 +525,8 @@ public theorem unmodified_pairing_and_c3_diagonal
   have hint : 0 ≤ ∫ y, integrand y ∂volume := integral_nonneg hnn
   have hsign : -kappa * ∫ y, integrand y ∂volume ≤ 0 := by
     rw [neg_mul]
-    exact neg_nonpos.mpr (mul_nonneg kappa_pos.le hint)
-  have hnonpos : TetherKernel orbit testF testF ≤ 0 := hdiag.trans hsign
+    exact neg_nonpos.mpr (mul_nonneg hκ.le hint)
+  have hnonpos : TetherKernel kappa orbit testF testF ≤ 0 := hdiag.trans hsign
   have hiff := reduced_pairing_iff_cancels_kappa_M4 pairing C kappa M
   exact ⟨hcubic, hrem, hdiag, hnonpos, hiff⟩
 
@@ -535,9 +540,9 @@ public theorem tethered_h_slot_stretching_remains_cubic
     (hCZ : ‖fderiv ℝ uField x‖ ≤ C * vorticity_sup_norm ωField)
     (hmax : ‖ωField x‖ = vorticity_sup_norm ωField)
     (orbit : CoadjointOrbit) (testF : Functional)
-    (hdeg : TetherKernel orbit testF KineticEnergyHamiltonian = 0) :
+    (hdeg : TetherKernel kappa orbit testF KineticEnergyHamiltonian = 0) :
     inner ℝ (ωField x) (convective ωField uField x) +
-        TetherKernel orbit testF KineticEnergyHamiltonian ≤
+        TetherKernel kappa orbit testF KineticEnergyHamiltonian ≤
       C * vorticity_sup_norm ωField ^ 3 := by
   rw [hdeg, add_zero]
   exact stretching_inner_le_at_max ωField uField x C hu hCZ hmax
@@ -545,13 +550,13 @@ public theorem tethered_h_slot_stretching_remains_cubic
 /-- The projected kernel density has no positive part. `Π_u` is the
 `L²` complement of `span{u}`; this pointwise sign does not need
 `‖Π_u δF‖ ≤ ‖δF‖`, and the summand contains no mollifier. -/
-public theorem tether_kernel_density_nonpos
+public theorem tether_kernel_density_nonpos (hκ : 0 < kappa)
     (orbit : CoadjointOrbit) (testF : Functional) (x : T3) :
     -kappa *
         (‖orbit.val x‖ ^ 2 *
           ‖Pi_u (velocity_from_vorticity orbit)
               (FunctionalDerivative testF orbit) x‖ ^ 2) ≤ 0 := by
-  have hκ : -kappa ≤ 0 := neg_nonpos.mpr kappa_pos.le
+  have hκ : -kappa ≤ 0 := neg_nonpos.mpr hκ.le
   have hsq :
       0 ≤ ‖orbit.val x‖ ^ 2 *
         ‖Pi_u (velocity_from_vorticity orbit)
@@ -612,7 +617,7 @@ See `HWEIGHT_OBSTRUCTION.md` and `scripts/hweight_plausibility_check.py` for the
 /-- The author's original conjectured reduction at a spatial maximum of the unmodified
 vorticity equation: that the symplectic tether feedback reduces the stretching pairing
 from `C M³` to `(C M - κ M²) M²`. Recorded openly as an explicit `Prop`. -/
-@[expose] public def ConjecturedUnmodifiedTetherPairing
+@[expose] public def ConjecturedUnmodifiedTetherPairing (kappa : ℝ)
     (u : TimeDependentVelocity) (p : TimeDependentPressure) (ν : ℝ)
     (t : ℝ) (x : T3) (C M : ℝ) : Prop :=
   0 ≤ t →
@@ -624,7 +629,7 @@ from `C M³` to `(C M - κ M²) M²`. Recorded openly as an explicit `Prop`. -/
   inner ℝ (vorticity (u t) x) (laplacian (vorticity (u t)) x) ≤ 0 →
   0 ≤ ν →
   (‖vorticity (u t) x‖ = M ∧ M = vorticity_sup_norm (vorticity (u t))) →
-  ProducesControllableNegativeFeedback TetherKernel →
+  ProducesControllableNegativeFeedback kappa (TetherKernel kappa) →
   kappa = CalderonZygmundConstant3D →
   inner ℝ (vorticity (u t) x) (convective (vorticity (u t)) (u t) x) ≤
     (C * M - kappa * M ^ 2) * M ^ 2
@@ -647,7 +652,7 @@ public theorem reduced_pairing_of_unmodified_and_tether
     (_hν : 0 ≤ ν)
     (_hmax : ‖vorticity (u t) x‖ = M ∧
       M = vorticity_sup_norm (vorticity (u t)))
-    (_htether : ProducesControllableNegativeFeedback TetherKernel)
+    (_htether : ProducesControllableNegativeFeedback kappa (TetherKernel kappa))
     (_hκ : kappa = CalderonZygmundConstant3D)
     (hcancels : inner ℝ (vorticity (u t) x)
         (convective (vorticity (u t)) (u t) x) +
@@ -662,7 +667,7 @@ public theorem reduced_pairing_of_unmodified_and_tether
 /-- Move `TetherKernel(F,F)` onto the classical stretching bound.
 `(C3)` gives `TetherKernel(F,F) = -κ ∫ |ω|² ‖Π_u δF‖²`.
 If that weight is at least `M⁴` (`hweight`), the sum is at most `C M³ - κ M⁴`. -/
-public theorem tethered_stretching_of_weight
+public theorem tethered_stretching_of_weight (hκ : 0 < kappa)
     (ωField uField : VelocityField) (x : T3) (C M : ℝ)
     (hu : DifferentiableAt ℝ uField x)
     (hCZ : ‖fderiv ℝ uField x‖ ≤ C * vorticity_sup_norm ωField)
@@ -673,7 +678,7 @@ public theorem tethered_stretching_of_weight
           ‖Pi_u (velocity_from_vorticity orbit)
               (FunctionalDerivative testF orbit) y‖ ^ 2 ∂volume) :
     inner ℝ (ωField x) (convective ωField uField x) +
-        TetherKernel orbit testF testF ≤
+        TetherKernel kappa orbit testF testF ≤
       (C * M - kappa * M ^ 2) * M ^ 2 := by
   have hpoint : ‖ωField x‖ = vorticity_sup_norm ωField := by
     rw [← hmax.2, hmax.1]
@@ -682,18 +687,18 @@ public theorem tethered_stretching_of_weight
   have hcubic :
       inner ℝ (ωField x) (convective ωField uField x) ≤ C * M ^ 3 := by
     simpa [hmax.2] using hstretch
-  have hker : TetherKernel orbit testF testF =
+  have hker : TetherKernel kappa orbit testF testF =
       -kappa * ∫ y,
         ‖orbit.val y‖ ^ 2 *
           ‖Pi_u (velocity_from_vorticity orbit)
               (FunctionalDerivative testF orbit) y‖ ^ 2 ∂volume :=
     tetherKernel_quadratic_form testF orbit
-  have hkerLe : TetherKernel orbit testF testF ≤ -kappa * M ^ 4 := by
+  have hkerLe : TetherKernel kappa orbit testF testF ≤ -kappa * M ^ 4 := by
     rw [hker]
-    exact mul_le_mul_of_nonpos_left hweight (neg_nonpos.mpr kappa_pos.le)
+    exact mul_le_mul_of_nonpos_left hweight (neg_nonpos.mpr hκ.le)
   have hsum :
       inner ℝ (ωField x) (convective ωField uField x) +
-          TetherKernel orbit testF testF ≤
+          TetherKernel kappa orbit testF testF ≤
         C * M ^ 3 + -kappa * M ^ 4 := by
     linarith
   have hrew :
@@ -744,7 +749,7 @@ at `u₀ = 0` (`frohmanianTetherRate_zero`). -/
 public theorem tetherKernel_of_right_factor_zero
     (ω : CoadjointOrbit) (F G : Functional)
     (h : Pi_u (velocity_from_vorticity ω) (FunctionalDerivative G ω) = 0) :
-    TetherKernel ω F G = 0 := by
+    TetherKernel kappa ω F G = 0 := by
   unfold TetherKernel
   have hpt : ∀ x,
       inner ℝ
@@ -965,19 +970,19 @@ See the comment in Uniqueness.lean for the move rationale and non-circularity.
 pushforward transcription replaces this proof, not the statement. -/
 theorem tether_coadjoint_invariance
     (_g : T3 → T3) (F G : Functional) (ω : CoadjointOrbit) :
-    TetherKernel (CoadjointAction _g ω) F G = TetherKernel ω F G := by
+    TetherKernel kappa (CoadjointAction _g ω) F G = TetherKernel kappa ω F G := by
   simp [CoadjointAction]
 
-public theorem tetherKernel_C1 : InvariantUnderCoadjointAction TetherKernel :=
+public theorem tetherKernel_C1 : InvariantUnderCoadjointAction (TetherKernel kappa) :=
   tether_coadjoint_invariance
 
 /-- Explicit conjectured invariance under an arbitrary volume-preserving
 diffeomorphism pushforward action `act : (T3 → T3) → CoadjointOrbit → CoadjointOrbit`
 on the coadjoint orbit of `SDiff(𝕋³)`. -/
-@[expose] public def ConjecturedSDiffPushforwardInvariance
+@[expose] public def ConjecturedSDiffPushforwardInvariance (kappa : ℝ)
     (act : (T3 → T3) → CoadjointOrbit → CoadjointOrbit) : Prop :=
   ∀ (g : T3 → T3) (F G : Functional) (ω : CoadjointOrbit),
-    TetherKernel (act g ω) F G = TetherKernel ω F G
+    TetherKernel kappa (act g ω) F G = TetherKernel kappa ω F G
 
 /-- For any orbit action `act` whose volume-preserving change of variables preserves
 the spatial integral of the quadratic tether density `‖ω(x)‖² ⟨Π_u δF(x), Π_u δG(x)⟩`
@@ -996,7 +1001,7 @@ public theorem tether_coadjoint_invariance_of_integral_eq
         inner ℝ
           (Pi_u (velocity_from_vorticity ω) (FunctionalDerivative F ω) x)
           (Pi_u (velocity_from_vorticity ω) (FunctionalDerivative G ω) x) ∂volume) :
-    ConjecturedSDiffPushforwardInvariance act := by
+    ConjecturedSDiffPushforwardInvariance kappa act := by
   intro g F G ω
   unfold TetherKernel
   rw [hint g F G ω]
@@ -1011,7 +1016,7 @@ public theorem tetherKernel_C2_of_no_gateaux
     (ω : CoadjointOrbit)
     (h : ¬ ∃ dH, IsGateauxRepresentative KineticEnergyHamiltonian ω dH)
     (F : Functional) :
-    TetherKernel ω F KineticEnergyHamiltonian = 0 := by
+    TetherKernel kappa ω F KineticEnergyHamiltonian = 0 := by
   apply tetherKernel_of_right_factor_zero
   rw [FunctionalDerivative_eq_zero_of_not h]
   exact Pi_u_zero _
@@ -1026,7 +1031,7 @@ public theorem tetherKernel_degenerates_on_kinetic_energy
     (hδH : FunctionalDerivative KineticEnergyHamiltonian ω = velocity_from_vorticity ω)
     (hdiv : ∀ x, div (velocity_from_vorticity ω) x = 0)
     (hInt : Integrable (fun y => ‖velocity_from_vorticity ω y‖ ^ 2)) :
-    TetherKernel ω F KineticEnergyHamiltonian = 0 := by
+    TetherKernel kappa ω F KineticEnergyHamiltonian = 0 := by
   by_cases hE : (∫ y, ‖velocity_from_vorticity ω y‖ ^ 2 ∂volume) ≠ 0
   · have hPi :=
       projection_orthogonal_to_u (velocity_from_vorticity ω) hdiv hE
@@ -1066,7 +1071,7 @@ public theorem tetherKernel_C2_of_identifications
       velocity_from_vorticity ω)
     (hdiv : ∀ ω x, div (velocity_from_vorticity ω) x = 0)
     (hInt : ∀ ω, Integrable (fun y => ‖velocity_from_vorticity ω y‖ ^ 2)) :
-    DegenerateWRTKineticEnergy TetherKernel :=
+    DegenerateWRTKineticEnergy (TetherKernel kappa) :=
   fun F ω => tetherKernel_degenerates_on_kinetic_energy F ω (hδ ω) (hdiv ω) (hInt ω)
 
 /-! ## The tethered bracket reproduces classical reversible dynamics -/
@@ -1076,10 +1081,10 @@ public theorem tethered_reproduces_classical_euler (F : Functional) (ω : Coadjo
       velocity_from_vorticity ω)
     (hdiv : ∀ x, div (velocity_from_vorticity ω) x = 0)
     (hInt : Integrable (fun y => ‖velocity_from_vorticity ω y‖ ^ 2)) :
-    TetheredBracket F KineticEnergyHamiltonian ω =
+    TetheredBracket kappa F KineticEnergyHamiltonian ω =
       ClassicalBracket F KineticEnergyHamiltonian ω := by
   simp only [TetheredBracket]
-  have hker : TetherKernel ω F KineticEnergyHamiltonian = 0 :=
+  have hker : TetherKernel kappa ω F KineticEnergyHamiltonian = 0 :=
     tetherKernel_degenerates_on_kinetic_energy F ω hδ hdiv hInt
   rw [hker, add_zero]
 
@@ -1089,9 +1094,9 @@ theorem degeneracy_for_mollified_sup_norm_proxy (ε : ℝ) (ω : CoadjointOrbit)
       velocity_from_vorticity ω)
     (hdiv : ∀ x, div (velocity_from_vorticity ω) x = 0)
     (hInt : Integrable (fun y => ‖velocity_from_vorticity ω y‖ ^ 2)) :
-    TetherKernel ω (fun ω' => MollifiedSupNormFunctional ε ω') KineticEnergyHamiltonian = 0 := by
+    TetherKernel kappa ω (fun ω' => MollifiedSupNormFunctional ε ω') KineticEnergyHamiltonian = 0 := by
   have h :=
-    tethered_reproduces_classical_euler
+    tethered_reproduces_classical_euler (kappa := kappa)
       (fun ω' => MollifiedSupNormFunctional ε ω') ω hδ hdiv hInt
   simp only [TetheredBracket] at h
   exact add_eq_left.mp h
@@ -1116,11 +1121,11 @@ hypotheses cannot hold for every choice of the tether data.
 -/
 
 /-- Jacobiator of the tethered bracket. It does not vanish in general (see `FieldMetriplectic`). -/
-public noncomputable def jacobiator (F G H : Functional) (ω : CoadjointOrbit) : ℝ :=
-  let GH : Functional := fun ω' => TetheredBracket G H ω'
-  let HF : Functional := fun ω' => TetheredBracket H F ω'
-  let FG : Functional := fun ω' => TetheredBracket F G ω'
-  TetheredBracket F GH ω + TetheredBracket G HF ω + TetheredBracket H FG ω
+public noncomputable def jacobiator (kappa : ℝ) (F G H : Functional) (ω : CoadjointOrbit) : ℝ :=
+  let GH : Functional := fun ω' => TetheredBracket kappa G H ω'
+  let HF : Functional := fun ω' => TetheredBracket kappa H F ω'
+  let FG : Functional := fun ω' => TetheredBracket kappa F G ω'
+  TetheredBracket kappa F GH ω + TetheredBracket kappa G HF ω + TetheredBracket kappa H FG ω
 
 /-- **Conditional only.** If the Jacobiator equals the cyclic Lie pairing (`hident`) and that
 pairing vanishes (`hvanish`), then the Jacobiator vanishes. This is not a proof of Jacobi for the
@@ -1130,10 +1135,10 @@ public theorem tethered_jacobi_identity_conditional (F G H : Functional) (ω : C
     (_hF : FunctionalDerivative F ω = X)
     (_hG : FunctionalDerivative G ω = Y)
     (_hH : FunctionalDerivative H ω = Z)
-    (hident : jacobiator F G H ω =
+    (hident : jacobiator kappa F G H ω =
       ∫ x, cyclicLiePairing X Y Z x ∂volume)
     (hvanish : (∫ x, cyclicLiePairing X Y Z x ∂volume) = 0) :
-    jacobiator F G H ω = 0 := by
+    jacobiator kappa F G H ω = 0 := by
   rw [hident, hvanish]
 
 
@@ -1141,18 +1146,18 @@ public theorem tethered_jacobi_identity_conditional (F G H : Functional) (ω : C
 
 /-- Pointwise diagonal integrand of `TetherKernel ω F F` at `x ∈ T3`:
 `-κ ‖ω(x)‖² ‖Π_u(δF/δω)(x)‖²`. -/
-@[expose] public noncomputable def tetherPointwiseDensity
+@[expose] public noncomputable def tetherPointwiseDensity (kappa : ℝ)
     (ω : CoadjointOrbit) (F : Functional) (x : T3) : ℝ :=
   -kappa * ‖ω.val x‖ ^ 2 *
     ‖Pi_u (velocity_from_vorticity ω) (FunctionalDerivative F ω) x‖ ^ 2
 
 /-- **Pointwise Diagonal Non-Positivity (`tetherPointwiseDensity_nonpos`):**
 The pointwise diagonal density of the Frohmanian Symplectic Tether is non-positive everywhere on `T3`. -/
-public theorem tetherPointwiseDensity_nonpos
+public theorem tetherPointwiseDensity_nonpos (hκ : 0 < kappa)
     (ω : CoadjointOrbit) (F : Functional) (x : T3) :
-    tetherPointwiseDensity ω F x ≤ 0 := by
+    tetherPointwiseDensity kappa ω F x ≤ 0 := by
   unfold tetherPointwiseDensity
-  have hκ : 0 ≤ kappa := le_of_lt kappa_pos
+  have hκ : 0 ≤ kappa := le_of_lt hκ
   have h1 : 0 ≤ ‖ω.val x‖ ^ 2 := sq_nonneg _
   have h2 : 0 ≤ ‖Pi_u (velocity_from_vorticity ω) (FunctionalDerivative F ω) x‖ ^ 2 := sq_nonneg _
   have hprod : 0 ≤ kappa * ‖ω.val x‖ ^ 2 *
@@ -1163,13 +1168,13 @@ public theorem tetherPointwiseDensity_nonpos
 /-- **Strict Negative Definiteness off Casimir / Velocity Alignment (`tetherPointwiseDensity_strict_neg_of_noncasimir`):**
 At any point `x ∈ T3` where the vorticity `ω.val x ≠ 0` and the orthogonal projection
 `Π_u(δF/δω)(x) ≠ 0`, the pointwise diagonal density of the Frohmanian Symplectic Tether is strictly negative. -/
-public theorem tetherPointwiseDensity_strict_neg_of_noncasimir
+public theorem tetherPointwiseDensity_strict_neg_of_noncasimir (hκ : 0 < kappa)
     (ω : CoadjointOrbit) (F : Functional) (x : T3)
     (hω : ω.val x ≠ 0)
     (hPi : Pi_u (velocity_from_vorticity ω) (FunctionalDerivative F ω) x ≠ 0) :
-    tetherPointwiseDensity ω F x < 0 := by
+    tetherPointwiseDensity kappa ω F x < 0 := by
   unfold tetherPointwiseDensity
-  have hκ : 0 < kappa := kappa_pos
+  have hκ : 0 < kappa := hκ
   have h1 : 0 < ‖ω.val x‖ ^ 2 := sq_pos_of_pos (norm_pos_iff.mpr hω)
   have h2 : 0 < ‖Pi_u (velocity_from_vorticity ω) (FunctionalDerivative F ω) x‖ ^ 2 :=
     sq_pos_of_pos (norm_pos_iff.mpr hPi)

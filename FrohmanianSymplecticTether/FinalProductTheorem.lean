@@ -30,6 +30,8 @@ namespace FrohmanianSymplecticTether.FinalProductTheorem
 
 noncomputable section
 
+variable {kappa : ℝ}
+
 /-! ## Section 1. Explicit KKS Symplectic 2-Form, Skew-Symmetry, and Cyclic Jacobi Identity -/
 
 /-- Pointwise Kirillov–Kostant–Souriau (KKS) coadjoint symplectic integrand on $\mathfrak{sdiff}(\mathbb{T}^3)^*$:
@@ -107,17 +109,17 @@ public theorem kksPointwise_cyclic_jacobi_identity
 
 /-- Complete Frohmanian Metriplectic Pairing on functional variations:
 $$\mathfrak{T}_F(\omega)(F, G) = \omega_{\mathrm{KKS}}(\omega)(\delta F, \delta G) + \mathrm{TetherKernel}(\omega, F, G).$$ -/
-@[expose] public def FrohmanianMetriplecticPairing
+@[expose] public def FrohmanianMetriplecticPairing (kappa : ℝ)
     (ω : CoadjointOrbit) (F G : Functional) : ℝ :=
   kksSymplecticForm ω (FunctionalDerivative F ω) (FunctionalDerivative G ω) +
-    TetherKernel ω F G
+    TetherKernel kappa ω F G
 
 /-- Diagonal reduction of the Frohmanian metriplectic pairing: the KKS symplectic part vanishes identically on the
 diagonal $(F, F)$, leaving purely the negative-semidefinite tether metric form $\mathrm{TetherKernel}(\omega, F, F) \le 0$. -/
 public theorem FrohmanianMetriplecticPairing_diag_eq_metric
-    (ω : CoadjointOrbit) (F : Functional) :
-    FrohmanianMetriplecticPairing ω F F = TetherKernel ω F F ∧
-    TetherKernel ω F F ≤ 0 := by
+    (hκ : 0 < kappa) (ω : CoadjointOrbit) (F : Functional) :
+    FrohmanianMetriplecticPairing kappa ω F F = TetherKernel kappa ω F F ∧
+    TetherKernel kappa ω F F ≤ 0 := by
   refine ⟨?_, ?_⟩
   · unfold FrohmanianMetriplecticPairing
     rw [kksSymplecticForm_self_zero, zero_add]
@@ -128,8 +130,8 @@ public theorem FrohmanianMetriplecticPairing_diag_eq_metric
     have hint : 0 ≤ ∫ x : T3, ‖ω.val x‖ ^ 2 *
         ‖Pi_u (velocity_from_vorticity ω) (FunctionalDerivative F ω) x‖ ^ 2 ∂NavierStokes3D.volume :=
       integral_nonneg hnn
-    have hκ : -kappa ≤ 0 := neg_nonpos.mpr kappa_pos.le
-    exact mul_nonpos_of_nonpos_of_nonneg hκ hint
+    have hκ' : -kappa ≤ 0 := neg_nonpos.mpr hκ.le
+    exact mul_nonpos_of_nonpos_of_nonneg hκ' hint
 
 /-! ## Stage 2. Attained Spatial Maximum & Compact Unit-Cell `BddAbove` Guard -/
 
@@ -291,7 +293,7 @@ public theorem beltrami_tetherPointwiseDensity_zero
     (hbeltrami : FunctionalDerivative F ω = fun x => lam • velocity_from_vorticity ω x)
     (hE : (∫ y, ‖velocity_from_vorticity ω y‖ ^ 2 ∂NavierStokes3D.volume) ≠ 0)
     (x : T3) :
-    tetherPointwiseDensity ω F x = 0 := by
+    tetherPointwiseDensity kappa ω F x = 0 := by
   unfold tetherPointwiseDensity
   rw [hbeltrami, beltrami_casimir_projection_zero (velocity_from_vorticity ω) lam hE]
   simp
@@ -406,29 +408,29 @@ Every bilinear correction $B$ satisfying C1–C3, quadratic saturation, and pola
 metriplectic symmetry), or having the canonical kernel density $\alpha_{\mathrm{can}}(\omega,x) = -\kappa\|\omega(x)\|^2$,
 equals `TetherKernel`, and `TetherKernel` has exact quadratic homogeneity $c^2$ under $\omega \mapsto c\omega$ with no
 degree $\ge 3$ remainder. -/
-@[expose] public def P1_CanonicalFiveStepUniqueness : Prop :=
+@[expose] public def P1_CanonicalFiveStepUniqueness (kappa : ℝ) : Prop :=
   (∀ (B : CoadjointOrbit → Functional → Functional → ℝ),
     (∀ ω F G, B ω F G = B ω G F) →
     InvariantUnderCoadjointAction B →
     DegenerateWRTKineticEnergy B →
-    ProducesControllableNegativeFeedback B →
-    SaturatesTetherQuadratic B →
+    ProducesControllableNegativeFeedback kappa B →
+    SaturatesTetherQuadratic kappa B →
     Polarizes B →
-    Polarizes TetherKernel →
-    ∀ (ω : CoadjointOrbit) (F G : Functional), B ω F G = TetherKernel ω F G) ∧
+    Polarizes (TetherKernel kappa) →
+    ∀ (ω : CoadjointOrbit) (F G : Functional), B ω F G = TetherKernel kappa ω F G) ∧
   (∀ (B : CoadjointOrbit → Functional → Functional → ℝ),
     (∀ ω F G, B ω F G = B ω G F) →
     InvariantUnderCoadjointAction B →
     DegenerateWRTKineticEnergy B →
-    ProducesControllableNegativeFeedback B →
-    SaturatesTetherQuadratic B →
+    ProducesControllableNegativeFeedback kappa B →
+    SaturatesTetherQuadratic kappa B →
     Polarizes B →
-    Polarizes TetherKernel →
-    ∀ (ω : CoadjointOrbit) (F G : Functional), B ω F G = TetherKernel ω F G) ∧
+    Polarizes (TetherKernel kappa) →
+    ∀ (ω : CoadjointOrbit) (F G : Functional), B ω F G = TetherKernel kappa ω F G) ∧
   (∀ (B : CoadjointOrbit → Functional → Functional → ℝ) (α : CoadjointOrbit → T3 → ℝ),
     HasTetherKernelDensity B α →
-    (∀ ω x, α ω x = canonicalTetherDensity ω x) →
-    ∀ (ω : CoadjointOrbit) (F G : Functional), B ω F G = TetherKernel ω F G) ∧
+    (∀ ω x, α ω x = canonicalTetherDensity kappa ω x) →
+    ∀ (ω : CoadjointOrbit) (F G : Functional), B ω F G = TetherKernel kappa ω F G) ∧
   (∀ (F G : Functional) (ω : CoadjointOrbit) (c : ℝ),
     c ≠ 0 →
     FunctionalDerivative F
@@ -437,8 +439,8 @@ degree $\ge 3$ remainder. -/
     FunctionalDerivative G
       ⟨fun x => c • ω.val x, fun x => by rw [div_smul, ω.property x, mul_zero]⟩ =
       FunctionalDerivative G ω →
-    TetherKernel ⟨fun x => c • ω.val x, fun x => by rw [div_smul, ω.property x, mul_zero]⟩ F G =
-      c ^ 2 * TetherKernel ω F G)
+    TetherKernel kappa ⟨fun x => c • ω.val x, fun x => by rw [div_smul, ω.property x, mul_zero]⟩ F G =
+      c ^ 2 * TetherKernel kappa ω F G)
 
 /-- **Component $P_2$ (Exact Metriplectic Split, KKS Skew-Symmetry & Cyclic Jacobi, Casimir/Beltrami Conservation, and Strict Transverse Damping):**
 The Frohmanian pairing $\mathfrak{T}_F = \omega_{\mathrm{KKS}} + \mathrm{TetherKernel}$ splits into the skew-symmetric KKS 2-form
@@ -446,7 +448,7 @@ satisfying the cyclic Jacobi identity and the symmetric negative-semidefinite te
 projection $\Pi_u$, which reproduces classical Euler dynamics on the kinetic-energy Hamiltonian ($\Pi_u u = 0$) and on
 Beltrami eigenmodes ($\Pi_u(\lambda u) = 0$), and enforces strict pointwise negative damping whenever $\omega(x) \neq 0$
 and $\Pi_u(\delta F/\delta\omega)(x) \neq 0$. -/
-@[expose] public def P2_MetriplecticSplitAndCasimirDamping : Prop :=
+@[expose] public def P2_MetriplecticSplitAndCasimirDamping (kappa : ℝ) : Prop :=
   (∀ (ω : CoadjointOrbit) (ξ₁ ξ₂ : VelocityField),
     kksSymplecticForm ω ξ₁ ξ₂ = -kksSymplecticForm ω ξ₂ ξ₁) ∧
   (∀ (ω : CoadjointOrbit) (ξ₁ ξ₂ ξ₃ : VelocityField) (x : T3),
@@ -454,13 +456,13 @@ and $\Pi_u(\delta F/\delta\omega)(x) \neq 0$. -/
     pairing (ω.val x) (cross (ξ₂ x) (cross (ξ₃ x) (ξ₁ x))) +
     pairing (ω.val x) (cross (ξ₃ x) (cross (ξ₁ x) (ξ₂ x))) = 0) ∧
   (∀ (ω : CoadjointOrbit) (F : Functional),
-    FrohmanianMetriplecticPairing ω F F = TetherKernel ω F F ∧
-    TetherKernel ω F F ≤ 0) ∧
+    FrohmanianMetriplecticPairing kappa ω F F = TetherKernel kappa ω F F ∧
+    TetherKernel kappa ω F F ≤ 0) ∧
   (∀ (F : Functional) (ω : CoadjointOrbit),
     FunctionalDerivative KineticEnergyHamiltonian ω = velocity_from_vorticity ω →
     (∀ x, div (velocity_from_vorticity ω) x = 0) →
     Integrable (fun y => ‖velocity_from_vorticity ω y‖ ^ 2) →
-    TetheredBracket F KineticEnergyHamiltonian ω =
+    TetheredBracket kappa F KineticEnergyHamiltonian ω =
       ClassicalBracket F KineticEnergyHamiltonian ω) ∧
   (∀ (u : VelocityField) (lam : ℝ),
     (∫ y, ‖u y‖ ^ 2 ∂NavierStokes3D.volume) ≠ 0 →
@@ -468,14 +470,14 @@ and $\Pi_u(\delta F/\delta\omega)(x) \neq 0$. -/
   (∀ (ω : CoadjointOrbit) (F : Functional) (x : T3),
     ω.val x ≠ 0 →
     Pi_u (velocity_from_vorticity ω) (FunctionalDerivative F ω) x ≠ 0 →
-    tetherPointwiseDensity ω F x < 0)
+    tetherPointwiseDensity kappa ω F x < 0)
 
 /-- **Component $P_3$ (Quartic $4 = 4$ Young Absorption, Attained `sSup` Pinning, Concrete 3D Bochner–Polar Identity, & Near/Far Cutoff Bridge):**
 Whenever Young's inequality with $\varepsilon_{\mathrm{abs}} = \kappa/4$ bounds $4 C_{\mathrm{CZ}} M I_4$ by
 $(\kappa/4) I_6 + C_{\mathrm{abs}} M^3 \|\phi\|_\infty^{3/2}$, subtracting the tether dissipation $\kappa I_6$ leaves
 the strictly negative hyper-dissipative remainder $-(3/4)\kappa I_6$; moreover any attained spatial maximum pins
 `vorticity_sup_norm ω = M`, and the concrete 3D Bochner–polar identity and Constantin–Fefferman near/far cutoff bridge hold at $x_{\max}$. -/
-@[expose] public def P3_QuarticYoungAbsorption : Prop :=
+@[expose] public def P3_QuarticYoungAbsorption (kappa : ℝ) : Prop :=
   (∀ (M I₄ I₆ phi_norm C_abs : ℝ),
     0 ≤ I₆ →
     4 * CalderonZygmundConstant3D * M * I₄ ≤
@@ -518,24 +520,24 @@ $y(t) \le \max(y(0), C / \kappa'')$ for all $t \ge 0$. -/
 Unconditional proof of the four-conjunct product statement
 $$P_1 \wedge P_2 \wedge P_3 \wedge P_4$$
 for the Frohmanian tethered / metriplectic system on $\mathbb{T}^3$. -/
-public theorem frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem :
-    P1_CanonicalFiveStepUniqueness ∧
-    P2_MetriplecticSplitAndCasimirDamping ∧
-    P3_QuarticYoungAbsorption ∧
+public theorem frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem (hκ : 0 < kappa) :
+    P1_CanonicalFiveStepUniqueness kappa ∧
+    P2_MetriplecticSplitAndCasimirDamping kappa ∧
+    P3_QuarticYoungAbsorption kappa ∧
     P4_UnconditionalLyapunovCeiling := by
   refine ⟨?_, ?_, ?_, ?_⟩
   · -- P1: 5-step canonical uniqueness and quadratic degree
-    exact ⟨uniqueness_of_minimal_tether,
+    exact ⟨uniqueness_of_minimal_tether hκ,
       uniqueness_of_minimal_symmetric_tether,
       FrohmanianTether.uniqueness_of_kernel_density,
       step2_degree_of_ne_zero⟩
   · -- P2: Metriplectic split, KKS skew-symmetry & Jacobi, Casimir/Beltrami conservation, strict transverse damping
     exact ⟨kksSymplecticForm_skew,
       kksPointwise_cyclic_jacobi_identity,
-      FrohmanianMetriplecticPairing_diag_eq_metric,
+      FrohmanianMetriplecticPairing_diag_eq_metric hκ,
       tethered_reproduces_classical_euler,
       beltrami_casimir_projection_zero,
-      tetherPointwiseDensity_strict_neg_of_noncasimir⟩
+      tetherPointwiseDensity_strict_neg_of_noncasimir hκ⟩
   · -- P3: Quartic 4=4 Young absorption, attained sSup pinning, concrete 3D Bochner–polar identity, and near/far cutoff bridge
     exact ⟨AnalyticPipeline.youngs_absorption_elimination,
       vorticity_sup_norm_eq_of_isSpatialMax,
