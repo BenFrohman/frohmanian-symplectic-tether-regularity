@@ -105,3 +105,17 @@ open Lean Elab Command
 #print axioms FrohmanianTether.step5_higher_order_vanishes
 #print axioms FrohmanianTether.step5_tetherKernel
 #print axioms ForMathlib.integral_heatKernel1D
+#print axioms FrohmanianTether.Pi_u_smul_self
+#print axioms FrohmanianTether.tetherKernel_C2_of_parallel
+#print axioms FrohmanianTether.tetherKernelVel_C2
+#print axioms FrohmanianTether.curlZ_psiS
+#print axioms FrohmanianTether.curlZ_uS
+#print axioms FrohmanianTether.integral_quad_cos
+#print axioms FrohmanianTether.pair_psi_u
+#print axioms FrohmanianTether.norm_u
+#print axioms FrohmanianTether.coefS_eq
+#print axioms FrohmanianTether.shearTetherHH_eq
+#print axioms FrohmanianTether.shear_C2_fails
+#print axioms FrohmanianTether.shear_velocity_slot_coef
+#print axioms FrohmanianTether.hasDerivAt_sin_mul
+#print axioms FrohmanianTether.hasDerivAt_cos_mul

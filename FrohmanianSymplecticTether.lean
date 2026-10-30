@@ -21,3 +21,4 @@ public import FrohmanianSymplecticTether.ForMathlib.PiUL2
 public import FrohmanianSymplecticTether.ForMathlib.Leray
 public import FrohmanianSymplecticTether.UniquenessC123
 public import FrohmanianSymplecticTether.ForMathlib.LeibnizGaussian
+public import FrohmanianSymplecticTether.C2Analysis
