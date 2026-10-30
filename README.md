@@ -3,7 +3,7 @@
 **Author:** Benjamin Stanley Frohman ([ORCID: 0009-0006-7068-3718](https://orcid.org/0009-0006-7068-3718))  
 **Zenodo DOI (v1.1.0):** [`10.5281/zenodo.23717082`](https://doi.org/10.5281/zenodo.23717082) | **Concept DOI:** [`10.5281/zenodo.23652842`](https://doi.org/10.5281/zenodo.23652842) | **v1.0.0 DOI:** [`10.5281/zenodo.23652843`](https://doi.org/10.5281/zenodo.23652843)  
 **License:** Apache-2.0 (`Copyright (c) 2026 Benjamin Stanley Frohman`)  
-**Toolchain:** `leanprover/lean4:v4.30.0-rc1` + Mathlib 4 (`2740` build jobs, **1154 theorems across 19 modules**, **0 `sorry`**, **0 non-standard axioms**)  
+**Toolchain:** `leanprover/lean4:v4.30.0-rc1` + Mathlib 4 (`2740` build jobs, **573 theorems across 19 modules**, **0 `sorry`**, **0 non-standard axioms**)  
 **Paper PDF:** [`Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.pdf`](Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.pdf)
 
 ---
@@ -49,7 +49,7 @@ These hypotheses are discharged only at $u_0\equiv0$. Nothing in this repository
 
 ---
 
-## Modules (`1154 theorems`, `0 sorry`)
+## Modules (`573 theorems`, `0 sorry`)
 
 | Module | Key Declarations | Status | Mathematical Content |
 |---|---|---|---|
