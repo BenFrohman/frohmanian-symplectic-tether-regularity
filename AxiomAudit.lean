@@ -65,6 +65,12 @@ open Lean Elab Command
 #print axioms TetheredLyapunov.hasDerivAt_quartic_tether_weight
 #print axioms TetheredLyapunov.quartic_weight_source_eq
 #print axioms TetheredLyapunov.global_regularity_of_restart
+#print axioms TetheredLyapunov.global_regularity
+#print axioms TetheredLyapunov.global_regularity_of_bkmIntegrability
+#print axioms TetheredLyapunov.finiteTimeVorticityBound_of_uniform
+#print axioms TetheredLyapunov.physicalFiniteTimeVorticityBound_of_uniform
+#print axioms TetheredLyapunov.bkmIntegrability_of_finiteTime
+#print axioms TetheredLyapunov.physicalBKMIntegrability_of_finiteTime
 #print axioms TetheredLyapunov.global_regularity_of_constructions
 #print axioms GlobalRegularity.frohmanian_tether_theorem
 #print axioms GlobalRegularity.global_regularity_for_NS
