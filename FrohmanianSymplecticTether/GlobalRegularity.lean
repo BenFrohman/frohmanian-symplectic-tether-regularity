@@ -15,8 +15,8 @@ public import FrohmanianSymplecticTether.NS_Equations
 public import FrohmanianSymplecticTether.AnalyticPipeline
 public import Mathlib.Analysis.Calculus.ContDiff.Basic
 
--- NOTE (post-bumper-rails phase): All silencing options removed. Warnings for classical `sorry`s
--- (pin weakenings and assembly) are now visible. Full convention documented in TetheredLyapunov.lean.
+-- NOTE: No silencing options. The build has 0 `sorry`; classical inputs enter as explicit
+-- hypotheses. Full convention documented in TetheredLyapunov.lean.
 
 -- Error Explanations (Lean Language Reference) — Assembly Layer
 -- This file historically contained the last 7 hard errors (custom unicode-in-identifier notation,
@@ -271,8 +271,9 @@ The section is of the *highest* importance for this project because:
 - The central claim (global regularity via the novel Frohmanian Symplectic Tether) is a
   high-stakes mathematical result (3D Navier–Stokes Regularity territory).
 - The user has repeatedly emphasized the desire for "unique proof confirmation".
-- Remaining `sorry`s are untranscribed paper steps in this authorship, not
-  community fill-ins. Transparent validation hygiene is therefore essential.
+- The build has 0 `sorry`. Local existence, BKM continuation and the tethered
+  Riccati majorant enter as explicitly stated hypotheses, so every regularity
+  statement here is conditional on them. Transparent validation hygiene is therefore essential.
 
 Current toolchain (as of this session): `leanprover/lean4:v4.28.0`
 (This is exactly the version the user requested we retain, matching Terence Tao’s Analysis I
@@ -284,10 +285,8 @@ native evaluation. See the dedicated subsection below.)
 1. **Blue Double Check Marks (everyday interactive use)**
    - What it means: The theorem elaborated successfully and the kernel accepted a proof term
      constructed from the definitions, theorems, and axioms in scope.
-   - Current status for this project: Once the remaining schematic `sorry`s inside the novel
-     geometry (especially the six named sub-haves in `h_cyclic_integrand_zero` in SymplecticTether)
-     and the classical black boxes are filled or properly cited, the blue ticks will appear on
-     `global_regularity_for_NS` and `frohmanian_tether_theorem`.
+   - Current status for this project: the build has 0 `sorry`; classical inputs enter as
+     explicit hypotheses.
    - Protection: incomplete proofs, explicit `sorry` in the *current* theorem, honest tactic bugs.
    - Limitation: does *not* detect `sorry` or incomplete proofs in dependencies.
 
@@ -354,16 +353,11 @@ and Canonicality) and the two-layer architecture.
 
 ## Current Honest Development State (rails off)
 
-As long as classical black-box `sorry`s remain inside `global_regularity_for_NS`,
-`frohmanian_tether_theorem`, or any lemma they depend on, `#print axioms` will
-report `sorryAx`. This is *expected and visible*.
+The build has 0 `sorry`, and `#print axioms` reports only `propext`,
+`Classical.choice` and `Quot.sound`. Local existence, BKM continuation and the
+tethered Riccati majorant of `‖ω‖_∞` enter as explicitly stated hypotheses;
+results that use them are conditional on them.
 
-The presence of `sorryAx` is not a bug in the formalization strategy; it is the
-honest signal that remaining paper steps are still being transcribed in this
-authorship. There is no open task list for anyone else to fill.
-
-When those steps are transcribed, the only axioms that should remain for the
-novel claims are `propext`, `Classical.choice`, and `Quot.sound`.
 
 ## Concrete Commands (live in this file)
 

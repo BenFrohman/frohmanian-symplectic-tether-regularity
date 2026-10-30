@@ -326,8 +326,8 @@ public theorem lyapunov_quartic_cancellation_skeleton
 
 Each step’s output type is the next step’s input type. Closed lemmas are
 invoked as real terms; the remaining geometric gate (existence of a Riccati
-majorant of `‖ω‖_∞` from the tethered Lyapunov inequality) stays `sorry` on
-those real types (`sorryAx`), never `True`.
+majorant of `‖ω‖_∞` from the tethered Lyapunov inequality) is an explicit
+hypothesis on those real types, never `True` and never `sorry`.
 
 `constant` placeholders, `axiom kappa`, `∀ x, True` stretching bounds, and
 `∫ < ∞` comparisons on `ℝ` are not used.
@@ -340,7 +340,7 @@ those real types (`sorryAx`), never `True`.
    (`4 C_CZ(3)` absorbed, residual `-(3/4)κ I₆`) that forces the Riccati
    field `y' ≤ C y² − κ'' y³`.
 3. A differentiable majorant of `M(t) = ‖ω(u t)‖_∞` obeying that field is
-   the remaining paper transcription (`sorryAx` on the real type).
+   an explicit hypothesis (`hRiccati`); it is not proved here.
 4. `regularity_from_riccati_majorant` consumes it: comparison ceiling →
    `IntegrableOn M (Icc 0 T)` → BKM `ContDiff ℝ (⊤ : ℕ∞) (u t)`.
 -/

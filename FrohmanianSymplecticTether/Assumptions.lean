@@ -28,15 +28,15 @@ discipline on axioms:
 
 - **Zero intentional axioms** are used in the novel geometric core
   (the Tether construction 𝔗_F, the 5-step canonicity/uniqueness proof,
-   the explicit 9-term Jacobi identity + Chevalley–Eilenberg 2-cocycle closure,
+   the metriplectic bracket properties in `FieldMetriplectic.lean`,
    degeneracy on the mollified sup-norm proxy, invariance under SDiff(T³),
    and the non-circular two-layer global regularity corollary).
 
 - All classical supporting facts (local existence, Beale–Kato–Majda criterion,
    Calderón–Zygmund estimates, Gagliardo–Nirenberg interpolation, parabolic
    regularity, etc.) are treated as documented black boxes. They are either
-   imported from mathlib4 or stated as lemmas with explicit `sorry` + citation
-   during development. They are **never** declared as axioms.
+   imported from mathlib4 or enter the theorems that use them as explicitly
+   stated hypotheses. They are **never** declared as axioms and never proved by `sorry`.
 
 - Any future intentional axiom (for example, a deep unique-continuation property
   that has not yet been formalized in mathlib) will be added here only after
@@ -58,9 +58,10 @@ namespace FrohmanianTether
 **The formalization currently uses ZERO intentional axioms in the dependency tree
 of any novel claim.**
 
-Remaining `sorry`s are untranscribed paper steps in this authorship
-(local existence, BKM, stretching identification, Jacobi arithmetic),
-not an open task list.
+The build has 0 `sorry`. Local existence, the Beale–Kato–Majda continuation
+criterion, and the tethered Riccati majorant of `‖ω‖_∞` enter as explicitly
+stated hypotheses of the theorems that use them. They are hypotheses, not proofs,
+and every result that depends on them is conditional on them.
 
 No axiom is used to justify the existence, uniqueness, or canonicity of the
 Frohmanian Symplectic Tether 𝔗_F itself.

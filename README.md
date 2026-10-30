@@ -3,21 +3,14 @@
 **Author:** Benjamin Stanley Frohman ([ORCID: 0009-0006-7068-3718](https://orcid.org/0009-0006-7068-3718))  
 **Zenodo DOI (v1.1.0):** [`10.5281/zenodo.23717082`](https://doi.org/10.5281/zenodo.23717082) | **Concept DOI:** [`10.5281/zenodo.23652842`](https://doi.org/10.5281/zenodo.23652842) | **v1.0.0 DOI:** [`10.5281/zenodo.23652843`](https://doi.org/10.5281/zenodo.23652843)  
 **License:** Apache-2.0 (`Copyright (c) 2026 Benjamin Stanley Frohman`)  
-**Toolchain:** `leanprover/lean4:v4.30.0-rc1` + Mathlib 4 (`2702/2702` build jobs, **383 theorems across 13 modules**, **0 `sorry`**, **0 non-standard axioms**)  
+**Toolchain:** `leanprover/lean4:v4.30.0-rc1` + Mathlib 4 (`2706` build jobs, **502 theorems across 13 modules**, **0 `sorry`**, **0 non-standard axioms**)  
 **Paper PDF:** [`Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.pdf`](Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.pdf)
 
 ---
 
-## Main Theorem (proved reduction; stated and proved in `fefferman-clay-navier-stokes/FeffermanClayNS/MainTheorem.lean` and `NS_Millennium_Proof/Modules/MainTheorem.lean`, synced here)
+## Supporting Facts (unconditional)
 
-`clay_reduces_to_direction_curvature_bound` (Lean 4 + Mathlib, `0 sorry`, axioms `[propext, Classical.choice, Quot.sound]`):
-
-> For every ν > 0, assuming the classical periodic Beale–Kato–Majda continuation principle `PeriodicBKMContinuation ν` (a published theorem, Kato 1972 / Beale–Kato–Majda 1984, **not** formalized here and therefore an explicit hypothesis), the named estimate `DirectionCurvatureBound ν` implies Fefferman's exact periodic Clay statement `Clay_B_exact ν`.
-
-- `DirectionCurvatureBound ν` (high-set direction-curvature / cubic depletion bound `M' ≤ C M² − κ M³`) is the single named **open** estimate (conjecture). It is **not** proved.
-- The Clay problem is **not** claimed solved. The converse (`Clay_B_exact → DirectionCurvatureBound`) is **not** proved.
-
-**Main Theorem A (unconditional supporting facts):** attained-maximum ⇒ `BddAbove` and sup-norm equality; Bochner and polar Pythagoras identities, now *derived* from `HasDerivAt` along coordinate lines (`Stage6Calculus.lean`); the near/far cutoff absorption algebra; Burgers-strain exclusion on 𝕋³; the comparison-ODE ceiling; and a genuinely non-constant exact periodic shear Beltrami mode `e^{-4π²νt}(sin 2πz, cos 2πz, 0)` checked component-wise.
+Attained-maximum ⇒ `BddAbove` and sup-norm equality; Bochner and polar Pythagoras identities, now *derived* from `HasDerivAt` along coordinate lines (`Stage6Calculus.lean`); the near/far cutoff absorption algebra; Burgers-strain exclusion on 𝕋³; the comparison-ODE ceiling; and a genuinely non-constant exact periodic shear Beltrami mode `e^{-4π²νt}(sin 2πz, cos 2πz, 0)` checked component-wise.
 
 ## What Is Proved (`FinalProductTheorem.lean`, status as of 2026-10-30)
 
@@ -41,7 +34,7 @@ These hypotheses are discharged only at $u_0\equiv0$. Nothing in this repository
 
 ---
 
-## Exact Breakdown: Modules and Unconditionally Proved Theorems (`383 theorems`, `0 sorry`)
+## Modules (`502 theorems`, `0 sorry`)
 
 | Module | Key Declarations | Status | Mathematical Content |
 |---|---|---|---|
@@ -51,9 +44,11 @@ These hypotheses are discharged only at $u_0\equiv0$. Nothing in this repository
 | `SymplecticTether.lean` | `CalderonZygmundConstant3D_eq_three_halves`, `kappa_pos`, `tether_preserves_casimirs`, `tetherPointwiseDensity_nonpos`, `tetherPointwiseDensity_strict_neg_of_noncasimir`, `tetherKernel_diagonal_nonpos`, `tetherKernel_strict_neg_of_orthogonal_component`, `tetherKernel_nondegenerate_on_casimir_defect` | **PROVED (Unconditional, 38 theorems)** | Construction of $\mathcal{K}_{\mathrm{FT}}$, exact Casimir conservation ($P_{\delta C}^\perp \omega = 0$), diagonal non-positivity, and **strict negativity on every non-Casimir transverse perturbation** $P_{\delta C}^\perp v \neq 0$ where $\omega \neq 0$. |
 | `Uniqueness.lean` | `uniqueness_of_minimal_tether`, `uniqueness_of_minimal_symmetric_tether`, `uniqueness_of_kernel_density`, `uniqueness_of_kernel_density_fun`, `tetherKernel_has_canonical_density`, `step2_degree_of_ne_zero`, `step5_higher_order` | **PROVED (Unconditional, 16 theorems)** | 5-step canonical classification proving $\mathcal{K}_{\mathrm{FT}}$ is the unique minimal-degree (degree 2 in $\omega$) Casimir-preserving symmetric metriplectic kernel up to $\kappa > 0$. |
 | `AnalyticPipeline.lean` | `youngs_absorption_elimination`, `holder_I4`, `comparison_ode_stability`, `comparison_ode_nonneg` | **PROVED (Unconditional, 14 theorems)** | Quartic $4 = 4$ Young absorption ($p = 4/3, q = 4$) cancelling $C_{\mathrm{CZ}}|\omega|^3$ into $-\frac{\nu}{3}|\omega|^2 - \frac{\kappa}{4}|\omega|^6$, and ODE comparison ceiling. |
-| `TetheredLyapunov.lean` | `hasDerivAt_quartic_tether_weight`, `quartic_weight_source_eq`, `riccati_ceiling_of_vorticity_di`, `global_regularity_of_restart` | **PROVED (Unconditional, 45 theorems)** | Quartic tethered Lyapunov functional $S_\varepsilon(t) = \int (\frac{1}{2}|\omega_\varepsilon|^2 + \frac{\kappa}{4}|\omega_\varepsilon|^4 \varphi_\varepsilon)\,dx$, material accumulation differentiation, and Kato–BKM continuation machinery. |
-| `GlobalRegularity.lean` | `stepField_not_physical`, `repaired_hInt`, `repaired_huniq_at_zero`, `frohmanianTetherBound_zero`, `frohmanianTetherRate_zero`, `global_regularity_for_NS_nonvacuous_at_zero`, `frohmanian_tether_theorem`, `global_regularity_for_NS` | **PROVED (Unconditional, 11 theorems)** | Exclusion of step-jump pathology via `IsPhysicalNSSolution`, unconditional non-vacuity witness at $u_0 \equiv 0$, and global regularity $T^*(u_0,\nu) = \top$ for tethered flows. |
-| `ClosureBlueprint.lean`, `IndependentMajorant.lean`, `NS_Equations.lean` | Supporting Navier–Stokes kinematics, Sobolev/BKM foundations, and Lyapunov closure lemmas | **PROVED (Unconditional, 167 theorems)** | Complete foundational infrastructure with zero `sorry`. |
+| `TetheredLyapunov.lean` | `hasDerivAt_quartic_tether_weight`, `quartic_weight_source_eq`, `riccati_ceiling_of_vorticity_di`, `global_regularity_of_restart` | **PROVED (45 theorems; continuation results conditional on stated local-existence, BKM and restart hypotheses)** | Quartic tethered Lyapunov functional $S_\varepsilon(t) = \int (\frac{1}{2}|\omega_\varepsilon|^2 + \frac{\kappa}{4}|\omega_\varepsilon|^4 \varphi_\varepsilon)\,dx$, material accumulation differentiation, and continuation from explicit Kato–BKM hypotheses. |
+| `GlobalRegularity.lean` | `stepField_not_physical`, `repaired_hInt`, `repaired_huniq_at_zero`, `frohmanianTetherBound_zero`, `frohmanianTetherRate_zero`, `global_regularity_for_NS_nonvacuous_at_zero`, `frohmanian_tether_theorem`, `global_regularity_for_NS` | **PROVED (11 theorems; `global_regularity_for_NS` and `frohmanian_tether_theorem` conditional on `w`, `hRiccati`, `hrestart`, `huniq`)** | Exclusion of step-jump pathology via `IsPhysicalNSSolution`, the hypotheses discharged at $u_0 \equiv 0$, and global regularity under the four stated hypotheses. |
+| `ClosureBlueprint.lean`, `IndependentMajorant.lean`, `NS_Equations.lean` | Supporting Navier–Stokes kinematics, Sobolev/BKM foundations, and Lyapunov closure lemmas | **PROVED (167 theorems; `type_composition_sequence` conditional on `hRiccati`, `hTstar`, `hbelow`)** | Navier–Stokes kinematics, Sobolev/BKM foundations and Lyapunov closure lemmas, 0 `sorry`. |
+| `Stage6Calculus.lean` | `polar_pythagoras_of_hasDerivAt`, `bochner_leibniz_of_hasDerivAt`, `shear_beltrami`, `shearU_heat` | **PROVED (Unconditional, 35 theorems)** | Bochner and polar Pythagoras identities from `HasDerivAt`; exact periodic shear Beltrami mode. |
+| `FieldMetriplectic.lean` | `jacF_eq_zero`, `tetF_symm`, `tetF_energy_left`, `tetF_energy_right`, `dissF_nonpos`, `shearX_mixed_ne_zero`, `shearY_transverse_ne_zero` | **PROVED (Unconditional, 100 theorems)** | Metriplectic bracket on trigonometric-polynomial fields: Jacobi for the KKS part, symmetric energy-degenerate nonpositive tether part, explicit Jacobi failure of the full bracket. |
 
 ---
 
@@ -61,17 +56,19 @@ These hypotheses are discharged only at $u_0\equiv0$. Nothing in this repository
 
 ```text
 FrohmanianSymplecticTether.ForMathlib.Projection: theorems=7 nonstandard=0
-FrohmanianSymplecticTether.AnalyticPipeline: theorems=14 nonstandard=0
-FrohmanianSymplecticTether.TetheredLyapunov: theorems=45 nonstandard=0
-FrohmanianSymplecticTether.Uniqueness: theorems=16 nonstandard=0
-FrohmanianSymplecticTether.SymplecticTether: theorems=38 nonstandard=0
 FrohmanianSymplecticTether.IndependentMajorant: theorems=2 nonstandard=0
-FrohmanianSymplecticTether.ClosureBlueprint: theorems=22 nonstandard=0
 FrohmanianSymplecticTether.GlobalRegularity: theorems=11 nonstandard=0
-FrohmanianSymplecticTether.ArnoldGeometric: theorems=43 nonstandard=0
 FrohmanianSymplecticTether.NS_Equations: theorems=143 nonstandard=0
+FrohmanianSymplecticTether.ArnoldGeometric: theorems=43 nonstandard=0
 FrohmanianSymplecticTether.FinalProductTheorem: theorems=26 nonstandard=0
-TOTAL theorems=367 nonstandard=0
+FrohmanianSymplecticTether.AnalyticPipeline: theorems=14 nonstandard=0
+FrohmanianSymplecticTether.Uniqueness: theorems=16 nonstandard=0
+FrohmanianSymplecticTether.TetheredLyapunov: theorems=45 nonstandard=0
+FrohmanianSymplecticTether.SymplecticTether: theorems=38 nonstandard=0
+FrohmanianSymplecticTether.Stage6Calculus: theorems=35 nonstandard=0
+FrohmanianSymplecticTether.ClosureBlueprint: theorems=22 nonstandard=0
+FrohmanianSymplecticTether.FieldMetriplectic: theorems=100 nonstandard=0
+TOTAL theorems=502 nonstandard=0
 'FrohmanianSymplecticTether.FinalProductTheorem.frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem' depends on axioms: [propext, Classical.choice, Quot.sound]
 ```
 
