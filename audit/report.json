@@ -9,7 +9,7 @@
     "path": "/workspace/frohmanian-symplectic-tether-regularity",
     "name": "frohmanian-symplectic-tether-regularity",
     "lean_toolchain": "leanprover/lean4:v4.30.0-rc1",
-    "git_head": "2518c46723862bfa370aea3fd26230361ec69263"
+    "git_head": "e6da374ff5989335b1adbfc2fd8b86306f27e518"
   },
   "build": {
     "requested": false
@@ -154,7 +154,7 @@
     }
   },
   "tree": {
-    "sha256": "a9a302154ac01c0c70c51d8393eed1ec5c83c273c678ac1966f31d4d919903b4",
+    "sha256": "e4eb80e2edc4aa0d038511306f8135284ce970544c863b4ba538137efb863383",
     "files": 26,
     "entries": [
       {
@@ -187,7 +187,7 @@
       },
       {
         "path": "FrohmanianSymplecticTether/FieldMetriplectic.lean",
-        "sha256": "31334d62e6b906aa1cc3f57bfe9ccf77897be5db8d7c7b596e0e128bc4d806f0"
+        "sha256": "4de8f13c2f8019fda99fd520f3e2f80e43e5edbeebd38180ddeb09ba1c6b6839"
       },
       {
         "path": "FrohmanianSymplecticTether/FinalProductTheorem.lean",
@@ -269,11 +269,11 @@
     "reasons": [],
     "vacuity_warnings_in_build": 5
   },
-  "generated_at_utc": "2026-10-30T18:54:35+00:00",
+  "generated_at_utc": "2026-10-30T19:17:27+00:00",
   "signature": {
     "alg": "ed25519",
-    "public_key_b64": "YoEHEghXFxrXvYKQoWQb+oDunzwdxBgpk03gxrdC7WI=",
+    "public_key_b64": "ZOyujV1yUEldQRZEDhmXCHa4ikWGfcTD+meZYssNLpo=",
     "payload": "canonical JSON of report without 'signature' (sort_keys, compact, UTF-8)",
-    "value_b64": "FInNN8ERLwWjxtZbloTJzfZjew7XwHMdmzzOtw89q0knQE//uW+K+mQuGSBTPjaeWBcqu9nt0riYg3Hy81+WAQ=="
+    "value_b64": "hikdBwVWsamUGSwl6UaFUdg+ifLzgXjgBB+L94YQwLIrZrOpXy3L47lh6FFbAU3BdxOCE/re0DKuExe2hLR5CA=="
   }
 }

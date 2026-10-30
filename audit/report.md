@@ -2,10 +2,10 @@
 
 **Verdict: PASS_WITH_WARNINGS**
 
-- Generated (UTC): 2026-10-30T18:54:35+00:00
+- Generated (UTC): 2026-10-30T19:17:27+00:00
 - Tool: titan-audit 1.0.0 (Benjamin Stanley Frohman (ORCID: 0009-0006-7068-3718))
-- Toolchain: `leanprover/lean4:v4.30.0-rc1`  Git HEAD: `2518c46723862bfa370aea3fd26230361ec69263`
-- Tree SHA-256: `a9a302154ac01c0c70c51d8393eed1ec5c83c273c678ac1966f31d4d919903b4` over 26 files
+- Toolchain: `leanprover/lean4:v4.30.0-rc1`  Git HEAD: `e6da374ff5989335b1adbfc2fd8b86306f27e518`
+- Tree SHA-256: `e4eb80e2edc4aa0d038511306f8135284ce970544c863b4ba538137efb863383` over 26 files
 
 ## Build
 
@@ -56,5 +56,5 @@ Heuristics are advisory: a flag means *look here*, not *wrong*.
 
 ## Signature
 
-- ed25519 public key (base64): `YoEHEghXFxrXvYKQoWQb+oDunzwdxBgpk03gxrdC7WI=`
+- ed25519 public key (base64): `ZOyujV1yUEldQRZEDhmXCHa4ikWGfcTD+meZYssNLpo=`
 - Verify: `titan-audit verify report.json`
