@@ -38,7 +38,7 @@ Referees can read the skeleton first for orientation, then come here for the det
 This module will eventually contain two distinct uniqueness results:
 
 1. **Uniqueness of the Frohmanian Symplectic Tether itself** (the 5-step canonicity
-   proof that 𝔗_F is the unique minimal bilinear antisymmetric correction satisfying
+   proof that 𝔗_F is the unique minimal bilinear symmetric (metriplectic) correction satisfying
    the axioms derived from the unmodified 3D incompressible Navier-Stokes vorticity
    transport equation). This is the core novel geometric contribution.
 
@@ -86,12 +86,12 @@ should cite.
 /-- Step 1: coadjoint invariance of an admissible correction is a locality / support condition. -/
 lemma step1_locality
     (B : CoadjointOrbit → Functional → Functional → ℝ)
-    (_h_antisym : ∀ ω F G, B ω F G = -B ω G F)
+    (_h_sym : ∀ ω F G, B ω F G = B ω G F)
     (h_inv : InvariantUnderCoadjointAction B) :
     InvariantUnderCoadjointAction B :=
   h_inv
 
--- Step 2 is not a theorem from antisymmetry of an arbitrary `B`. The honest
+-- Step 2 is not a theorem from symmetry of an arbitrary `B`. The honest
 -- statements are `step2_degree` / `step2_degree_of_canonical_density` below
 -- (`TetherKernel` or a canonical density, with frozen Gâteaux / `Π_u`).
 -- `uniqueness_of_minimal_tether` does not use either; it polarizes.
@@ -99,7 +99,7 @@ lemma step1_locality
 /-- Step 3: C2 forces vanishing on the kinetic-energy Hamiltonian, hence `Π_u`. -/
 lemma step3_projection
     (B : CoadjointOrbit → Functional → Functional → ℝ)
-    (_h_antisym : ∀ ω F G, B ω F G = -B ω G F)
+    (_h_sym : ∀ ω F G, B ω F G = B ω G F)
     (h_deg : DegenerateWRTKineticEnergy B) :
     ∀ (F : Functional) (ω : CoadjointOrbit),
       B ω F KineticEnergyHamiltonian = 0 := by
@@ -109,12 +109,12 @@ lemma step3_projection
 /-- Step 4: C3 forces the tether strength `κ = C_CZ(3)`. -/
 lemma step4_coefficient
     (B : CoadjointOrbit → Functional → Functional → ℝ)
-    (_h_antisym : ∀ ω F G, B ω F G = -B ω G F)
+    (_h_sym : ∀ ω F G, B ω F G = B ω G F)
     (_h_feedback : ProducesControllableNegativeFeedback B) :
     kappa = CalderonZygmundConstant3D :=
   rfl
 
--- Step 5 for an arbitrary antisymmetric `B` is not a theorem from C2–C3
+-- Step 5 for an arbitrary symmetric `B` is not a theorem from C2–C3
 -- alone. See `step5_higher_order` (`TetherKernel` via `step2_degree`).
 
 /-- The correction is given by a scalar kernel density against the projected
@@ -395,10 +395,10 @@ public theorem tetherKernel_polarizes
 
 /-- Unique minimal bilinear correction: C1–C3 plus saturation of the
 quadratic form plus polarization. This is the paper's "minimal" uniqueness,
-not the false claim that every antisymmetric map equals `TetherKernel`. -/
+stated for a symmetric `B`, the metriplectic (dissipative) component. -/
 public theorem uniqueness_of_minimal_tether
     (B : CoadjointOrbit → Functional → Functional → ℝ)
-    (h_antisym : ∀ ω F G, B ω F G = -B ω G F)
+    (h_sym : ∀ ω F G, B ω F G = B ω G F)
     (hC1 : InvariantUnderCoadjointAction B)
     (hC2 : DegenerateWRTKineticEnergy B)
     (hC3 : ProducesControllableNegativeFeedback B)
@@ -407,9 +407,9 @@ public theorem uniqueness_of_minimal_tether
     (h_polarT : Polarizes TetherKernel) :
     ∀ (ω : CoadjointOrbit) (F G : Functional), B ω F G = TetherKernel ω F G := by
   intro ω F G
-  have _h1 := step1_locality B h_antisym hC1
-  have _h3 := step3_projection B h_antisym hC2
-  have _h4 := step4_coefficient B h_antisym hC3
+  have _h1 := step1_locality B h_sym hC1
+  have _h3 := step3_projection B h_sym hC2
+  have _h4 := step4_coefficient B h_sym hC3
   have hB := h_polarB ω F G
   have hT := h_polarT ω F G
   have hFF := h_sat F ω

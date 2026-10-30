@@ -39,11 +39,11 @@ namespace ClosureBlueprint
 
 /-! ## Admissible phase-space corrections (real C1–C3) -/
 
-/-- A bilinear correction is admissible when it is antisymmetric and satisfies
+/-- A bilinear correction is admissible when it is symmetric (metriplectic) and satisfies
 the three necessary conditions extracted from vorticity transport. -/
 public structure IsAdmissibleCorrection
     (B : CoadjointOrbit → Functional → Functional → ℝ) : Prop where
-  antisym : ∀ ω F G, B ω F G = -B ω G F
+  symm : ∀ ω F G, B ω F G = B ω G F
   invariance : InvariantUnderCoadjointAction B
   degeneracy : DegenerateWRTKineticEnergy B
   feedback : ProducesControllableNegativeFeedback B
@@ -140,7 +140,7 @@ public theorem tether_kernel_uniqueness
     (h_polarB : Polarizes B)
     (h_polarT : Polarizes TetherKernel) :
     ∀ ω F G, B ω F G = TetherKernel ω F G :=
-  uniqueness_of_minimal_tether B hB.antisym hB.invariance hB.degeneracy hB.feedback
+  uniqueness_of_minimal_tether B hB.symm hB.invariance hB.degeneracy hB.feedback
     h_sat h_polarB h_polarT
 
 /-- Density-form uniqueness: substitution of `α = -κ |ω|²` into the

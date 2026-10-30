@@ -402,13 +402,13 @@ public theorem constantin_fefferman_near_far_cutoff_bridge
 /-! ## Section 3. The Four Components $P_1, P_2, P_3, P_4$ and the Master Product Theorem -/
 
 /-- **Component $P_1$ (Canonical 5-Step Uniqueness & Quadratic Degree on $\mathrm{SDiff}(\mathbb{T}^3)^*$):**
-Every bilinear correction $B$ satisfying C1–C3, quadratic saturation, and polarization (under either antisymmetry or
+Every bilinear correction $B$ satisfying C1–C3, quadratic saturation, and polarization (under
 metriplectic symmetry), or having the canonical kernel density $\alpha_{\mathrm{can}}(\omega,x) = -\kappa\|\omega(x)\|^2$,
 equals `TetherKernel`, and `TetherKernel` has exact quadratic homogeneity $c^2$ under $\omega \mapsto c\omega$ with no
 degree $\ge 3$ remainder. -/
 @[expose] public def P1_CanonicalFiveStepUniqueness : Prop :=
   (∀ (B : CoadjointOrbit → Functional → Functional → ℝ),
-    (∀ ω F G, B ω F G = -B ω G F) →
+    (∀ ω F G, B ω F G = B ω G F) →
     InvariantUnderCoadjointAction B →
     DegenerateWRTKineticEnergy B →
     ProducesControllableNegativeFeedback B →

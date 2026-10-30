@@ -123,7 +123,7 @@ public theorem frohmanian_tether_theorem
       TetheredBracket F KineticEnergyHamiltonian ω =
         ClassicalBracket F KineticEnergyHamiltonian ω) ∧
     (∀ (B : CoadjointOrbit → Functional → Functional → ℝ),
-      (∀ ω F G, B ω F G = -B ω G F) →
+      (∀ ω F G, B ω F G = B ω G F) →
       InvariantUnderCoadjointAction B →
       DegenerateWRTKineticEnergy B →
       ProducesControllableNegativeFeedback B →
