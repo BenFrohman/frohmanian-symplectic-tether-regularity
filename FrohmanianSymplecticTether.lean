@@ -18,3 +18,4 @@ public import FrohmanianSymplecticTether.FinalProductTheorem
 public import FrohmanianSymplecticTether.Stage6Calculus
 public import FrohmanianSymplecticTether.FieldMetriplectic
 public import FrohmanianSymplecticTether.ForMathlib.PiUL2
+public import FrohmanianSymplecticTether.ForMathlib.Leray

@@ -99,3 +99,4 @@ open Lean Elab Command
 #print axioms FrohmanianSymplecticTether.Stage6.hasDerivAt_inner_self_deriv_of_hasDerivAt
 #print axioms FrohmanianSymplecticTether.Stage6.isShearBeltramiMode
 #print axioms ForMathlib.Pi_u_ae_eq_PiL2
+#print axioms ForMathlib.lerayL2_fixes_test
