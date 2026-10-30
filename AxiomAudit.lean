@@ -103,3 +103,4 @@ open Lean Elab Command
 #print axioms FrohmanianTether.c1_c3_not_unique
 #print axioms FrohmanianTether.uniqueness_of_two_sided_feedback
 #print axioms FrohmanianTether.step5_higher_order_vanishes
+#print axioms ForMathlib.integral_heatKernel1D
