@@ -518,7 +518,11 @@ $y(t) \le \max(y(0), C / \kappa'')$ for all $t \ge 0$. -/
 The physical solution class `IsPhysicalNSSolution` excludes discontinuous step fields (`¬ IsPhysicalNSSolution stepField`),
 for every $\nu > 0$ all hypotheses of `global_regularity_for_NS` are jointly satisfied at quiescent initial data $u_0 \equiv 0$,
 and for every non-zero vector $c \in \mathbb{R}^3 \setminus \{0\}$ there exists a strictly non-zero smooth solution $(u_c, 0)$
-with $u_c(0) \neq 0$ satisfying `navier_stokes_eq u_c 0 ν` on $[0, \infty)$. -/
+with $u_c(0) \neq 0$ satisfying `navier_stokes_eq u_c 0 ν` on $[0, \infty)$.
+
+**Scope (2026-10-30):** despite the name, this conjunct does NOT assert global regularity for general
+data. It covers admissibility and trivial-data non-vacuity only. The general `global_regularity_for_NS` is
+conditional on `KatoLocalWitness`, `FrohmanianTetherBound`, `hrestart` and `huniq`, and is not part of P5. -/
 @[expose] public def P5_TetheredGlobalRegularityAndNonVacuity : Prop :=
   (¬ IsPhysicalNSSolution stepField) ∧
   (∀ (ν : ℝ), 0 < ν →
