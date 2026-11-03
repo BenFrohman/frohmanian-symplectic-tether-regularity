@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "note": "Hand-written by the PipelineHalt run of 2026-11-03 from the \\texttt{} Lean names the paper cites in each claim (checked to exist). Props that appear as hypotheses (FrohmanianTetherBound, KatoLocalWitness, …) are not mapped as claims. It pairs claims with declarations; it does not assert that the meanings match.",
+  "claims": {
+    "theorem-1.1": {"lean": ["frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem"]},
+    "theorem-2.2": {"lean": ["tetherPointwiseDensity_nonpos", "tetherKernel_diagonal_nonpos", "tether_preserves_casimirs", "tetherPointwiseDensity_strict_neg_of_noncasimir", "tetherKernel_strict_neg_of_orthogonal_component", "tetherKernel_nondegenerate_on_casimir_defect"]},
+    "theorem-3.1": {"lean": ["uniqueness_of_minimal_tether", "uniqueness_of_kernel_density"]},
+    "eq:young-4-eq-4": {"lean": ["youngs_absorption_elimination"]}
+  }
+}

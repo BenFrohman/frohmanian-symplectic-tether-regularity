@@ -1,0 +1,80 @@
+{
+  "title": "\\textbf{The Frohmanian Symplectic Tether: Canonical Uniqueness on Coadjoint Orbits of $\\mathrm{SDiff",
+  "source": "paper/Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.tex",
+  "claims": [
+    {
+      "id": "theorem-1.1",
+      "number": "Theorem 1.1",
+      "statement": "For every viscosity $\\nu > 0$ on the dual Lie algebra $\\mathfrak{g}^* = \\mathrm{SDiff}(\\mathbb{T}^3)^*$ with Calder\\'on--Zygmund constant $C_{\\mathrm{CZ}} = 3/2$ and canonical tether coupling $\\kappa = \\frac{27 C_{\\mathrm{CZ}}^4}{4\\nu^3} = \\frac{2187}{64\\nu^3} > 0$, \\textbf{(P$_1$)} the quadratic density $\\alpha(\\omega) = -\\kappa\\|\\omega\\|^2$ is the unique minimal-degree polynomial kernel density satisfying Casimir preservation, parity/negativity, and parabolic scaling; \\textbf{(P$_2$)} the full pairing $\\mathfrak{T}_F(\\delta F, \\delta G) = \\omega_{\\mathrm{KKS}}(\\omega)(\\delta F, \\delta G) - \\kappa\\int_{\\mathbb{T}^3} \\|\\omega\\|^2 \\langle P_{\\delta C}^\\perp \\delta F, P_{\\delta C}^\\perp \\delta G \\rangle\\,dx$ decomposes into an alternating Kirillov--Kostant--Souriau symplectic 2-form obeying the cyclic Jacobi identity and a symmetric negative-semidefinite metriplectic tether that vanishes on Casimir gradients ($P_{\\delta C}^\\perp \\omega = 0$) and is strictly negative on every non-Casimir transverse perturbation ($P_{\\delta C}^\\perp v \\neq 0, \\omega \\neq 0$); \\textbf{(P$_3$)} conjugate $(4/3, 4)$ Young absorption satisfies $C_{\\mathrm{CZ}} m^3 - \\frac{\\nu}{3} m^2 - \\frac{\\kappa}{4} m^6 \\le 0$ for all $m \\ge 0$; and \\textbf{(P$_4$)} every continuous vorticity envelope obeying $M'(t) \\le C_{\\mathrm{CZ}} M(t)^2 - \\kappa'' M(t)^3$ ($\\kappa'' > 0$) satisfies the global Lyapunov ceiling $M(t) \\le \\max(M(0), C_{\\mathrm{CZ}}/\\kappa'')$. Global regularity for general data is conditional on \\texttt{FrohmanianTetherBound}, \\texttt{KatoLocalWitness}, \\texttt{PhysicalBKMContinuationCriterionFor} and \\texttt{KatoUniquenessOnExistenceTimes}.",
+      "kind": "theorem",
+      "source": "paper/Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.tex:72",
+      "title": "Master Product Theorem: \\texttt{frohmanian\\_metriplectic\\_system\\_canonical\\_uniqueness\\_and\\_global\\_regularity\\_product\\_theorem}"
+    },
+    {
+      "id": "eq:kappa-def",
+      "number": "Definition 2.1",
+      "statement": "For $\\nu > 0$ and $C_{\\mathrm{CZ}} = 3/2$, define the canonical coupling constant and symmetric bilinear kernel: \\begin{align} \\kappa(\\nu) &= \\frac{27 C_{\\mathrm{CZ}}^4}{4 \\nu^3} = \\frac{2187}{64 \\nu^3} > 0, \\\\ \\mathcal{K}_{\\mathrm{FT}}(v, w; \\omega) &= \\int_{\\mathbb{T}^3} \\|\\omega(x)\\|^2 \\bigl\\langle P_{\\delta C}^\\perp v(x),\\, P_{\\delta C}^\\perp w(x) \\bigr\\rangle\\,dx, \\\\ \\{F, G\\}_{\\mathrm{FT}}(\\omega) &= \\{F, G\\}_{\\mathrm{LP}}(\\omega) - \\kappa(\\nu)\\,\\mathcal{K}_{\\mathrm{FT}}(\\delta F(\\omega), \\delta G(\\omega); \\omega). \\end{align}",
+      "kind": "definition",
+      "source": "paper/Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.tex:136",
+      "title": "Frohmanian Symplectic Tether Bracket and Kernel"
+    },
+    {
+      "id": "theorem-2.2",
+      "number": "Theorem 2.2",
+      "statement": "Let $\\kappa > 0$, $\\omega \\in \\mathfrak{g}^*$, and $v : \\mathbb{T}^3 \\to \\mathbb{R}^3$. Define the pointwise tether density $d_{\\mathrm{FT}}(\\kappa, \\omega, v, x) = -\\kappa \\|\\omega(x)\\|^2 \\|P_{\\delta C}^\\perp v(x)\\|^2$. Then: • \\textbf{Diagonal non-positivity (\\texttt{tetherPointwiseDensity\\_nonpos}, \\texttt{tetherKernel\\_diagonal\\_nonpos}):} $d_{\\mathrm{FT}}(\\kappa, \\omega, v, x) \\le 0$ for all $x \\in \\mathbb{T}^3$, and $-\\kappa\\,\\mathcal{K}_{\\mathrm{FT}}(v, v; \\omega) \\le 0$. • \\textbf{Casimir invariance (\\texttt{tether\\_preserves\\_casimirs}):} For any Casimir functional $C$ with $\\delta C(\\omega) \\parallel \\omega$, $\\{F, C\\}_{\\mathrm{FT}} = \\{F, C\\}_{\\mathrm{LP}} = 0$. • \\textbf{Strict negativity on non-Casimir modes (\\texttt{tetherPointwiseDensity\\_strict\\_neg\\_of\\_noncasimir}, \\texttt{tetherKernel\\_strict\\_neg\\_of\\_orthogonal\\_component}, \\texttt{tetherKernel\\_nondegenerate\\_on\\_casimir\\_defect}):} Whenever $\\omega(x) \\neq 0$ and $P_{\\delta C}^\\perp v(x) \\neq 0$, we have $d_{\\mathrm{FT}}(\\kappa, \\omega, v, x) < 0$. Moreover, if the integrated orthogonal Casimir defect $\\int_{\\mathbb{T}^3} \\|\\omega(x)\\|^2 \\|P_{\\delta C}^\\perp v(x)\\|^2\\,dx > 0$, then $-\\kappa\\,\\mathcal{K}_{\\mathrm{FT}}(v, v; \\omega) < 0$.",
+      "kind": "theorem",
+      "source": "paper/Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.tex:147",
+      "title": "Unconditional Casimir Non-Degeneracy of $\\mathcal{K}_{\\mathrm{FT}}$"
+    },
+    {
+      "id": "theorem-3.1",
+      "number": "Theorem 3.1",
+      "statement": "Let $\\mathcal{K}(v, w; \\omega) = \\int_{\\mathbb{T}^3} k(\\omega(x), v(x), w(x))\\,dx$ be any local bilinear symmetric form on $\\mathfrak{g}^*$ whose pointwise density $k(\\omega, v, w)$ satisfies C1 (Casimir Kernel Annihilation), C2 (Minimal Polynomial Degree $2m=2$ \\& Parabolic Scaling), and C3 ($\\mathrm{SO}(3)$ Isotropy \\& Negative Semi-Definiteness). Then $\\mathcal{K} = \\alpha\\,\\mathcal{K}_{\\mathrm{FT}}$ with unique canonical coefficient $-\\kappa(\\nu) = -\\frac{27 C_{\\mathrm{CZ}}^4}{4\\nu^3}$.",
+      "kind": "theorem",
+      "source": "paper/Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.tex:160",
+      "title": "Canonical Uniqueness: \\texttt{uniqueness\\_of\\_minimal\\_tether} and \\texttt{uniqueness\\_of\\_kernel\\_density}"
+    },
+    {
+      "id": "eq:young-4-eq-4",
+      "number": "Theorem 4.1",
+      "statement": "For every $\\nu > 0$, $C_{\\mathrm{CZ}} > 0$, and $x = |\\omega| \\ge 0$, with $\\kappa = \\frac{27 C_{\\mathrm{CZ}}^4}{4\\nu^3}$, \\begin{equation} C_{\\mathrm{CZ}} x^3 - \\frac{\\nu}{3} x^2 - \\frac{\\kappa}{4} x^6 \\le 0. \\end{equation}",
+      "kind": "theorem",
+      "source": "paper/Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.tex:166",
+      "title": "Quartic $4 = 4$ Young Absorption, \\texttt{youngs\\_absorption\\_elimination}"
+    }
+  ],
+  "clarifications": {
+    "e7f5ad81c345": {
+      "claimId": "theorem-1.1",
+      "kind": "ambiguous",
+      "question": "Paper claim Theorem 1.1 (theorem-1.1) states: “For every viscosity $\\nu > 0$ on the dual Lie algebra $\\mathfrak{g}^* = \\mathrm{SDiff}(\\mathbb{T}^3)^*$ with Calder\\'on--Zygmund constant $C_{\\mathrm{CZ}} = 3/2$ and canonical tether coupling $\\kappa…”. Its title is “Master Product Theorem: \\texttt{frohmanian\\_metriplectic\\_system\\_canonical\\_uniqueness\\_and\\_global\\_regularity\\_product\\_theorem}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording: the title is the Lean name frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem, which exists and is the mapped declaration.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T19:59:43.921Z"
+    },
+    "51164beb1353": {
+      "claimId": "eq:young-4-eq-4",
+      "kind": "ambiguous",
+      "question": "Paper claim Theorem 4.1 (eq:young-4-eq-4) states: “For every $\\nu > 0$, $C_{\\mathrm{CZ}} > 0$, and $x = |\\omega| \\ge 0$, with $\\kappa = \\frac{27 C_{\\mathrm{CZ}}^4}{4\\nu^3}$, \\begin{equation} C_{\\mathrm{CZ}} x^3 - \\frac{\\nu}{3} x^2 - \\frac{\\kappa}{4} …”. Its title is “Quartic $4 = 4$ Young Absorption, \\texttt{youngs\\_absorption\\_elimination}”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording: the title cites the Lean name youngs_absorption_elimination (exists, AnalyticPipeline.lean:69); '4 = 4' names the quartic exponent balance, not a separate assertion.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T19:59:44.075Z"
+    },
+    "8f22c96a8cb9": {
+      "claimId": "eq:kappa-def",
+      "kind": "ambiguous",
+      "question": "Paper claim Definition 2.1 (eq:kappa-def) states: “For $\\nu > 0$ and $C_{\\mathrm{CZ}} = 3/2$, define the canonical coupling constant and symmetric bilinear kernel: \\begin{align} \\kappa(\\nu) &= \\frac{27 C_{\\mathrm{CZ}}^4}{4 \\nu^3} = \\frac{2187}{64 \\nu…”. Its title is “Frohmanian Symplectic Tether Bracket and Kernel”, which does not appear to describe that statement. Is the title or the statement misworded?",
+      "answer": "harmless wording: a definition's title ('Bracket and Kernel') naming the objects it defines (κ(ν) and K_FT); no assertion is made by the title.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T19:59:44.225Z"
+    },
+    "77453ba2c6fe": {
+      "claimId": "theorem-2.2",
+      "kind": "conditional",
+      "question": "Paper claim Theorem 2.2 (theorem-2.2) states: “Let $\\kappa > 0$, $\\omega \\in \\mathfrak{g}^*$, and $v : \\mathbb{T}^3 \\to \\mathbb{R}^3$. Define the pointwise tether density $d_{\\mathrm{FT}}(\\kappa, \\omega, v, x) = -\\kappa \\|\\omega(x)\\|^2 \\|P_{\\delt…”. Lean theorem `tetherPointwiseDensity_strict_neg_of_noncasimir` assumes `hω : ω.val x ≠ 0`, which the claim does not state. Is this extra hypothesis intentional?",
+      "answer": "stated in the claim: the paper says 'Whenever ω(x) ≠ 0 …' (theorem-2.2, third bullet); hω : ω.val x ≠ 0 is that hypothesis.",
+      "verdict": "intentional",
+      "answeredAt": "2026-11-03T19:59:44.376Z"
+    }
+  }
+}
