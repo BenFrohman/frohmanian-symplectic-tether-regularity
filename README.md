@@ -147,3 +147,7 @@ See [`NAMING.md`](NAMING.md) for the canonical names (Frohmanian Tether Hypothes
 ## AI Assistance Disclosure
 
 Grok (xAI), via the Grok Bot assistant, provided scaffolding, drafting, and collaboration support on formalization, code, and papers in this repository. Benjamin Stanley Frohman is the sole author: he directed, reviewed, and is responsible for all of the work. Grok is not a coauthor.
+
+## Zenodo archive
+
+- [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23867486.svg)](https://doi.org/10.5281/zenodo.23867486) The Frohmanian Symplectic Tether: Canonical Uniqueness on Coadjoint Orbits of SDiff(T3), Non-Degenerate Casimir Coupling, and Conditional Global Regularity via Quartic Young Absorption in Lean 4 — all versions: [10.5281/zenodo.23867486](https://doi.org/10.5281/zenodo.23867486); latest version: [10.5281/zenodo.23867487](https://doi.org/10.5281/zenodo.23867487)
