@@ -1,0 +1,32 @@
+name: Lean certificate
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  certify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install elan (toolchain pinned by lean-toolchain)
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh | sh -s -- -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "$GITHUB_PATH"
+      - name: Get Mathlib cache
+        run: lake exe cache get
+      - name: Build
+        run: |
+          set -o pipefail
+          lake build 2>&1 | tee build.log
+      - name: Axiom audit
+        run: |
+          set -o pipefail
+          lake env lean AxiomAudit.lean 2>&1 | tee axioms.txt
+      - name: No sorry in build, standard axioms only
+        run: |
+          if grep -q "declaration uses 'sorry'" build.log; then echo "sorry found"; exit 1; fi
+          if grep -E "depends on axioms" axioms.txt | grep -vE "depends on axioms: \[(propext|Classical\.choice|Quot\.sound)(, (propext|Classical\.choice|Quot\.sound))*\]$"; then echo "non-standard axioms"; exit 1; fi
+          grep -E "TOTAL" axioms.txt || true
+          echo "OK: no sorry in build; all printed axiom sets standard"
