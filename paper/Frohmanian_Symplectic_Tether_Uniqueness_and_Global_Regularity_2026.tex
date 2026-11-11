@@ -48,7 +48,7 @@
 ORCID: \href{https://orcid.org/0009-0006-7068-3718}{0009-0006-7068-3718}\\
 \texttt{frohmanbenjamin@gmail.com}}
 
-\date{October 27, 2026; revised November 11, 2026 (v1.3.0: conditional scope, counts and model corrections)}
+\date{October 27, 2026; revised November 11, 2026 (v1.3.0; paper erratum: $P_5$ withdrawn)}
 
 \begin{document}\sloppy
 \maketitle
@@ -65,9 +65,28 @@ where $\mathcal{K}_{\mathrm{FT}}(v, w; \omega) = \int \|\omega(x)\|^2 \langle P_
 The structural results are packaged into the 4-conjunct product theorem (its only hypothesis is $0<\kappa$) \texttt{frohmanian\_metriplectic\_system\_canonical\_uniqueness\_and\_global\_regularity\_product\_theorem} ($P_1 \wedge P_2 \wedge P_3 \wedge P_4$, Section~\ref{sec:product}). $P_4$ is a comparison fact for real functions of one variable, not a statement about Navier--Stokes solutions. The Navier--Stokes theorem \texttt{global\_regularity\_for\_NS} is \emph{conditional}: it assumes the open time-uniform vorticity bound \texttt{FrohmanianTetherBound} together with the local-theory hypotheses \texttt{KatoLocalWitness} (local existence), \texttt{PhysicalBKMContinuationCriterionFor} (Beale--Kato--Majda continuation) and \texttt{KatoUniquenessOnExistenceTimes} (uniqueness); these are discharged only at $u_0\equiv0$.
 
 \textbf{Model caveat.} The Lean type \texttt{T3} is \texttt{EuclideanSpace}~$\mathbb{R}$~\texttt{(Fin 3)}, i.e.\ $\mathbb{R}^3$ with Lebesgue measure, not the torus. \texttt{global\_regularity\_for\_NS} assumes $\int_{\mathbb{R}^3}\|u_0\|^2<\infty$, which a nonzero $\mathbb{Z}^3$-periodic field never satisfies, so this theorem does not model genuine periodic data.
+
+Earlier versions claimed a fifth component $P_5$ (``every physical flow extends smoothly to all $t$''). That claim is withdrawn; see the Erratum.
 \end{abstract}
 
 \tableofcontents
+
+\phantomsection
+\section*{Erratum}\label{sec:erratum}
+\addcontentsline{toc}{section}{Erratum}
+
+Earlier versions of this paper stated a fifth component $P_5$, to the effect that every physical flow of the tethered dynamics extends smoothly to all $t\ge0$. That claim is withdrawn.
+
+What the Lean development actually proved under the name $P_5$ is only the following two facts, both in \texttt{GlobalRegularity.lean}:
+\begin{itemize}
+  \item \texttt{stepField\_not\_physical}: one discontinuous step field (equal to $0$ for $t\le 1$ and to the constant basis vector $e_0$ for $t>1$) is not an \texttt{IsPhysicalNSSolution}.
+  \item \texttt{global\_regularity\_for\_NS\_nonvacuous\_at\_zero}: zero initial data admits a unique zero flow. The local-theory hypotheses of \texttt{global\_regularity\_for\_NS} are discharged only in that case.
+\end{itemize}
+Neither fact is a regularity theorem for general data, and no theorem in this development asserts that every physical flow extends smoothly to all time.
+
+\textbf{Model caveat.} The Lean type \texttt{T3} is \texttt{EuclideanSpace}~$\mathbb{R}$~\texttt{(Fin 3)}, i.e.\ $\mathbb{R}^3$ with Lebesgue measure, not the 3-torus. Together with the $L^2$ hypothesis $\int_{\mathbb{R}^3}\|u_0\|^2<\infty$, this forces every $\mathbb{Z}^3$-periodic initial datum to be identically zero. Consequently the regularity theorem \texttt{global\_regularity\_for\_NS} says nothing about periodic data.
+
+\textbf{Conditional scope. Not a Clay Millennium claim.} The remaining regularity result is conditional on the open tether bound \texttt{FrohmanianTetherBound} and on the unproved Kato / Beale--Kato--Majda hypotheses \texttt{KatoLocalWitness}, \texttt{PhysicalBKMContinuationCriterionFor} and \texttt{KatoUniquenessOnExistenceTimes}. Nothing here proves global regularity for the 3D Navier--Stokes equations, and nothing here is an unconditional solution of the Clay Millennium Problem.
 
 \section{Introduction and Single-Sentence Final Product Form ($P_1 \wedge P_2 \wedge P_3 \wedge P_4$)}\label{sec:product}
 
