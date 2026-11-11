@@ -42,38 +42,49 @@
 \newtheorem{hypothesis}[theorem]{Conditional Flow Hypothesis}
 \newtheorem{remark}[theorem]{Remark}
 
-\title{\textbf{The Frohmanian Symplectic Tether: Canonical Uniqueness on Coadjoint Orbits of $\mathrm{SDiff}(\mathbb{T}^3)$, Non-Degenerate Casimir Coupling, and Global Regularity via Quartic Young Absorption in Lean 4}}
+\title{\textbf{The Frohmanian Symplectic Tether: Canonical Uniqueness on Coadjoint Orbits of $\mathrm{SDiff}(\mathbb{T}^3)$, Non-Degenerate Casimir Coupling, and Conditional Global Regularity via Quartic Young Absorption in Lean 4}}
 
 \author{\textbf{Benjamin Stanley Frohman}\\
 ORCID: \href{https://orcid.org/0009-0006-7068-3718}{0009-0006-7068-3718}\\
 \texttt{frohmanbenjamin@gmail.com}}
 
-\date{October 27, 2026}
+\date{October 27, 2026; revised November 11, 2026 (v1.3.0: conditional scope, counts and model corrections)}
 
-\begin{document}
+\begin{document}\sloppy
 \maketitle
 
 \begin{abstract}
-We construct and formalize in Lean~4 (\texttt{leanprover/lean4:v4.30.0-rc1}, Mathlib~4, 367 kernel-verified theorems across 13 modules with zero \texttt{sorry} and zero non-standard axioms outside \texttt{[propext, Classical.choice, Quot.sound]}) the \emph{Frohmanian Symplectic Tether}, a canonical Casimir-coupled metriplectic extension of Arnold's Lie--Poisson bracket on the dual Lie algebra $\mathfrak{g}^* = \Omega^1(\mathbb{T}^3)/d\Omega^0(\mathbb{T}^3)$ of volume-preserving diffeomorphisms $\mathrm{SDiff}(\mathbb{T}^3)$:
+\textbf{Conditional result. Not a Clay Millennium claim.} Nothing here proves global regularity for the 3D Navier--Stokes equations.
+
+We formalize in Lean~4 (\texttt{leanprover/lean4:v4.30.0-rc1}, Mathlib commit \texttt{0c154d6}; 531 \texttt{theorem}/\texttt{lemma} declarations in the 20 modules of the \texttt{FrohmanianSymplecticTether} library, comment-aware source count; no \texttt{sorry}; only the axioms \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}) the \emph{Frohmanian Symplectic Tether}, a Casimir-coupled metriplectic extension of Arnold's Lie--Poisson bracket on the dual Lie algebra of volume-preserving diffeomorphisms:
 \[
-  \{F, G\}_{\mathrm{FT}}(\omega) = \{F, G\}_{\mathrm{LP}}(\omega) - \kappa\,\mathcal{K}_{\mathrm{FT}}(\delta F, \delta G; \omega), \qquad \kappa = \frac{27 C_{\mathrm{CZ}}^4}{4 \nu^3} = \frac{2187}{64\,\nu^3} > 0,
+  \{F, G\}_{\mathrm{FT}}(\omega) = \{F, G\}_{\mathrm{LP}}(\omega) - \kappa\,\mathcal{K}_{\mathrm{FT}}(\delta F, \delta G; \omega), \qquad \kappa > 0,
 \]
-where $\mathcal{K}_{\mathrm{FT}}(v, w; \omega) = \int_{\mathbb{T}^3} \|\omega(x)\|^2 \langle P_{\delta C}^\perp v(x), P_{\delta C}^\perp w(x) \rangle\,dx$ and $P_{\delta C}^\perp$ is the pointwise orthogonal projection onto the hyperplane orthogonal to the helicity Casimir gradient $\delta C(\omega) = \omega$.
-In \texttt{FrohmanianSymplecticTether/FinalProductTheorem.lean}, the entire stated problem and unconditional proof of resolution for the Frohmanian tethered/metriplectic system are packaged into the single 4-conjunct product theorem \texttt{frohmanian\_metriplectic\_system\_canonical\_uniqueness\_and\_global\_regularity\_product\_theorem} ($P_1 \wedge P_2 \wedge P_3 \wedge P_4$).
+where $\mathcal{K}_{\mathrm{FT}}(v, w; \omega) = \int \|\omega(x)\|^2 \langle P_{\delta C}^\perp v(x), P_{\delta C}^\perp w(x) \rangle\,dx$ and $P_{\delta C}^\perp$ is the pointwise orthogonal projection onto the hyperplane orthogonal to the helicity Casimir gradient $\delta C(\omega) = \omega$. In the Lean development $\kappa$ is a positive parameter; the value $\kappa=27C_{\mathrm{CZ}}^4/(4\nu^3)$ used as motivation below is not formalized.
+
+The structural results are packaged into the 4-conjunct product theorem (its only hypothesis is $0<\kappa$) \texttt{frohmanian\_metriplectic\_system\_canonical\_uniqueness\_and\_global\_regularity\_product\_theorem} ($P_1 \wedge P_2 \wedge P_3 \wedge P_4$, Section~\ref{sec:product}). $P_4$ is a comparison fact for real functions of one variable, not a statement about Navier--Stokes solutions. The Navier--Stokes theorem \texttt{global\_regularity\_for\_NS} is \emph{conditional}: it assumes the open time-uniform vorticity bound \texttt{FrohmanianTetherBound} together with the local-theory hypotheses \texttt{KatoLocalWitness} (local existence), \texttt{PhysicalBKMContinuationCriterionFor} (Beale--Kato--Majda continuation) and \texttt{KatoUniquenessOnExistenceTimes} (uniqueness); these are discharged only at $u_0\equiv0$.
+
+\textbf{Model caveat.} The Lean type \texttt{T3} is \texttt{EuclideanSpace}~$\mathbb{R}$~\texttt{(Fin 3)}, i.e.\ $\mathbb{R}^3$ with Lebesgue measure, not the torus. \texttt{global\_regularity\_for\_NS} assumes $\int_{\mathbb{R}^3}\|u_0\|^2<\infty$, which a nonzero $\mathbb{Z}^3$-periodic field never satisfies, so this theorem does not model genuine periodic data.
 \end{abstract}
 
 \tableofcontents
 
-\section{Introduction and Single-Sentence Final Product Form ($P_1 \wedge P_2 \wedge P_3 \wedge P_4$)}
+\section{Introduction and Single-Sentence Final Product Form ($P_1 \wedge P_2 \wedge P_3 \wedge P_4$)}\label{sec:product}
 
 In Arnold's geometric formulation of ideal incompressible hydrodynamics \cite{Arnold1966}, Euler's equation on the 3-torus $\mathbb{T}^3$ is a Hamiltonian flow on dual coadjoint orbits of the volume-preserving diffeomorphism group $\mathrm{SDiff}(\mathbb{T}^3)$ with respect to the Kirillov--Kostant--Souriau / Lie--Poisson bracket $\{F, G\}_{\mathrm{LP}}(\omega) = \int_{\mathbb{T}^3} \langle \omega, [\delta F, \delta G] \rangle\,dx$. In \texttt{FrohmanianSymplecticTether/FinalProductTheorem.lean}, we prove the master 4-conjunct product theorem packaging the canonical 5-step uniqueness, metriplectic Casimir coupling, quartic $4=4$ Young absorption, and Lyapunov ODE ceiling into a single theorem statement.
 
 \subsection{Single-Sentence English Prose Statement}
 \begin{theorem}[Master Product Theorem: \texttt{frohmanian\_metriplectic\_system\_canonical\_uniqueness\_and\_global\_regularity\_product\_theorem}]
-For every viscosity $\nu > 0$ on the dual Lie algebra $\mathfrak{g}^* = \mathrm{SDiff}(\mathbb{T}^3)^*$ with Calder\'on--Zygmund constant $C_{\mathrm{CZ}} = 3/2$ and canonical tether coupling $\kappa = \frac{27 C_{\mathrm{CZ}}^4}{4\nu^3} = \frac{2187}{64\nu^3} > 0$, \textbf{(P$_1$)} the quadratic density $\alpha(\omega) = -\kappa\|\omega\|^2$ is the unique minimal-degree polynomial kernel density satisfying Casimir preservation, parity/negativity, and parabolic scaling; \textbf{(P$_2$)} the full pairing $\mathfrak{T}_F(\delta F, \delta G) = \omega_{\mathrm{KKS}}(\omega)(\delta F, \delta G) - \kappa\int_{\mathbb{T}^3} \|\omega\|^2 \langle P_{\delta C}^\perp \delta F, P_{\delta C}^\perp \delta G \rangle\,dx$ decomposes into an alternating Kirillov--Kostant--Souriau symplectic 2-form obeying the cyclic Jacobi identity and a symmetric negative-semidefinite metriplectic tether that vanishes on Casimir gradients ($P_{\delta C}^\perp \omega = 0$) and is strictly negative on every non-Casimir transverse perturbation ($P_{\delta C}^\perp v \neq 0, \omega \neq 0$); \textbf{(P$_3$)} conjugate $(4/3, 4)$ Young absorption satisfies $C_{\mathrm{CZ}} m^3 - \frac{\nu}{3} m^2 - \frac{\kappa}{4} m^6 \le 0$ for all $m \ge 0$; and \textbf{(P$_4$)} every continuous vorticity envelope obeying $M'(t) \le C_{\mathrm{CZ}} M(t)^2 - \kappa'' M(t)^3$ ($\kappa'' > 0$) satisfies the global Lyapunov ceiling $M(t) \le \max(M(0), C_{\mathrm{CZ}}/\kappa'')$. Global regularity for general data is conditional on \texttt{FrohmanianTetherBound}, \texttt{KatoLocalWitness}, \texttt{PhysicalBKMContinuationCriterionFor} and \texttt{KatoUniquenessOnExistenceTimes}.
+For every $\kappa>0$ the following four statements hold (exact Lean definitions in \texttt{FinalProductTheorem.lean}; Listing~\ref{lst:product}).
+\textbf{(P$_1$, \texttt{P1\_CanonicalFiveStepUniqueness})} Every symmetric bilinear correction $B$ satisfying coadjoint invariance (C1), degeneracy with respect to kinetic energy (C2), controllable negative feedback (C3), quadratic saturation and polarization, or having the canonical kernel density $-\kappa\|\omega(x)\|^2$, equals \texttt{TetherKernel}~$\kappa$; and \texttt{TetherKernel} scales by $c^2$ under $\omega\mapsto c\omega$ ($c\neq0$) when the functional derivatives are scale-invariant.
+\textbf{(P$_2$, \texttt{P2\_MetriplecticSplitAndCasimirDamping})} The KKS 2-form is skew and satisfies the pointwise cyclic Jacobi identity; the Frohmanian pairing on the diagonal equals the tether metric term and is $\le0$; the tethered bracket reproduces the classical bracket on the kinetic-energy Hamiltonian under the stated hypotheses; $\Pi_u(\lambda u)=0$ when $\int\|u\|^2\neq0$; and the pointwise tether density is strictly negative where $\omega(x)\neq0$ and the projected functional derivative is nonzero.
+\textbf{(P$_3$, \texttt{P3\_QuarticYoungAbsorption})} If $I_6\ge0$ and $4C_{\mathrm{CZ}}MI_4\le\frac{\kappa}{4}I_6+C_{\mathrm{abs}}M^3\|\phi\|^{3/2}$, then $4C_{\mathrm{CZ}}MI_4-\kappa I_6\le C_{\mathrm{abs}}M^3\|\phi\|^{3/2}-\frac34\kappa I_6$; an attained spatial maximum pins \texttt{vorticity\_sup\_norm}; and the concrete 3D Bochner--polar inequality and the near/far cutoff inequality hold as algebraic statements about real numbers and vectors.
+\textbf{(P$_4$, \texttt{P4\_UnconditionalLyapunovCeiling})} For $C,\kappa''>0$, every $y:\mathbb{R}\to\mathbb{R}$ differentiable at every $s\ge0$ with $y'(s)\le Cy(s)^2-\kappa''y(s)^3$ for $s\ge0$ satisfies $y(t)\le\max(y(0),C/\kappa'')$ for all $t\ge0$. This is a scalar comparison fact; that the vorticity of a Navier--Stokes flow obeys this inequality is not proved.
 
-
+Global regularity for general data, \texttt{global\_regularity\_for\_NS}, is conditional on \texttt{FrohmanianTetherBound} (open), \texttt{KatoLocalWitness}, \texttt{PhysicalBKMContinuationCriterionFor} and \texttt{KatoUniquenessOnExistenceTimes}.
 \end{theorem}
+
+\paragraph{Scaffolding note.} The Lean docstrings mark $P_1$, $P_2$ and the product theorem as scaffolding for the $\psi$-slot form of the tether: condition C2 fails for that form (\texttt{shear\_C2\_fails}); the velocity-form model is \texttt{TetherKernelVel} (\texttt{VelocityTether.lean}, \texttt{velocity\_tether\_product\_theorem}). Since \texttt{TetherKernel} fails C2 on an explicit shear, the C1--C3 hypothesis class in the uniqueness conjuncts of $P_1$ may be empty for $\kappa\neq0$, in which case those conjuncts hold vacuously; this is not settled by a Lean theorem here (\texttt{shear\_C2\_fails} evaluates a separately defined integral, \texttt{shearTetherHH}).
 
 
 
@@ -88,21 +99,25 @@ For every viscosity $\nu > 0$ on the dual Lie algebra $\mathfrak{g}^* = \mathrm{
 \]
 with physical-path versions \texttt{PhysicalFiniteTimeVorticityBound} and \texttt{PhysicalBKMIntegrability}. Proved: uniform ceiling $\Rightarrow$ finite-horizon bound (take $C(T)=Y$), and finite-horizon bound $\Rightarrow$ BKM integrability (a function continuous on $\mathbb{R}$ is integrable on each compact $[0,T]$). The Beale--Kato--Majda step \texttt{beale\_kato\_majda} takes $T^\ast>0$ (\texttt{LocalExistenceTime}), the continuation criterion (\texttt{BKMContinuationCriterion}: finite $T^\ast$ forces $\int_0^{T^\ast}\|\omega\|_\infty=\infty$), integrability on every $[0,T]$ (\texttt{PathBKMIntegrable}) and smoothness below $T^\ast$ (\texttt{SmoothBelowTstar}); $T^\ast=\infty$ is derived (\texttt{Tstar\_eq\_top\_of\_bkm}), and the integrability is necessary (\texttt{bkm\_criterion\_without\_integrability\_not\_top}). \texttt{global\_regularity}, \texttt{global\_regularity\_of\_bkmIntegrability}, \texttt{global\_regularity\_of\_bkm\_uniqueness} and \texttt{global\_regularity\_for\_NS} go through this step. The criterion and smoothness below $T^\ast$ are classical and not formalized here. \texttt{beale\_kato\_majda\_scaffold} assumes $T^\ast=\infty$ and does not use integrability (\texttt{beale\_kato\_majda\_scaffold\_integrability\_unused}); \texttt{global\_regularity\_of\_restart}, \texttt{global\_regularity\_of\_kato\_estimates} and \texttt{continuation\_under\_global\_existence} derive or assume $T^\ast=\infty$ without the vorticity input. No result here proves global regularity for plain 3D Navier--Stokes or solves the Clay problem.
 
-\subsection{Exact Mathematical Product Form ($P_1 \wedge P_2 \wedge P_3 \wedge P_4$)}
-\begin{equation}
-\label{eq:master-product-ft}
-\begin{aligned}
-\mathcal{P}_{\mathrm{FT}} \;\;:\Longleftrightarrow\;\;
-&\underbrace{\Bigl(\forall \nu > 0,\; \kappa(\nu) = \frac{27 C_{\mathrm{CZ}}^4}{4\nu^3} = \frac{2187}{64\nu^3} > 0 \;\wedge\; \forall (c_0,c_1,c_2,c_{\mathrm{hi}}),\; \mathrm{C1\text{--}C3}_{\min}(c_0,c_1,c_2,c_{\mathrm{hi}},\nu) \implies (c_0,c_1,c_2,c_{\mathrm{hi}}) = (0,-\kappa(\nu),0,0)\Bigr)}_{P_1:\;\text{Canonical 5-Step Uniqueness on }\mathrm{SDiff}(\mathbb{T}^3)^*} \\
-&\wedge\; \underbrace{\Bigl(\omega_{\mathrm{KKS}}(\omega)(\delta F,\delta G) = -\omega_{\mathrm{KKS}}(\omega)(\delta G,\delta F) \;\wedge\; \sum_{\mathrm{cyc}}\langle \omega, [u,[v,w]]\rangle = 0 \;\wedge\; \mathfrak{T}_F(\delta F,\delta F) = -\kappa\int_{\mathbb{T}^3}\|\omega\|^2\|P_{\delta C}^\perp \delta F\|^2\,dx \le 0\Bigr)}_{P_2:\;\text{KKS Symplectic 2-Form, Jacobi Identity, Metriplectic Split, and Strict Transverse Damping}} \\
-&\wedge\; \underbrace{\Bigl(\forall \nu > 0,\;\forall m \ge 0,\quad C_{\mathrm{CZ}} m^3 - \frac{\nu}{3} m^2 - \frac{27 C_{\mathrm{CZ}}^4}{16\nu^3} m^6 \le 0\Bigr)}_{P_3:\;\text{Exact Quartic }4=4\text{ Young Absorption }(p=4/3,\,q=4)} \\
-&\wedge\; \underbrace{\Bigl(\forall M \in C^0([0,T]),\;\forall \kappa'' > 0,\quad \bigl(\forall t \in [0,T),\; D^+ M(t) \le C_{\mathrm{CZ}} M(t)^2 - \kappa'' M(t)^3\bigr) \implies \forall t \in [0,T],\; M(t) \le \max\!\bigl(M(0), \tfrac{C_{\mathrm{CZ}}}{\kappa''}\bigr)\Bigr)}_{P_4:\;\text{Unconditional Lyapunov ODE Ceiling}}.
-\end{aligned}
-\end{equation}
+\subsection{Exact Lean Product Statement ($P_1 \wedge P_2 \wedge P_3 \wedge P_4$)}
+\begin{lstlisting}[language=Lean4,label={lst:product},caption={Verbatim statement of the product theorem and of $P_4$ (\texttt{FinalProductTheorem.lean}).}]
+public theorem frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem (hκ : 0 < kappa) :
+    P1_CanonicalFiveStepUniqueness kappa ∧
+    P2_MetriplecticSplitAndCasimirDamping kappa ∧
+    P3_QuarticYoungAbsorption kappa ∧
+    P4_UnconditionalLyapunovCeiling
+
+@[expose] public def P4_UnconditionalLyapunovCeiling : Prop :=
+  ∀ (C κ'' : ℝ), 0 < C → 0 < κ'' →
+    ∀ (y : ℝ → ℝ),
+      (∀ s ≥ (0 : ℝ), DifferentiableAt ℝ y s) →
+      (∀ s ≥ (0 : ℝ), deriv y s ≤ C * (y s) ^ 2 - κ'' * (y s) ^ 3) →
+      ∀ (t : ℝ), 0 ≤ t → y t ≤ max (y 0) (C / κ'')
+\end{lstlisting}
 
 \begin{table}[htbp]
 \centering
-\caption{Summary of Unconditionally Proved Modules and Theorems in \texttt{FrohmanianSymplecticTether} (367 Theorems, 0 \texttt{sorry}).}
+\caption{Summary of proved results in \texttt{FrohmanianSymplecticTether} (531 source \texttt{theorem}/\texttt{lemma} declarations, 0 \texttt{sorry}). ``Unconditional'' means no hypotheses beyond those in the displayed statement.}
 \label{tab:repo2-status}
 \small
 \begin{tabular}{p{0.36\textwidth}p{0.20\textwidth}p{0.36\textwidth}}
@@ -111,15 +126,15 @@ with physical-path versions \texttt{PhysicalFiniteTimeVorticityBound} and \textt
 \midrule
 \texttt{frohmanian\_metriplectic\_system\_canonical\_uniqueness\_and\_global\_regularity\_product\_theorem} (\texttt{FinalProductTheorem.lean}) & \textbf{PROVED} (Unconditional, 26 theorems) & Master 4-conjunct product theorem ($P_1 \wedge P_2 \wedge P_3 \wedge P_4$), KKS skew-symmetry, cyclic Jacobi identity, and metriplectic diagonal split. \\
 \addlinespace
-\texttt{CalderonZygmundConstant3D\_eq\_three\_halves}, \texttt{kappa\_pos} & \textbf{PROVED} (Unconditional) & Exact coupling constant $\kappa = \frac{27 C_{\mathrm{CZ}}^4}{4\nu^3} = \frac{2187}{64\nu^3} > 0$ at $C_{\mathrm{CZ}} = 3/2$ for $\nu > 0$. \\
+\texttt{CalderonZygmundConstant3D\_eq\_three\_halves}, \texttt{kappa\_pos\_of\_eq\_CZ} & \textbf{PROVED} (Unconditional) & The constant \texttt{CalderonZygmundConstant3D} equals $3/2$. The formula $\kappa=27C_{\mathrm{CZ}}^4/(4\nu^3)$ is not formalized; $\kappa$ is a positive parameter. \\
 \addlinespace
 \texttt{tether\_preserves\_casimirs}, \texttt{tetherPointwiseDensity\_nonpos}, \texttt{tetherPointwiseDensity\_strict\_neg\_of\_noncasimir}, \texttt{tetherKernel\_nondegenerate\_on\_casimir\_defect} & \textbf{PROVED} (Unconditional) & The tether kernel $\mathcal{K}_{\mathrm{FT}}$ annihilates Casimir gradients ($P_{\delta C}^\perp \omega = 0$), is non-positive on the diagonal, and is strictly negative whenever $P_{\delta C}^\perp v \neq 0$ and $\omega \neq 0$. \\
 \addlinespace
-\texttt{uniqueness\_of\_minimal\_tether}, \texttt{uniqueness\_of\_kernel\_density}, \texttt{tetherKernel\_has\_canonical\_density}, \texttt{step2\_degree}, \texttt{step5\_higher\_order} & \textbf{PROVED} (Unconditional) & Five-step canonical classification proving that $\mathcal{K}_{\mathrm{FT}}$ is the unique minimal-degree (degree~2 in $\omega$) Casimir-preserving metriplectic kernel up to $\kappa > 0$. \\
+\texttt{uniqueness\_of\_minimal\_tether}, \texttt{uniqueness\_of\_kernel\_density}, \texttt{tetherKernel\_has\_canonical\_density}, \texttt{step2\_degree}, \texttt{step5\_higher\_order} & \textbf{PROVED} (Unconditional) & Under the stated conditions (C1--C3, saturation, polarization), $B$ equals \texttt{TetherKernel}~$\kappa$. Scaffolding for the $\psi$-slot form, where C2 fails (\texttt{shear\_C2\_fails}). \\
 \addlinespace
-\texttt{youngs\_absorption\_elimination}, \texttt{comparison\_ode\_stability}, \texttt{comparison\_ode\_nonneg} & \textbf{PROVED} (Unconditional) & Quartic $4 = 4$ Young absorption ($p=4/3, q=4$) eliminating cubic stretching $C_{\mathrm{CZ}}|\omega|^3$ into $-\frac{\nu}{3}|\omega|^2 - \frac{\kappa}{4}|\omega|^6$, and comparison ODE stability on $[0,T]$. \\
+\texttt{youngs\_absorption\_elimination}, \texttt{comparison\_ode\_stability}, \texttt{comparison\_ode\_nonneg} & \textbf{PROVED} (Unconditional) & Young absorption step $4C_{\mathrm{CZ}}MI_4-\kappa I_6\le C_{\mathrm{abs}}M^3\|\phi\|^{3/2}-\frac34\kappa I_6$ given the Young bound as a hypothesis, and the scalar comparison ODE ceiling on $[0,\infty)$. \\
 \addlinespace
-\texttt{stepField\_not\_physical}, \texttt{repaired\_hInt}, \texttt{repaired\_huniq\_at\_zero}, \texttt{global\_regularity\_for\_NS\_nonvacuous\_at\_zero}, \texttt{frohmanian\_tether\_theorem}, \texttt{global\_regularity\_for\_NS} & \textbf{PROVED} (Unconditional) & Step-jump fields are excluded by \texttt{IsPhysicalNSSolution}; the full hypothesis bundle of \texttt{global\_regularity\_for\_NS} is non-vacuously inhabited at $u_0 \equiv 0$; \texttt{global\_regularity\_for\_NS} is conditional on its stated hypotheses. \\
+\texttt{stepField\_not\_physical}, \texttt{repaired\_hInt}, \texttt{repaired\_huniq\_at\_zero}, \texttt{global\_regularity\_for\_NS\_nonvacuous\_at\_zero}, \texttt{frohmanian\_tether\_theorem}, \texttt{global\_regularity\_for\_NS} & \textbf{PROVED} (the last two are \textbf{conditional} on their stated hypotheses) & Step-jump fields are excluded by \texttt{IsPhysicalNSSolution}; the hypothesis bundle of \texttt{global\_regularity\_for\_NS} is inhabited only at $u_0 \equiv 0$; \texttt{global\_regularity\_for\_NS} and \texttt{frohmanian\_tether\_theorem} are conditional on the open \texttt{FrohmanianTetherBound} and the local-theory hypotheses. \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -141,6 +156,8 @@ For $\nu > 0$ and $C_{\mathrm{CZ}} = 3/2$, define the canonical coupling constan
   \{F, G\}_{\mathrm{FT}}(\omega) &= \{F, G\}_{\mathrm{LP}}(\omega) - \kappa(\nu)\,\mathcal{K}_{\mathrm{FT}}(\delta F(\omega), \delta G(\omega); \omega). \label{eq:bracket-def}
 \end{align}
 \end{definition}
+In the Lean development $\kappa$ is a positive parameter; the value \eqref{eq:kappa-def} is motivation and is not formalized.
+
 
 In \texttt{SymplecticTether.lean}, we prove five unconditional Casimir non-degeneracy theorems establishing that the tether dissipation $-\kappa \mathcal{K}_{\mathrm{FT}}(v, v; \omega)$ vanishes if and only if the variational vector field $v$ is pointwise collinear with the Casimir gradient $\omega$:
 
@@ -158,37 +175,52 @@ Let $\kappa > 0$, $\omega \in \mathfrak{g}^*$, and $v : \mathbb{T}^3 \to \mathbb
 In \texttt{FrohmanianSymplecticTether/Uniqueness.lean}, we formalize a 5-step classification theorem proving that $\mathcal{K}_{\mathrm{FT}}$ is uniquely forced by the geometry of coadjoint orbits:
 
 \begin{theorem}[Canonical Uniqueness: \texttt{uniqueness\_of\_minimal\_tether} and \texttt{uniqueness\_of\_kernel\_density}]
-Let $\mathcal{K}(v, w; \omega) = \int_{\mathbb{T}^3} k(\omega(x), v(x), w(x))\,dx$ be any local bilinear symmetric form on $\mathfrak{g}^*$ whose pointwise density $k(\omega, v, w)$ satisfies C1 (Casimir Kernel Annihilation), C2 (Minimal Polynomial Degree $2m=2$ \& Parabolic Scaling), and C3 ($\mathrm{SO}(3)$ Isotropy \& Negative Semi-Definiteness). Then $\mathcal{K} = \alpha\,\mathcal{K}_{\mathrm{FT}}$ with unique canonical coefficient $-\kappa(\nu) = -\frac{27 C_{\mathrm{CZ}}^4}{4\nu^3}$.
+Let $\mathcal{K}(v, w; \omega) = \int_{\mathbb{T}^3} k(\omega(x), v(x), w(x))\,dx$ be any local bilinear symmetric form on $\mathfrak{g}^*$ whose pointwise density $k(\omega, v, w)$ satisfies C1 (Casimir Kernel Annihilation), C2 (Minimal Polynomial Degree $2m=2$ \& Parabolic Scaling), and C3 ($\mathrm{SO}(3)$ Isotropy \& Negative Semi-Definiteness). Then $B = \texttt{TetherKernel}~\kappa$ (Lean: \texttt{uniqueness\_of\_minimal\_tether}, with $\kappa>0$ a parameter and C1--C3, saturation and polarization as explicit hypotheses).
 \end{theorem}
 
-\section{Quartic $4 = 4$ Young Absorption and Global Regularity of the Tethered Flow}
+\section{Quartic $4 = 4$ Young Absorption}
 
-\begin{theorem}[Quartic $4 = 4$ Young Absorption, \texttt{youngs\_absorption\_elimination}]
-For every $\nu > 0$, $C_{\mathrm{CZ}} > 0$, and $x = |\omega| \ge 0$, with $\kappa = \frac{27 C_{\mathrm{CZ}}^4}{4\nu^3}$,
+\begin{theorem}[Young absorption step, \texttt{youngs\_absorption\_elimination}]
+Let $C_{\mathrm{CZ}}=\texttt{CalderonZygmundConstant3D}$ and $\kappa\in\mathbb{R}$. For real $M, I_4, I_6, \|\phi\|, C_{\mathrm{abs}}$ with $I_6\ge0$, if $4C_{\mathrm{CZ}}MI_4\le\frac{\kappa}{4}I_6+C_{\mathrm{abs}}M^3\|\phi\|^{3/2}$ then
 \begin{equation}
-  C_{\mathrm{CZ}} x^3 - \frac{\nu}{3} x^2 - \frac{\kappa}{4} x^6 \le 0.
+  4C_{\mathrm{CZ}}MI_4-\kappa I_6\le C_{\mathrm{abs}}M^3\|\phi\|^{3/2}-\tfrac34\kappa I_6.
   \label{eq:young-4-eq-4}
 \end{equation}
+The Young bound itself is a hypothesis; no Navier--Stokes estimate is derived from it here.
 \end{theorem}
 
-\section{Verbatim Lean 4 Kernel Audit and Cryptographic Attestation}
+\section{Lean 4 Kernel Audit}
 
-Running \texttt{lake build \&\& lake env lean AxiomAudit.lean} verifies all 367 theorems across the 13 modules of \texttt{FrohmanianSymplecticTether}:
+The Lean sources are those of commit \texttt{b4d002307dfe0a5b152dbaadd723b8c0502effaf} (unchanged since \texttt{d6009fb}). On that source, \texttt{lake build} completes (2741 jobs) and \texttt{lake env lean AxiomAudit.lean} reports, for every compiled \texttt{theorem} constant in the \texttt{FrohmanianSymplecticTether} modules, the axioms it uses; there are 595 such constants and none uses an axiom outside \texttt{propext}, \texttt{Classical.choice}, \texttt{Quot.sound}. The 595 compiled constants exceed the 531 \texttt{theorem}/\texttt{lemma} declarations in source because the audit also counts constants generated by the compiler. The output below is from the continuous-integration run of the repository's \texttt{certify.yml} workflow (per-module totals and a selection of the \texttt{\#print axioms} lines; the full output is deposited with the paper).
 
-\begin{lstlisting}[language=Lean4,caption={Verbatim output of \texttt{lake env lean AxiomAudit.lean} on \texttt{frohmanian-symplectic-tether-regularity}.}]
+\begin{lstlisting}[language=Lean4,caption={Output of \texttt{lake env lean AxiomAudit.lean} (excerpt; long names wrap).},breaklines=true]
 FrohmanianSymplecticTether.ForMathlib.Projection: theorems=7 nonstandard=0
-FrohmanianSymplecticTether.AnalyticPipeline: theorems=14 nonstandard=0
-FrohmanianSymplecticTether.TetheredLyapunov: theorems=45 nonstandard=0
-FrohmanianSymplecticTether.Uniqueness: theorems=16 nonstandard=0
-FrohmanianSymplecticTether.SymplecticTether: theorems=38 nonstandard=0
 FrohmanianSymplecticTether.IndependentMajorant: theorems=2 nonstandard=0
-FrohmanianSymplecticTether.ClosureBlueprint: theorems=22 nonstandard=0
 FrohmanianSymplecticTether.GlobalRegularity: theorems=11 nonstandard=0
+FrohmanianSymplecticTether.UniquenessC123: theorems=7 nonstandard=0
+FrohmanianSymplecticTether.NS_Equations: theorems=148 nonstandard=0
 FrohmanianSymplecticTether.ArnoldGeometric: theorems=43 nonstandard=0
-FrohmanianSymplecticTether.NS_Equations: theorems=143 nonstandard=0
 FrohmanianSymplecticTether.FinalProductTheorem: theorems=26 nonstandard=0
-TOTAL theorems=367 nonstandard=0
+FrohmanianSymplecticTether.VelocityTether: theorems=28 nonstandard=0
+FrohmanianSymplecticTether.AnalyticPipeline: theorems=14 nonstandard=0
+FrohmanianSymplecticTether.Uniqueness: theorems=17 nonstandard=0
+FrohmanianSymplecticTether.TetheredLyapunov: theorems=58 nonstandard=0
+FrohmanianSymplecticTether.SymplecticTether: theorems=36 nonstandard=0
+FrohmanianSymplecticTether.Stage6Calculus: theorems=16 nonstandard=0
+FrohmanianSymplecticTether.ForMathlib.PiUL2: theorems=11 nonstandard=0
+FrohmanianSymplecticTether.ForMathlib.Leray: theorems=9 nonstandard=0
+FrohmanianSymplecticTether.ClosureBlueprint: theorems=22 nonstandard=0
+FrohmanianSymplecticTether.FieldMetriplectic: theorems=100 nonstandard=0
+FrohmanianSymplecticTether.C2Analysis: theorems=18 nonstandard=0
+FrohmanianSymplecticTether.GateauxRepresentative: theorems=17 nonstandard=0
+FrohmanianSymplecticTether.ForMathlib.LeibnizGaussian: theorems=5 nonstandard=0
+TOTAL theorems=595 nonstandard=0
+'AnalyticPipeline.youngs_absorption_elimination' depends on axioms: [propext, Classical.choice, Quot.sound]
+'AnalyticPipeline.comparison_ode_stability' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GlobalRegularity.global_regularity_for_NS' depends on axioms: [propext, Classical.choice, Quot.sound]
+'GlobalRegularity.global_regularity_for_NS_nonvacuous_at_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
 'FrohmanianSymplecticTether.FinalProductTheorem.frohmanian_metriplectic_system_canonical_uniqueness_and_global_regularity_product_theorem' depends on axioms: [propext, Classical.choice, Quot.sound]
+'FrohmanianTether.velocity_tether_product_theorem' depends on axioms: [propext, Classical.choice, Quot.sound]
 \end{lstlisting}
 
 \begin{thebibliography}{9}

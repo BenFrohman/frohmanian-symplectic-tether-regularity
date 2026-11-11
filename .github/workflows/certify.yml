@@ -23,7 +23,7 @@ jobs:
       - name: Axiom audit
         run: |
           set -o pipefail
-          lake env lean AxiomAudit.lean 2>&1 | tee axioms.txt
+          lake env lean AxiomAudit.lean 2>&1 | awk '/^[ \t]/{sub(/^[ \t]+/," ");printf "%s",$0;next} NR>1{print ""} {printf "%s",$0} END{print ""}' | tee axioms.txt
       - name: No sorry in build, standard axioms only
         run: |
           if grep -q "declaration uses 'sorry'" build.log; then echo "sorry found"; exit 1; fi
