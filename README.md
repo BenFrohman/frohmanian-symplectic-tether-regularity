@@ -122,7 +122,7 @@ TOTAL theorems=502 nonstandard=0
 - **Author:** Benjamin Stanley Frohman
 - **ORCID:** [0009-0006-7068-3718](https://orcid.org/0009-0006-7068-3718)
 - **Email:** `frohmanbenjamin@gmail.com`
-- **X / GitHub:** `@Investor0x` / `BenFrohman` (`Bit21`)
+- **X / GitHub:** `@Frohmanian` / `BenFrohman` (`Bit21`)
 
 ## Provenance of Ingredients
 
