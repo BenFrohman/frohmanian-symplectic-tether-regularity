@@ -1,33 +1,19 @@
 /-
 Copyright (c) 2026 Benjamin Stanley Frohman. All rights reserved.
-Released under Apache 2.0 license.
-Author: Benjamin Stanley Frohman.
-
-# Gâteaux representatives on the `ℝ³` model: refutation of pointwise uniqueness and the
-# regular-representative derivative
-
-`IsGateauxRepresentative F ω d` tests `d` only through the integrals `∫ ⟨d, ε⟩` over
-divergence-free directions `ε`. Changing `d` on a Lebesgue-null set leaves every such integral
-unchanged, so a representative is never pointwise unique:
-
-* `isGateauxRepresentative_add_null` : adding a field that vanishes a.e. keeps a representative;
-* `not_gateauxRepresentativeUnique` : `IsGateauxRepresentative F ω dH → ¬ GateauxRepresentativeUnique F ω dH`;
-* `not_streamFunctionRepresentative` : `StreamFunctionRepresentative ω` is false for every `ω`;
-* `isGateauxRepresentative_of_not_differentiable` : if `ω` is not differentiable everywhere,
-  every field is a representative of every functional.
-
-The correct uniqueness statement is among regular representatives (`RegularRep`: continuous,
-differentiable, divergence-free, square-integrable); two of these are equal
-(`regularRep_unique`, from `gateaux_representative_unique`). `RegularFunctionalDerivative` is the
-choice among regular representatives, `KineticEnergyCurlIdentityReg` the curl identity for it,
-and `kineticEnergyCurlIdentityReg_of_regularStream` proves it from the single named `Prop`
-`RegularStreamRepresentative` (existence on `ℝ³` of a regular Biot–Savart stream function that
-represents the kinetic energy and has `curl ψ = u`).
+Released under Apache 2.0 license as described in the file LICENSE.
+Authors: Benjamin Stanley Frohman
 -/
+
 module
 
 public import FrohmanianSymplecticTether.VelocityTether
 public import Mathlib.MeasureTheory.Function.L2Space
+
+/-!
+# FrohmanianSymplecticTether.GateauxRepresentative
+
+Machine-checked Lean 4 module.
+-/
 
 @[expose] public section
 

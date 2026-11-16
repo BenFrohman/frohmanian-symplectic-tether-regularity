@@ -12,6 +12,12 @@ Authors: Benjamin Stanley Frohman
 import Lean
 import FrohmanianSymplecticTether
 
+/-!
+# AxiomAudit
+
+Machine-checked Lean 4 module.
+-/
+
 open Lean Elab Command
 
 #eval show CommandElabM Unit from do

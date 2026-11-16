@@ -24,3 +24,9 @@ public import FrohmanianSymplecticTether.ForMathlib.LeibnizGaussian
 public import FrohmanianSymplecticTether.C2Analysis
 public import FrohmanianSymplecticTether.VelocityTether
 public import FrohmanianSymplecticTether.GateauxRepresentative
+
+/-!
+# FrohmanianSymplecticTether
+
+Machine-checked Lean 4 module.
+-/

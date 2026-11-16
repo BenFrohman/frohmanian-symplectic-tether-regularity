@@ -2,27 +2,18 @@
 Copyright (c) 2026 Benjamin Stanley Frohman. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Benjamin Stanley Frohman
-
-# Field-level tethered bracket: metriplectic structure and Jacobi counterexamples
-
-This file is ported from the private development `tether-may-form` (`FieldJacobi.lean`,
-`FieldMetriplectic.lean`). Fields are trigonometric polynomials on `𝕋³`, written by their Fourier
-coefficients. The classical bracket is the vector-field Lie bracket `br`, `pr` is the `L²` pairing,
-and `tetF` is the symmetric tether `T(a,b) = −(κw)⟨Π_u a,Π_u b⟩ u`.
-
-Proved (no hypotheses on the bracket):
-* `jacF_eq_zero`: Jacobi for the antisymmetric (classical) part.
-* `tetF_symm`, `tetF_energy_left/right`, `dissF_nonpos`: the tether is symmetric, degenerate in
-  the energy direction `dH = u`, and `d(a) = −κw⟨Π_u a,Π_u a⟩ ≤ 0` for all real fields when `κw ≥ 0`.
-* `shearX_mixed_ne_zero`, `shearY_transverse_ne_zero`: explicit counterexamples. The **full**
-  bracket `br + T` does *not* satisfy Jacobi (`jacT_eq_mixedSum`). So the system is metriplectic,
-  not Lie–Poisson.
-Not proved: a Casimir/entropy `S` with `{S,·}_classical = 0` for this model.
 -/
+
 module
 
 public import Mathlib.LinearAlgebra.CrossProduct
 public import Mathlib.Analysis.SpecialFunctions.Trigonometric.Deriv
+
+/-!
+# FrohmanianSymplecticTether.FieldMetriplectic
+
+Machine-checked Lean 4 module.
+-/
 
 @[expose] public section
 
