@@ -1,0 +1,17 @@
+{
+  "semantics_file": "FrohmanianSymplecticTether/Semantics.lean",
+  "semantics_module": "FrohmanianSymplecticTether.Semantics",
+  "paper_path": "paper/Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.tex",
+  "paper_sha256": "437fff4d53f1377c16ee25ac42cc2ccdd0371f8191ff1e0b68f44254d422b61c",
+  "main_theorems": [
+    "AnalyticPipeline.comparison_ode_stability"
+  ],
+  "lock_region_sha256": "2ff25e2c9408027f3f338b8d8188ed11ad6d6ea09770d08d2aa2638862b63d23",
+  "draft_dirs": [
+    "FrohmanianSymplecticTether/Draft"
+  ],
+  "lean_roots": [
+    "FrohmanianSymplecticTether",
+    "FrohmanianSymplecticTether.lean"
+  ]
+}
