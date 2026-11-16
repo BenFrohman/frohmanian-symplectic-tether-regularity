@@ -1,5 +1,9 @@
 # `frohmanian-symplectic-tether-regularity` — The Frohmanian Symplectic Tether: Canonical 5-Step Uniqueness on $\mathrm{SDiff}(\mathbb{T}^3)^*$, Metriplectic Structure, and Conditional Global Regularity in Lean 4
 
+## Kernel certificate
+
+[certificates/CERTIFICATE.md](certificates/CERTIFICATE.md): commit `c75337f`, `leanprover/lean4:v4.30.0-rc1`. `lake build` passes; the sorry/axiom scan finds 0 hits; **595 theorems depend only on `propext`, `Classical.choice`, `Quot.sound`**; 22 of 22 modules replayed through the kernel, 0 failures ([CI run](https://github.com/BenFrohman/frohmanian-symplectic-tether-regularity/actions/runs/43937880141)).
+
 **Author:** Benjamin Stanley Frohman ([ORCID: 0009-0006-7068-3718](https://orcid.org/0009-0006-7068-3718))  
 **Zenodo DOI (v1.3.0):** [`10.5281/zenodo.24144856`](https://doi.org/10.5281/zenodo.24144856) | **Concept DOI:** [`10.5281/zenodo.23652842`](https://doi.org/10.5281/zenodo.23652842) | **v1.0.0 DOI:** [`10.5281/zenodo.23652843`](https://doi.org/10.5281/zenodo.23652843)  
 **License:** Apache-2.0 (`Copyright (c) 2026 Benjamin Stanley Frohman`)  

@@ -1,0 +1,45 @@
+import Lean
+import «FrohmanianSymplecticTether»
+import «FrohmanianSymplecticTether».«AnalyticPipeline»
+import «FrohmanianSymplecticTether».«ArnoldGeometric»
+import «FrohmanianSymplecticTether».«Assumptions»
+import «FrohmanianSymplecticTether».«C2Analysis»
+import «FrohmanianSymplecticTether».«ClosureBlueprint»
+import «FrohmanianSymplecticTether».«FieldMetriplectic»
+import «FrohmanianSymplecticTether».«FinalProductTheorem»
+import «FrohmanianSymplecticTether».«ForMathlib».«LeibnizGaussian»
+import «FrohmanianSymplecticTether».«ForMathlib».«Leray»
+import «FrohmanianSymplecticTether».«ForMathlib».«PiUL2»
+import «FrohmanianSymplecticTether».«ForMathlib».«Projection»
+import «FrohmanianSymplecticTether».«GateauxRepresentative»
+import «FrohmanianSymplecticTether».«GlobalRegularity»
+import «FrohmanianSymplecticTether».«IndependentMajorant»
+import «FrohmanianSymplecticTether».«NS_Equations»
+import «FrohmanianSymplecticTether».«Stage6Calculus»
+import «FrohmanianSymplecticTether».«SymplecticTether»
+import «FrohmanianSymplecticTether».«TetheredLyapunov»
+import «FrohmanianSymplecticTether».«Uniqueness»
+import «FrohmanianSymplecticTether».«UniquenessC123»
+import «FrohmanianSymplecticTether».«VelocityTether»
+
+open Lean Elab Command
+
+/-- Prints `#print axioms`-style lines for every theorem declared in the listed modules. -/
+elab "#kernel_certificate_audit" : command => do
+  let env ← getEnv
+  let mods : Array Name := #[`«FrohmanianSymplecticTether», `«FrohmanianSymplecticTether».«AnalyticPipeline», `«FrohmanianSymplecticTether».«ArnoldGeometric», `«FrohmanianSymplecticTether».«Assumptions», `«FrohmanianSymplecticTether».«C2Analysis», `«FrohmanianSymplecticTether».«ClosureBlueprint», `«FrohmanianSymplecticTether».«FieldMetriplectic», `«FrohmanianSymplecticTether».«FinalProductTheorem», `«FrohmanianSymplecticTether».«ForMathlib».«LeibnizGaussian», `«FrohmanianSymplecticTether».«ForMathlib».«Leray», `«FrohmanianSymplecticTether».«ForMathlib».«PiUL2», `«FrohmanianSymplecticTether».«ForMathlib».«Projection», `«FrohmanianSymplecticTether».«GateauxRepresentative», `«FrohmanianSymplecticTether».«GlobalRegularity», `«FrohmanianSymplecticTether».«IndependentMajorant», `«FrohmanianSymplecticTether».«NS_Equations», `«FrohmanianSymplecticTether».«Stage6Calculus», `«FrohmanianSymplecticTether».«SymplecticTether», `«FrohmanianSymplecticTether».«TetheredLyapunov», `«FrohmanianSymplecticTether».«Uniqueness», `«FrohmanianSymplecticTether».«UniquenessC123», `«FrohmanianSymplecticTether».«VelocityTether»]
+  for m in mods do
+    match env.getModuleIdx? m with
+    | none => IO.println s!"MODULE NOT LOADED {m}"
+    | some i =>
+      for n in (env.header.moduleData[i.toNat]!).constNames do
+        match env.find? n with
+        | some (.thmInfo _) =>
+          if !n.isInternal then
+            let ax ← collectAxioms n
+            let axs := ", ".intercalate (ax.toList.map toString)
+            if ax.isEmpty then IO.println s!"'{n}' does not depend on any axioms [module {m}]"
+            else IO.println s!"'{n}' depends on axioms: [{axs}] [module {m}]"
+        | _ => pure ()
+
+#kernel_certificate_audit
