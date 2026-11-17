@@ -13,5 +13,8 @@
   "lean_roots": [
     "FrohmanianSymplecticTether",
     "FrohmanianSymplecticTether.lean"
-  ]
+  ],
+  "certifying": false,
+  "reopened_reason": "Partial lock. Only conjunct (P4) of the paper's Master Product Theorem (P1–P5) is locked. The paper's headline statement, the product theorem itself, is not, so the lock leaves the rest of the stated theorem unchecked (partial drift).",
+  "reopened_on": "2026-11-16"
 }
