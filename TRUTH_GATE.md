@@ -140,33 +140,22 @@ python3 -m unittest discover -s scripts/tests -p 'test_truth_gate_classify.py' -
 ## The locked claim of this repository
 
 * Paper: `paper/Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.tex`
-* sha256: `437fff4d53f1377c16ee25ac42cc2ccdd0371f8191ff1e0b68f44254d422b61c`
-* Section: Section 1 "Introduction and Single-Sentence Final Product Form", Theorem "Master Product Theorem", conjunct (P4)
-* Main theorem(s): `AnalyticPipeline.comparison_ode_stability`
+* sha256: `8f8df2e9e58ff7cce36eaf1876e44c2fb0fa8a3634d35a2847eece6400a6732f`
+* Section: Section 1 "Introduction and Single-Sentence Final Product Form", Theorem "Master Product Theorem", conjuncts (P1) (polarization from diagonal agreement) and (P4)
+* Main theorem(s): `TruthGate.polarization_from_diagonal_agreement`, `AnalyticPipeline.comparison_ode_stability`
 * Lock file: `TRUTH_GATE.lock`; semantics: `FrohmanianSymplecticTether/Semantics.lean`
 
-Verbatim quote:
+Verbatim quotes:
+
+```
+\textbf{(P$_1$, polarization from diagonal agreement)} Let $B$ and $T$ be maps sending a pair of functionals, at each $\omega$, to a real number, and suppose the space of functionals is closed under addition. If $B$ agrees with $T$ on the diagonal --- $B(\omega,F,F)=T(\omega,F,F)$ for every $\omega$ and $F$ --- and both $B$ and $T$ satisfy the polarization identity $2B(\omega,F,G)=B(\omega,F+G,F+G)-B(\omega,F,F)-B(\omega,G,G)$ (and likewise for $T$), then $B(\omega,F,G)=T(\omega,F,G)$ for every $\omega,F,G$.
+```
 
 ```
 \textbf{(P$_4$, \texttt{P4\_UnconditionalLyapunovCeiling})} For $C,\kappa''>0$, every $y:\mathbb{R}\to\mathbb{R}$ differentiable at every $s\ge0$ with $y'(s)\le Cy(s)^2-\kappa''y(s)^3$ for $s\ge0$ satisfies $y(t)\le\max(y(0),C/\kappa'')$ for all $t\ge0$. This is a scalar comparison fact; that the vorticity of a Navier--Stokes flow obeys this inequality is not proved.
 ```
 
-```lean
-def formal_claim : Prop :=
-  ∀ (C κ'' : ℝ), 0 < C → 0 < κ'' → ∀ (y : ℝ → ℝ),
-    (∀ s ≥ (0 : ℝ), DifferentiableAt ℝ y s) →
-    (∀ s ≥ (0 : ℝ), deriv y s ≤ C * (y s) ^ 2 - κ'' * (y s) ^ 3) →
-    ∀ (t : ℝ), 0 ≤ t → y t ≤ max (y 0) (C / κ'')
-
-def paper_claim : Prop :=
-  ∀ C κ'' : ℝ, 0 < C ∧ 0 < κ'' →
-    ∀ y : ℝ → ℝ,
-      (∀ s : ℝ, 0 ≤ s → DifferentiableAt ℝ y s ∧
-        deriv y s ≤ C * y s ^ 2 - κ'' * y s ^ 3) →
-      ∀ t : ℝ, 0 ≤ t → y t ≤ max (y 0) (C / κ'')
-```
-
-See the doc comment of `FrohmanianSymplecticTether/Semantics.lean` for the fixed reading of the paper's terms and the scope.
+`formal_claim` is the conjunction of `TruthGate.polarization_from_diagonal_agreement` and `AnalyticPipeline.comparison_ode_stability`. `paper_claim` packages the same two statements with bundled hypotheses. See `FrohmanianSymplecticTether/Semantics.lean` for the full statements and the fixed reading of the paper's terms.
 
 ## Re-audit (2026-11-16): this lock is NOT certifying
 
@@ -183,10 +172,14 @@ Rule applied (Benjamin Stanley Frohman, 2026-11-16):
 * `paper_claim` is an independent transcription of the verbatim paper quote, never an alias of
   `formal_claim`, and the correspondence is never `rfl`/`Iff.rfl`.
 
-Locked claim under review: comparison_ode_stability (conjunct (P4) of the Master Product Theorem)
+Locked claim under review (2026-11-16): comparison_ode_stability (conjunct (P4) of the Master Product Theorem)
 
-Why it is reopened:
+Why it was reopened on 2026-11-16:
 * Partial lock. Only conjunct (P4) of the paper's Master Product Theorem (P1–P5) is locked. The paper's headline statement, the product theorem itself, is not, so the lock leaves the rest of the stated theorem unchecked (partial drift).
 * Not a certified step on the paper's path. P4 is a scalar ODE comparison fact. The paper itself says "that the vorticity of a Navier–Stokes flow obeys this inequality is not proved".
 
-What would re-certify it: A lock needs the complete Master Product Theorem as stated, with every conjunct independently transcribed and matching, or a paper statement reduced to what is proved on the path.
+## Update (2026-11-23): P1 paper corrected; polarization + P4 locked; still not whole-paper
+
+The paper no longer calls P1 a uniqueness theorem from C1–C3. It now states exactly what Lean proves: agreement on the diagonal, plus polarization of both forms, implies agreement off the diagonal (`uniqueness_of_tether_by_polarization` / `TruthGate.polarization_from_diagonal_agreement`). C1–C3 are unused; that class may be empty (`shear_C2_fails`). The lock covers this polarization identity and P4. Still outside the lock: (P2), (P3), `uniqueness_of_kernel_density`, `step2_degree_of_ne_zero`, and the remaining statements of the paper. `certifying` stays false. Nothing here is a Clay claim.
+
+What would re-certify it: independently transcribe and lock every remaining claimed statement, with no weakening.

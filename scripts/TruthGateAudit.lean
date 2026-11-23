@@ -26,7 +26,7 @@ open Lean Meta Elab Command
 namespace TruthGateAudit
 
 def standard : List Name := [``propext, ``Classical.choice, ``Quot.sound]
-def mains : List Name := [`AnalyticPipeline.comparison_ode_stability]
+def mains : List Name := [`TruthGate.polarization_from_diagonal_agreement, `AnalyticPipeline.comparison_ode_stability]
 
 partial def reach (env : Environment) (todo : List Name) (seen : NameSet) : NameSet :=
   match todo with

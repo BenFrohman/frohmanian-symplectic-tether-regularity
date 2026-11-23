@@ -472,6 +472,24 @@ public theorem uniqueness_of_minimal_symmetric_tether
   have hFG := h_sat (fun ω' => F ω' + G ω') ω
   linarith
 
+/-- What the uniqueness theorems above actually prove: agreement with `TetherKernel` on
+the diagonal, plus polarization of both forms, implies agreement off the diagonal.
+The C1–C3 and symmetry hypotheses of `uniqueness_of_minimal_symmetric_tether` are
+unused; this theorem does not assume them. This is not uniqueness from C1–C3. -/
+public theorem uniqueness_of_tether_by_polarization
+    (B : CoadjointOrbit → Functional → Functional → ℝ)
+    (h_sat : SaturatesTetherQuadratic kappa B)
+    (h_polarB : Polarizes B)
+    (h_polarT : Polarizes (TetherKernel kappa)) :
+    ∀ (ω : CoadjointOrbit) (F G : Functional), B ω F G = TetherKernel kappa ω F G := by
+  intro ω F G
+  have hB := h_polarB ω F G
+  have hT := h_polarT ω F G
+  have hFF := h_sat F ω
+  have hGG := h_sat G ω
+  have hFG := h_sat (fun ω' => F ω' + G ω') ω
+  linarith
+
 
 /-!
 ## Later paper: uniqueness of global regular solutions
