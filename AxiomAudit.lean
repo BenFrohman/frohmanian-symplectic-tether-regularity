@@ -81,7 +81,7 @@ open Lean Elab Command
 #print axioms TetheredLyapunov.physicalFiniteTimeVorticityBound_of_uniform
 #print axioms TetheredLyapunov.bkmIntegrability_of_finiteTime
 #print axioms TetheredLyapunov.physicalBKMIntegrability_of_finiteTime
-#print axioms TetheredLyapunov.global_regularity_of_constructions
+#print axioms TetheredLyapunov.global_regularity_of_constructions_conditional
 #print axioms GlobalRegularity.frohmanian_tether_theorem
 #print axioms GlobalRegularity.global_regularity_for_NS
 #print axioms GlobalRegularity.global_regularity_for_NS_nonvacuous_at_zero
