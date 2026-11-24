@@ -2,11 +2,12 @@
   "semantics_file": "FrohmanianSymplecticTether/Semantics.lean",
   "semantics_module": "FrohmanianSymplecticTether.Semantics",
   "paper_path": "paper/Frohmanian_Symplectic_Tether_Uniqueness_and_Global_Regularity_2026.tex",
-  "paper_sha256": "437fff4d53f1377c16ee25ac42cc2ccdd0371f8191ff1e0b68f44254d422b61c",
+  "paper_sha256": "8f8df2e9e58ff7cce36eaf1876e44c2fb0fa8a3634d35a2847eece6400a6732f",
   "main_theorems": [
+    "TruthGate.polarization_from_diagonal_agreement",
     "AnalyticPipeline.comparison_ode_stability"
   ],
-  "lock_region_sha256": "2ff25e2c9408027f3f338b8d8188ed11ad6d6ea09770d08d2aa2638862b63d23",
+  "lock_region_sha256": "60d790381d1a07dd0a57444daf8a03f0aff69fa3b2b068bdc3d0ac0114f789ac",
   "draft_dirs": [
     "FrohmanianSymplecticTether/Draft"
   ],
@@ -15,6 +16,6 @@
     "FrohmanianSymplecticTether.lean"
   ],
   "certifying": false,
-  "reopened_reason": "Partial lock. Only conjunct (P4) of the paper's Master Product Theorem (P1–P5) is locked. The paper's headline statement, the product theorem itself, is not, so the lock leaves the rest of the stated theorem unchecked (partial drift).",
+  "reopened_reason": "Partial lock (not whole-paper). The paper's P1 statement has been corrected to the identity Lean actually proves: diagonal agreement plus polarization implies equality off the diagonal (TruthGate.polarization_from_diagonal_agreement / uniqueness_of_tether_by_polarization). C1–C3 are unused; that class may be empty (shear_C2_fails). The lock covers this polarization identity and P4 (comparison_ode_stability). Still outside any lock: (P2), (P3), uniqueness_of_kernel_density, step2_degree_of_ne_zero, and the remaining statements of the paper. certifying stays false until all are locked.",
   "reopened_on": "2026-11-16"
 }
